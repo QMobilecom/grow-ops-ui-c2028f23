@@ -1,70 +1,253 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Bot, Plus } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, FileText } from "lucide-react";
+
+interface Assistant {
+  id: string;
+  name: string;
+  template: string;
+  status: string;
+}
+
+const templates = [
+  {
+    id: "blank",
+    title: "Blank Template",
+    description: "This blank slate template with minimal configurations. It's a starting point for creating your custom assistant.",
+    icon: Plus,
+    category: "basic"
+  },
+  {
+    id: "sales",
+    title: "SalesAI",
+    description: "A comprehensive template for resolving product issues, answering questions, and ensuring satisfying customer experiences with technical knowledge and empathy.",
+    icon: Heart,
+    category: "quickstart"
+  },
+  {
+    id: "support",
+    title: "Customer Support",
+    description: "A consultative template designed to identify qualified prospects, understand business challenges, and connect them with appropriate sales representatives.",
+    icon: User,
+    category: "quickstart"
+  },
+  {
+    id: "scheduler",
+    title: "Appointment Scheduler",
+    description: "A specialized template for efficiently booking, confirming, rescheduling, or canceling appointments while providing clear service information.",
+    icon: Calendar,
+    category: "quickstart"
+  },
+  {
+    id: "feedback",
+    title: "Feedback Gatherer",
+    description: "A methodical template for gathering accurate and complete information from customers while ensuring data quality and regulatory compliance.",
+    icon: MessageSquare,
+    category: "quickstart"
+  },
+  {
+    id: "forwarder",
+    title: "Forwarder Specialist",
+    description: "A specialized template for call forwarding and routing services with advanced telephony management capabilities.",
+    icon: Star,
+    category: "quickstart"
+  }
+];
 
 export function CreateAssistantSection() {
+  const [assistants, setAssistants] = useState<Assistant[]>([]);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [assistantName, setAssistantName] = useState("New Assistant");
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+
+  const handleCreateAssistant = () => {
+    if (selectedTemplate && assistantName) {
+      const template = templates.find(t => t.id === selectedTemplate);
+      const newAssistant: Assistant = {
+        id: Date.now().toString(),
+        name: assistantName,
+        template: template?.title || "Custom",
+        status: "Draft"
+      };
+      setAssistants([...assistants, newAssistant]);
+      setIsCreateDialogOpen(false);
+      setAssistantName("New Assistant");
+      setSelectedTemplate(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Create AI Assistant</h2>
-          <p className="text-muted-foreground">Configure your new AI voice agent</p>
+          <h2 className="text-2xl font-bold">Assistants</h2>
+          <p className="text-muted-foreground">Manage your AI voice assistants</p>
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Quick Setup
-        </Button>
+        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-teal-600 hover:bg-teal-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Create Assistant
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-gray-900 text-white border-gray-700">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-white">
+                <Bot className="h-5 w-5" />
+                Create Assistant
+              </DialogTitle>
+              <DialogDescription className="text-gray-400">
+                Choose a template to get you started, or you can create your own template and use it to create a new assistant.
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-6 mt-6">
+              <div className="space-y-2">
+                <Label htmlFor="assistant-name" className="text-white">
+                  Assistant Name <span className="text-teal-400 text-sm">(This can be adjusted at any time after creation)</span>
+                </Label>
+                <Input 
+                  id="assistant-name"
+                  value={assistantName}
+                  onChange={(e) => setAssistantName(e.target.value)}
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-white">Choose a template</h3>
+                <p className="text-gray-400 text-sm">
+                  Here's a few templates to get you started, or you can create your own template and use it to create a new assistant.
+                </p>
+                
+                {/* Blank Template */}
+                <div 
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-colors ${
+                    selectedTemplate === "blank" 
+                      ? "border-teal-500 bg-gray-800" 
+                      : "border-gray-600 bg-gray-800 hover:border-gray-500"
+                  }`}
+                  onClick={() => setSelectedTemplate("blank")}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center mt-1">
+                      <Plus className="h-4 w-4 text-gray-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-white">Blank Template</h4>
+                      <p className="text-sm text-gray-400 mt-1">
+                        This blank slate template with minimal configurations. It's a starting point for creating your custom assistant.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quickstart Templates */}
+                <div className="space-y-3">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                    QUICKSTART
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {templates.slice(1).map((template) => (
+                      <div
+                        key={template.id}
+                        className={`border-2 rounded-lg p-4 cursor-pointer transition-colors ${
+                          selectedTemplate === template.id
+                            ? "border-teal-500 bg-gray-800"
+                            : "border-gray-600 bg-gray-800 hover:border-gray-500"
+                        }`}
+                        onClick={() => setSelectedTemplate(template.id)}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center flex-shrink-0">
+                            <template.icon className="h-4 w-4 text-gray-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-white">{template.title}</h4>
+                            <p className="text-xs text-gray-400 mt-1 line-clamp-3">
+                              {template.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-700">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsCreateDialogOpen(false)}
+                  className="border-gray-600 text-gray-300 hover:bg-gray-800"
+                >
+                  Close
+                </Button>
+                <Button 
+                  onClick={handleCreateAssistant}
+                  disabled={!selectedTemplate}
+                  className="bg-teal-600 hover:bg-teal-700"
+                >
+                  Create Assistant
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
-      <div className="grid gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bot className="h-5 w-5" />
-              Assistant Configuration
-            </CardTitle>
-            <CardDescription>
-              Set up your AI assistant's personality and capabilities
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="assistant-name">Assistant Name</Label>
-                <Input 
-                  id="assistant-name" 
-                  placeholder="e.g., Customer Support Bot"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="voice-type">Voice Type</Label>
-                <Input 
-                  id="voice-type" 
-                  placeholder="e.g., Professional Female"
-                />
-              </div>
+      {/* Assistants List */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            Your Assistants
+          </CardTitle>
+          <CardDescription>
+            Manage and configure your AI voice assistants
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {assistants.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p>No assistants created yet</p>
+              <p className="text-sm">Click "Create Assistant" to get started</p>
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="system-prompt">System Prompt</Label>
-              <Textarea 
-                id="system-prompt"
-                placeholder="Define your assistant's personality, role, and how it should respond..."
-                className="min-h-32"
-              />
+          ) : (
+            <div className="space-y-4">
+              {assistants.map((assistant) => (
+                <div key={assistant.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{assistant.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Template: {assistant.template} • Status: {assistant.status}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm">
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Test
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </div>
-            
-            <div className="flex gap-2">
-              <Button>Save Configuration</Button>
-              <Button variant="outline">Test Assistant</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
