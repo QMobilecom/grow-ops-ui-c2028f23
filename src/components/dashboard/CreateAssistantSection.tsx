@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, FileText } from "lucide-react";
+import { AssistantConfigForm } from "./AssistantConfigForm";
 
 interface Assistant {
   id: string;
@@ -64,6 +65,7 @@ export function CreateAssistantSection() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [assistantName, setAssistantName] = useState("New Assistant");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [editingAssistant, setEditingAssistant] = useState<Assistant | null>(null);
 
   const handleCreateAssistant = () => {
     if (selectedTemplate && assistantName) {
@@ -80,6 +82,19 @@ export function CreateAssistantSection() {
       setSelectedTemplate(null);
     }
   };
+
+  const handleEditAssistant = (assistant: Assistant) => {
+    setEditingAssistant(assistant);
+  };
+
+  const handleBackFromEdit = () => {
+    setEditingAssistant(null);
+  };
+
+  // If editing an assistant, show the config form
+  if (editingAssistant) {
+    return <AssistantConfigForm assistant={editingAssistant} onBack={handleBackFromEdit} />;
+  }
 
   return (
     <div className="space-y-6">
@@ -235,7 +250,11 @@ export function CreateAssistantSection() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleEditAssistant(assistant)}
+                    >
                       Edit
                     </Button>
                     <Button variant="outline" size="sm">
