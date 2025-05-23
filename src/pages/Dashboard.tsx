@@ -10,6 +10,9 @@ import { CallLogsSection } from "@/components/dashboard/CallLogsSection";
 import { FilesSection } from "@/components/dashboard/FilesSection";
 import { ApiKeysSection } from "@/components/dashboard/ApiKeysSection";
 import { BillingSection } from "@/components/dashboard/BillingSection";
+import { AnalyticsSection } from "@/components/dashboard/AnalyticsSection";
+import { ComplianceSection } from "@/components/dashboard/ComplianceSection";
+import { SystemMonitoringSection } from "@/components/dashboard/SystemMonitoringSection";
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -30,6 +33,12 @@ export default function Dashboard() {
         return <ApiKeysSection />;
       case "billing":
         return <BillingSection />;
+      case "analytics":
+        return <AnalyticsSection />;
+      case "compliance":
+        return <ComplianceSection />;
+      case "system-monitoring":
+        return <SystemMonitoringSection />;
       default:
         return <OverviewSection />;
     }

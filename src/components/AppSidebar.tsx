@@ -8,7 +8,10 @@ import {
   Key,
   Settings,
   PhoneCall,
-  CreditCard
+  CreditCard,
+  BarChart3,
+  Shield,
+  Activity
 } from "lucide-react";
 import {
   Sidebar,
@@ -44,6 +47,21 @@ const menuItems = [
     title: "Call Logs",
     icon: PhoneCall,
     id: "call-logs",
+  },
+  {
+    title: "Analytics",
+    icon: BarChart3,
+    id: "analytics",
+  },
+  {
+    title: "Compliance",
+    icon: Shield,
+    id: "compliance",
+  },
+  {
+    title: "System Monitoring",
+    icon: Activity,
+    id: "system-monitoring",
   },
   {
     title: "Files",
