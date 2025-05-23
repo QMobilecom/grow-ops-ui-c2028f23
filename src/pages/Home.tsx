@@ -1,7 +1,8 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mic, Brain, Zap, Shield, Users, Star, Target, AlertTriangle, PieChart } from "lucide-react";
+import { ArrowRight, Mic, Brain, Zap, Shield, Users, Star, Target, AlertTriangle, PieChart, Check } from "lucide-react";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -221,6 +222,198 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Pricing Section */}
+        <section 
+          id="pricing" 
+          data-animate
+          className={`py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 via-purple-900/50 to-slate-900/80 transition-all duration-1000 ${
+            visibleSections.has('pricing') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
+              Pricing
+            </h2>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Starter Plan */}
+              <div 
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                  visibleSections.has('pricing') 
+                    ? 'translate-y-0 opacity-100' 
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '0ms' }}
+              >
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
+                  <div className="text-4xl font-bold text-emerald-400 mb-2">$297</div>
+                  <div className="text-slate-300">/month</div>
+                  <p className="text-slate-400 mt-4">For small teams or early adopters testing AI outreach</p>
+                </div>
+                
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>1 AI agent</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>500 outbound minutes/month</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Lead import + basic qualification</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Standard script builder</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Call recording + basic transcripts</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Lite dashboard (calls, connects, outcomes)</span>
+                  </li>
+                </ul>
+
+                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
+                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: SMBs running &lt;1K cold leads/mo</p>
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                  Get Started
+                </Button>
+              </div>
+
+              {/* Pro Plan */}
+              <div 
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border-2 border-emerald-400/50 hover:border-emerald-400 transition-all duration-500 shadow-xl backdrop-blur-sm relative ${
+                  visibleSections.has('pricing') 
+                    ? 'translate-y-0 opacity-100' 
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '200ms' }}
+              >
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    Most Popular
+                  </span>
+                </div>
+                
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+                  <div className="text-4xl font-bold text-emerald-400 mb-2">$997</div>
+                  <div className="text-slate-300">/month</div>
+                  <p className="text-slate-400 mt-4">For sales teams scaling AI-led outreach with ROI tracking</p>
+                </div>
+                
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Up to 3 AI agents</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>2,500 outbound minutes/month</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Advanced objection handling</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Smart lead scoring</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Auto follow-up sequences (email/SMS)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Full analytics dashboard + call tagging</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>CRM sync (HubSpot, Salesforce)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Priority email support</span>
+                  </li>
+                </ul>
+
+                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
+                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: startups or agencies booking 20–50+ meetings/mo</p>
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                  Get Started
+                </Button>
+              </div>
+
+              {/* Enterprise Plan */}
+              <div 
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                  visibleSections.has('pricing') 
+                    ? 'translate-y-0 opacity-100' 
+                    : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '400ms' }}
+              >
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Enterprise</h3>
+                  <div className="text-4xl font-bold text-emerald-400 mb-2">Custom</div>
+                  <div className="text-slate-300">Pricing</div>
+                  <p className="text-slate-400 mt-4">For high-volume teams with custom workflows and SLAs</p>
+                </div>
+                
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Unlimited agents/minutes (usage-based)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Dedicated success manager</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Custom integrations (Zapier, API access)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Voice cloning + multi-language support</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Compliance suite (GDPR/TCPA)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>Onboarding + call script optimization</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-slate-300">
+                    <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
+                    <span>24/7 support + quarterly ROI reports</span>
+                  </li>
+                </ul>
+
+                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
+                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: B2B orgs running 50K+ leads or needing full compliance coverage with pay-as-you-go charging $1/minute</p>
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                  Contact Sales
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
         
         {/* Resources Section */}
         <section 
@@ -303,7 +496,6 @@ export default function Home() {
           </div>
         </section>
         
-        {/* CTA Section */}
         <section 
           id="cta"
           data-animate
