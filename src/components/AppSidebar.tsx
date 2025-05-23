@@ -2,13 +2,11 @@
 import { useState } from "react";
 import { 
   LayoutDashboard, 
-  BarChart3, 
-  DollarSign, 
-  Users, 
-  FolderKanban,
-  Settings,
-  Bell,
-  Search
+  Bot, 
+  Phone, 
+  FileText,
+  Key,
+  Settings
 } from "lucide-react";
 import {
   Sidebar,
@@ -31,24 +29,24 @@ const menuItems = [
     id: "overview",
   },
   {
-    title: "Analytics",
-    icon: BarChart3,
-    id: "analytics",
+    title: "Create Assistant",
+    icon: Bot,
+    id: "create-assistant",
   },
   {
-    title: "Finance",
-    icon: DollarSign,
-    id: "finance",
+    title: "Phone Numbers",
+    icon: Phone,
+    id: "phone-numbers",
   },
   {
-    title: "Team",
-    icon: Users,
-    id: "team",
+    title: "Files",
+    icon: FileText,
+    id: "files",
   },
   {
-    title: "Projects",
-    icon: FolderKanban,
-    id: "projects",
+    title: "External API Keys",
+    icon: Key,
+    id: "api-keys",
   },
 ];
 
@@ -63,11 +61,11 @@ export function AppSidebar({ activeSection, onSectionChange }: AppSidebarProps) 
       <SidebarHeader className="p-6 border-b">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
+            <span className="text-white font-bold text-sm">AI</span>
           </div>
           <div>
-            <h2 className="font-semibold text-lg">StartupOS</h2>
-            <p className="text-xs text-muted-foreground">Operations Hub</p>
+            <h2 className="font-semibold text-lg">AI Voice Agents</h2>
+            <p className="text-xs text-muted-foreground">Dashboard</p>
           </div>
         </div>
       </SidebarHeader>
@@ -109,7 +107,7 @@ export function AppSidebar({ activeSection, onSectionChange }: AppSidebarProps) 
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate">John Doe</p>
-            <p className="text-xs text-muted-foreground">Founder & CEO</p>
+            <p className="text-xs text-muted-foreground">Admin</p>
           </div>
           <Settings className="h-4 w-4 text-slate-400" />
         </div>

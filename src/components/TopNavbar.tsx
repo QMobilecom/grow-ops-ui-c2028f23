@@ -1,5 +1,5 @@
 
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,12 +13,23 @@ export function TopNavbar({ activeSection }: TopNavbarProps) {
   const getSectionTitle = (section: string) => {
     const titles = {
       overview: "Dashboard Overview",
-      analytics: "Analytics & Insights",
-      finance: "Financial Dashboard",
-      team: "Team Management",
-      projects: "Project Portfolio"
+      "create-assistant": "Create AI Assistant",
+      "phone-numbers": "Phone Numbers",
+      files: "Knowledge Base Files",
+      "api-keys": "External API Keys"
     };
     return titles[section as keyof typeof titles] || "Dashboard";
+  };
+
+  const getSectionDescription = (section: string) => {
+    const descriptions = {
+      overview: "Monitor and analyze your AI voice agents performance",
+      "create-assistant": "Configure and deploy new AI voice assistants",
+      "phone-numbers": "Manage phone numbers for your voice agents",
+      files: "Upload and manage knowledge base files for your AI",
+      "api-keys": "Store and manage external API keys securely"
+    };
+    return descriptions[section as keyof typeof descriptions] || "Manage your AI voice agents";
   };
 
   return (
@@ -30,7 +41,7 @@ export function TopNavbar({ activeSection }: TopNavbarProps) {
             {getSectionTitle(activeSection)}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Monitor and manage your startup operations
+            {getSectionDescription(activeSection)}
           </p>
         </div>
       </div>

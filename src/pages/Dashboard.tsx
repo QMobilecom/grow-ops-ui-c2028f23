@@ -1,16 +1,48 @@
 
-import { Header } from "@/components/Header";
+import { useState } from "react";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
+import { TopNavbar } from "@/components/TopNavbar";
+import { OverviewSection } from "@/components/dashboard/OverviewSection";
+import { CreateAssistantSection } from "@/components/dashboard/CreateAssistantSection";
+import { PhoneNumbersSection } from "@/components/dashboard/PhoneNumbersSection";
+import { FilesSection } from "@/components/dashboard/FilesSection";
+import { ApiKeysSection } from "@/components/dashboard/ApiKeysSection";
 
 export default function Dashboard() {
+  const [activeSection, setActiveSection] = useState("overview");
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "overview":
+        return <OverviewSection />;
+      case "create-assistant":
+        return <CreateAssistantSection />;
+      case "phone-numbers":
+        return <PhoneNumbersSection />;
+      case "files":
+        return <FilesSection />;
+      case "api-keys":
+        return <ApiKeysSection />;
+      default:
+        return <OverviewSection />;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black flex flex-col">
-      <Header />
-      <main className="flex-grow flex flex-col items-center justify-center text-white p-8">
-        <h1 className="text-4xl md:text-6xl font-bold mb-8">Dashboard</h1>
-        <p className="text-xl max-w-3xl text-center">
-          Welcome to your AI Voice Agents dashboard. This is where you'll manage your voice agents and analytics.
-        </p>
-      </main>
-    </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-slate-50">
+        <AppSidebar 
+          activeSection={activeSection} 
+          onSectionChange={setActiveSection} 
+        />
+        <SidebarInset className="flex-1">
+          <TopNavbar activeSection={activeSection} />
+          <main className="flex-1 p-6">
+            {renderActiveSection()}
+          </main>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
   );
 }
