@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { ArrowLeft, ChevronDown, ChevronUp, Settings, Clock, DollarSign, MessageSquare, Mic } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Settings, Clock, DollarSign, MessageSquare, Mic, Minus } from "lucide-react";
 
 interface AssistantConfigFormProps {
   assistant: {
@@ -18,6 +17,14 @@ interface AssistantConfigFormProps {
     status: string;
   };
   onBack: () => void;
+}
+
+interface DataProperty {
+  id: string;
+  name: string;
+  type: string;
+  isEnum: boolean;
+  required: boolean;
 }
 
 export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormProps) {
@@ -51,12 +58,34 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
   const [keypadTimeout, setKeypadTimeout] = useState([2]);
   const [maxIdleMessages, setMaxIdleMessages] = useState([3]);
   const [idleTimeout, setIdleTimeout] = useState([7.5]);
+  const [dataProperties, setDataProperties] = useState<DataProperty[]>([]);
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections(prev => ({
       ...prev,
       [section]: !prev[section]
     }));
+  };
+
+  const addProperty = () => {
+    const newProperty: DataProperty = {
+      id: Date.now().toString(),
+      name: `field_${dataProperties.length + 1}`,
+      type: "String",
+      isEnum: false,
+      required: false
+    };
+    setDataProperties([...dataProperties, newProperty]);
+  };
+
+  const removeProperty = (id: string) => {
+    setDataProperties(dataProperties.filter(prop => prop.id !== id));
+  };
+
+  const updateProperty = (id: string, field: keyof DataProperty, value: any) => {
+    setDataProperties(dataProperties.map(prop => 
+      prop.id === id ? { ...prop, [field]: value } : prop
+    ));
   };
 
   return (
@@ -529,8 +558,13 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
                     <SelectValue placeholder="Select Evaluation Rubric" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="sales">Sales Success Rubric</SelectItem>
-                    <SelectItem value="support">Support Success Rubric</SelectItem>
+                    <SelectItem value="numeric">NumericScale</SelectItem>
+                    <SelectItem value="descriptive">DescriptiveScale</SelectItem>
+                    <SelectItem value="checklist">Checklist</SelectItem>
+                    <SelectItem value="matrix">Matrix</SelectItem>
+                    <SelectItem value="percentage">PercentageScale</SelectItem>
+                    <SelectItem value="likert">LikertScale</SelectItem>
+                    <SelectItem value="automatic">AutomaticRubric</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -551,9 +585,83 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
                   className="min-h-[100px]"
                 />
               </div>
-              <Button variant="outline" size="sm">
-                Add Property
-              </Button>
+              
+              {/* Data Properties */}
+              <div className="space-y-4">
+                {dataProperties.map((property) => (
+                  <div key={property.id} className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <div className="flex items-center justify-between">
+                      <h5 className="font-medium text-sm">Property</h5>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => removeProperty(property.id)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    
+                    <div className="grid grid-cols-4 gap-4 items-end">
+                      <div className="space-y-2">
+                        <Label className="text-sm">Name</Label>
+                        <Input 
+                          value={property.name}
+                          onChange={(e) => updateProperty(property.id, 'name', e.target.value)}
+                          className="h-10"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label className="text-sm">Type</Label>
+                        <Select 
+                          value={property.type} 
+                          onValueChange={(value) => updateProperty(property.id, 'type', value)}
+                        >
+                          <SelectTrigger className="h-10">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="String">String</SelectItem>
+                            <SelectItem value="Number">Number</SelectItem>
+                            <SelectItem value="Boolean">Boolean</SelectItem>
+                            <SelectItem value="Array">Array</SelectItem>
+                            <SelectItem value="Object">Object</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Switch 
+                          id={`enum-${property.id}`}
+                          checked={property.isEnum}
+                          onCheckedChange={(checked) => updateProperty(property.id, 'isEnum', checked)}
+                        />
+                        <Label htmlFor={`enum-${property.id}`} className="text-sm">Is Enum</Label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Switch 
+                          id={`required-${property.id}`}
+                          checked={property.required}
+                          onCheckedChange={(checked) => updateProperty(property.id, 'required', checked)}
+                        />
+                        <Label htmlFor={`required-${property.id}`} className="text-sm">Mark as required</Label>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-2">
+                      <Button variant="link" size="sm" className="text-teal-600 p-0 h-auto">
+                        Add Description
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                
+                <Button variant="outline" size="sm" onClick={addProperty}>
+                  Add Property
+                </Button>
+              </div>
             </div>
           </CardContent>
         )}
