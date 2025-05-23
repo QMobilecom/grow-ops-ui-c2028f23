@@ -45,7 +45,7 @@ export default function Home() {
         </section>
         
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 to-purple-900/50">
+        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-800/30 to-purple-900/50">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               How It Works
