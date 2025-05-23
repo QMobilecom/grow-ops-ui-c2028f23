@@ -1,20 +1,35 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (sectionId: string) => {
+    // If we're on the home page, scroll to the section
+    if (location.pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If we're on a different page, navigate to home with the section hash
+      navigate(`/#${sectionId}`);
+      // After navigation, scroll to the section
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
     setIsMenuOpen(false);
   };
@@ -28,16 +43,16 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <button onClick={() => scrollToSection('home')} className="text-white hover:text-green-400 transition-colors">
+          <button onClick={() => handleNavigation('home')} className="text-white hover:text-green-400 transition-colors">
             Home
           </button>
-          <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-green-400 transition-colors">
+          <button onClick={() => handleNavigation('how-it-works')} className="text-white hover:text-green-400 transition-colors">
             How It Works
           </button>
-          <button onClick={() => scrollToSection('solutions')} className="text-white hover:text-green-400 transition-colors">
+          <button onClick={() => handleNavigation('solutions')} className="text-white hover:text-green-400 transition-colors">
             Solutions
           </button>
-          <button onClick={() => scrollToSection('resources')} className="text-white hover:text-green-400 transition-colors">
+          <button onClick={() => handleNavigation('resources')} className="text-white hover:text-green-400 transition-colors">
             Resources
           </button>
         </nav>
@@ -68,25 +83,25 @@ export function Header() {
         <div className="md:hidden absolute top-16 inset-x-0 bg-black z-50 py-4">
           <div className="flex flex-col space-y-4 px-6">
             <button 
-              onClick={() => scrollToSection('home')} 
+              onClick={() => handleNavigation('home')} 
               className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Home
             </button>
             <button 
-              onClick={() => scrollToSection('how-it-works')} 
+              onClick={() => handleNavigation('how-it-works')} 
               className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               How It Works
             </button>
             <button 
-              onClick={() => scrollToSection('solutions')} 
+              onClick={() => handleNavigation('solutions')} 
               className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Solutions
             </button>
             <button 
-              onClick={() => scrollToSection('resources')} 
+              onClick={() => handleNavigation('resources')} 
               className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Resources
