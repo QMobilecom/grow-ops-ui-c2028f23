@@ -6,7 +6,9 @@ import {
   Phone, 
   FileText,
   Key,
-  Settings
+  Settings,
+  PhoneCall,
+  CreditCard
 } from "lucide-react";
 import {
   Sidebar,
@@ -39,6 +41,11 @@ const menuItems = [
     id: "phone-numbers",
   },
   {
+    title: "Call Logs",
+    icon: PhoneCall,
+    id: "call-logs",
+  },
+  {
     title: "Files",
     icon: FileText,
     id: "files",
@@ -47,6 +54,11 @@ const menuItems = [
     title: "External API Keys",
     icon: Key,
     id: "api-keys",
+  },
+  {
+    title: "Billing",
+    icon: CreditCard,
+    id: "billing",
   },
 ];
 

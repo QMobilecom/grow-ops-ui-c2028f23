@@ -15,19 +15,23 @@ export function TopNavbar({ activeSection }: TopNavbarProps) {
       overview: "Dashboard Overview",
       "create-assistant": "Create AI Assistant",
       "phone-numbers": "Phone Numbers",
+      "call-logs": "Call Logs",
       files: "Knowledge Base Files",
-      "api-keys": "External API Keys"
+      "api-keys": "External API Keys",
+      billing: "Billing & Cost Management"
     };
     return titles[section as keyof typeof titles] || "Dashboard";
   };
 
   const getSectionDescription = (section: string) => {
     const descriptions = {
-      overview: "Monitor and analyze your AI voice agents performance",
-      "create-assistant": "Configure and deploy new AI voice assistants",
-      "phone-numbers": "Manage phone numbers for your voice agents",
-      files: "Upload and manage knowledge base files for your AI",
-      "api-keys": "Store and manage external API keys securely"
+      overview: "Monitor and analyze your AI voice agents performance with comprehensive analytics",
+      "create-assistant": "Configure and deploy new AI voice assistants with custom prompts",
+      "phone-numbers": "Manage phone numbers for your voice agents and track availability",
+      "call-logs": "View detailed call logs, transcripts, and performance metrics",
+      files: "Upload and manage knowledge base files for your AI agents",
+      "api-keys": "Store and manage external API keys securely for integrations",
+      billing: "Track costs, API usage, and manage your billing preferences"
     };
     return descriptions[section as keyof typeof descriptions] || "Manage your AI voice agents";
   };

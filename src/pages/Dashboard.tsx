@@ -6,8 +6,10 @@ import { TopNavbar } from "@/components/TopNavbar";
 import { OverviewSection } from "@/components/dashboard/OverviewSection";
 import { CreateAssistantSection } from "@/components/dashboard/CreateAssistantSection";
 import { PhoneNumbersSection } from "@/components/dashboard/PhoneNumbersSection";
+import { CallLogsSection } from "@/components/dashboard/CallLogsSection";
 import { FilesSection } from "@/components/dashboard/FilesSection";
 import { ApiKeysSection } from "@/components/dashboard/ApiKeysSection";
+import { BillingSection } from "@/components/dashboard/BillingSection";
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -20,10 +22,14 @@ export default function Dashboard() {
         return <CreateAssistantSection />;
       case "phone-numbers":
         return <PhoneNumbersSection />;
+      case "call-logs":
+        return <CallLogsSection />;
       case "files":
         return <FilesSection />;
       case "api-keys":
         return <ApiKeysSection />;
+      case "billing":
+        return <BillingSection />;
       default:
         return <OverviewSection />;
     }
