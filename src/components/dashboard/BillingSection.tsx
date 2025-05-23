@@ -1,9 +1,9 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditCard, DollarSign, TrendingUp, Zap, AlertCircle } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CreditCard, DollarSign, TrendingUp, Zap, AlertCircle, Clock, Receipt } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 const costData = [
@@ -24,6 +24,14 @@ const apiModels = [
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 
+const paymentHistory = [
+  { id: 1, date: "2024-01-15", amount: 2420, status: "Paid", method: "•••• 4242", invoice: "INV-001" },
+  { id: 2, date: "2024-01-01", amount: 2150, status: "Paid", method: "•••• 4242", invoice: "INV-002" },
+  { id: 3, date: "2023-12-15", amount: 1920, status: "Paid", method: "•••• 4242", invoice: "INV-003" },
+  { id: 4, date: "2023-12-01", amount: 1680, status: "Paid", method: "•••• 4242", invoice: "INV-004" },
+  { id: 5, date: "2023-11-15", amount: 1450, status: "Paid", method: "•••• 4242", invoice: "INV-005" },
+];
+
 export function BillingSection() {
   return (
     <div className="space-y-6">
@@ -43,11 +51,12 @@ export function BillingSection() {
           <TabsTrigger value="overview">Cost Overview</TabsTrigger>
           <TabsTrigger value="usage">API Usage</TabsTrigger>
           <TabsTrigger value="revenue">Revenue Attribution</TabsTrigger>
+          <TabsTrigger value="payment-history">Payment History</TabsTrigger>
           <TabsTrigger value="settings">Billing Settings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total Spent</CardTitle>
@@ -67,6 +76,17 @@ export function BillingSection() {
               <CardContent>
                 <div className="text-2xl font-bold">$1.02</div>
                 <p className="text-xs text-muted-foreground">-$0.08 from last month</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Minutes</CardTitle>
+                <Clock className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">15,240</div>
+                <p className="text-xs text-muted-foreground">+18.2% from last month</p>
               </CardContent>
             </Card>
 
@@ -247,6 +267,86 @@ export function BillingSection() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="payment-history" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Receipt className="h-5 w-5" />
+                Payment History
+              </CardTitle>
+              <CardDescription>
+                View your payment history and download invoices
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Payment Method</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Invoice</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {paymentHistory.map((payment) => (
+                    <TableRow key={payment.id}>
+                      <TableCell>{payment.date}</TableCell>
+                      <TableCell className="font-medium">${payment.amount}</TableCell>
+                      <TableCell>{payment.method}</TableCell>
+                      <TableCell>
+                        <Badge variant="default" className="bg-green-100 text-green-800">
+                          {payment.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{payment.invoice}</TableCell>
+                      <TableCell>
+                        <Button variant="outline" size="sm">
+                          Download
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Total Paid</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">$10,620</div>
+                <p className="text-xs text-muted-foreground">Last 6 months</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Average Monthly</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">$1,770</div>
+                <p className="text-xs text-muted-foreground">Based on history</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Next Payment</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">Feb 15</div>
+                <p className="text-xs text-muted-foreground">Estimated: $2,850</p>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="settings" className="space-y-6">

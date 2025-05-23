@@ -1,9 +1,9 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, Mic, History, Lightbulb, Play, Pause } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { MessageSquare, Mic, History, Lightbulb, Play, Pause, TrendingUp, Award } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const promptHistory = [
@@ -33,6 +33,40 @@ const agentBehavior = [
   { metric: "Error Rate", current: "3.4%", target: "< 5%", status: "good" },
 ];
 
+const systemPromptHistory = [
+  { id: 1, version: "v2.3", date: "2024-01-15", changes: "Enhanced objection handling", author: "AI System", performance: 94 },
+  { id: 2, version: "v2.2", date: "2024-01-10", changes: "Updated greeting script", author: "John Smith", performance: 89 },
+  { id: 3, version: "v2.1", date: "2024-01-05", changes: "Added empathy phrases", author: "AI System", performance: 85 },
+  { id: 4, version: "v2.0", date: "2024-01-01", changes: "Initial optimization", author: "Sarah Johnson", performance: 82 },
+];
+
+const suggestedUpdates = [
+  {
+    id: 1,
+    title: "Improve Pricing Objection Response",
+    description: "Add more value-focused responses when customers mention budget constraints",
+    impact: "Potential 12% increase in conversion rate",
+    confidence: "High",
+    category: "Objection Handling"
+  },
+  {
+    id: 2,
+    title: "Enhance Product Feature Explanations",
+    description: "Include specific use cases and benefits for each feature mentioned",
+    impact: "Potential 8% increase in engagement",
+    confidence: "Medium",
+    category: "Product Knowledge"
+  },
+  {
+    id: 3,
+    title: "Optimize Call-to-Action Timing",
+    description: "Adjust when and how appointment booking requests are made",
+    impact: "Potential 15% increase in booking rate",
+    confidence: "High",
+    category: "Conversion"
+  }
+];
+
 export function SystemPromptsSection() {
   return (
     <div className="space-y-6">
@@ -47,9 +81,57 @@ export function SystemPromptsSection() {
         </Button>
       </div>
 
+      {/* Add metrics cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">First Call Resolution</CardTitle>
+            <Award className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">87%</div>
+            <p className="text-xs text-muted-foreground">+5.2% from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Lead Quality Score</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">8.4/10</div>
+            <p className="text-xs text-muted-foreground">+0.3 from last month</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Prompts</CardTitle>
+            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">Across all assistants</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Suggestions Pending</CardTitle>
+            <Lightbulb className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">AI-generated improvements</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Tabs defaultValue="prompts" className="space-y-6">
         <TabsList>
           <TabsTrigger value="prompts">Prompt History</TabsTrigger>
+          <TabsTrigger value="history">System Prompt History</TabsTrigger>
           <TabsTrigger value="testing">Voice Testing</TabsTrigger>
           <TabsTrigger value="behavior">Agent Behavior</TabsTrigger>
           <TabsTrigger value="suggestions">AI Suggestions</TabsTrigger>
@@ -125,6 +207,55 @@ export function SystemPromptsSection() {
                   <Button variant="outline" size="sm">View Full Prompt</Button>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="history" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <History className="h-5 w-5" />
+                System Prompt History
+              </CardTitle>
+              <CardDescription>
+                Complete history of system prompt changes and their performance impact
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Version</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Changes</TableHead>
+                    <TableHead>Author</TableHead>
+                    <TableHead>Performance</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {systemPromptHistory.map((prompt) => (
+                    <TableRow key={prompt.id}>
+                      <TableCell className="font-medium">{prompt.version}</TableCell>
+                      <TableCell>{prompt.date}</TableCell>
+                      <TableCell>{prompt.changes}</TableCell>
+                      <TableCell>{prompt.author}</TableCell>
+                      <TableCell>
+                        <Badge variant={prompt.performance >= 90 ? "default" : "secondary"}>
+                          {prompt.performance}%
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Restore</Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         </TabsContent>
@@ -322,60 +453,56 @@ export function SystemPromptsSection() {
         <TabsContent value="suggestions" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>AI-Generated Improvements</CardTitle>
-              <CardDescription>Smart suggestions to optimize your prompts</CardDescription>
+              <CardTitle>Suggested System Prompt Updates</CardTitle>
+              <CardDescription>AI-generated improvements based on call analysis and performance data</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 border rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <Lightbulb className="h-5 w-5 text-yellow-500 mt-0.5" />
-                    <div className="flex-1">
-                      <div className="font-medium">Improve Objection Handling</div>
-                      <div className="text-sm text-muted-foreground mb-3">
-                        Add more empathy phrases when customers mention budget concerns. 
-                        Current success rate: 78% → Potential: 89%
+                {suggestedUpdates.map((suggestion) => (
+                  <div key={suggestion.id} className="p-4 border rounded-lg">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Lightbulb className="h-4 w-4 text-yellow-500" />
+                          <h4 className="font-medium">{suggestion.title}</h4>
+                          <Badge variant="outline">{suggestion.category}</Badge>
+                          <Badge variant={suggestion.confidence === "High" ? "default" : "secondary"}>
+                            {suggestion.confidence} Confidence
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2">{suggestion.description}</p>
+                        <p className="text-sm font-medium text-green-600">{suggestion.impact}</p>
                       </div>
-                      <div className="flex gap-2">
-                        <Button size="sm">Apply Suggestion</Button>
-                        <Button size="sm" variant="outline">Preview Changes</Button>
+                      <div className="flex gap-2 ml-4">
+                        <Button size="sm">Apply</Button>
+                        <Button size="sm" variant="outline">Preview</Button>
+                        <Button size="sm" variant="outline">Dismiss</Button>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-                <div className="p-4 border rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <Lightbulb className="h-5 w-5 text-yellow-500 mt-0.5" />
-                    <div className="flex-1">
-                      <div className="font-medium">Enhance Product Explanations</div>
-                      <div className="text-sm text-muted-foreground mb-3">
-                        Include more specific use cases in feature descriptions. 
-                        Clarity score: 7.2/10 → Potential: 8.8/10
-                      </div>
-                      <div className="flex gap-2">
-                        <Button size="sm">Apply Suggestion</Button>
-                        <Button size="sm" variant="outline">Preview Changes</Button>
-                      </div>
-                    </div>
-                  </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Suggestion Performance Tracking</CardTitle>
+              <CardDescription>Track the impact of implemented AI suggestions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">12</div>
+                  <div className="text-sm text-muted-foreground">Suggestions Applied</div>
                 </div>
-
-                <div className="p-4 border rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <Lightbulb className="h-5 w-5 text-yellow-500 mt-0.5" />
-                    <div className="flex-1">
-                      <div className="font-medium">Optimize Call-to-Action</div>
-                      <div className="text-sm text-muted-foreground mb-3">
-                        Refine appointment booking language for higher conversion. 
-                        Booking rate: 45% → Potential: 58%
-                      </div>
-                      <div className="flex gap-2">
-                        <Button size="sm">Apply Suggestion</Button>
-                        <Button size="sm" variant="outline">Preview Changes</Button>
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold">+15.3%</div>
+                  <div className="text-sm text-muted-foreground">Avg Performance Improvement</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold">89%</div>
+                  <div className="text-sm text-muted-foreground">Suggestion Success Rate</div>
                 </div>
               </div>
             </CardContent>
