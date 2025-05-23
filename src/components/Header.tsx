@@ -11,27 +11,35 @@ export function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
-    <header className="w-full py-4 px-6 bg-black">
+    <header className="w-full py-4 px-6 bg-black fixed top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <h1 className="text-2xl font-bold text-white">VAPI</h1>
+          <h1 className="text-2xl font-bold text-white">NOVA</h1>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-white hover:text-green-400 transition-colors">
+          <button onClick={() => scrollToSection('home')} className="text-white hover:text-green-400 transition-colors">
             Home
-          </Link>
-          <Link to="/how-it-works" className="text-white hover:text-green-400 transition-colors">
+          </button>
+          <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-green-400 transition-colors">
             How It Works
-          </Link>
-          <Link to="/solutions" className="text-white hover:text-green-400 transition-colors">
+          </button>
+          <button onClick={() => scrollToSection('solutions')} className="text-white hover:text-green-400 transition-colors">
             Solutions
-          </Link>
-          <Link to="/resources" className="text-white hover:text-green-400 transition-colors">
+          </button>
+          <button onClick={() => scrollToSection('resources')} className="text-white hover:text-green-400 transition-colors">
             Resources
-          </Link>
+          </button>
         </nav>
 
         {/* CTA Buttons */}
@@ -59,34 +67,30 @@ export function Header() {
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 inset-x-0 bg-black z-50 py-4">
           <div className="flex flex-col space-y-4 px-6">
-            <Link 
-              to="/" 
-              className="text-white hover:text-green-400 transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            <button 
+              onClick={() => scrollToSection('home')} 
+              className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Home
-            </Link>
-            <Link 
-              to="/how-it-works" 
-              className="text-white hover:text-green-400 transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => scrollToSection('how-it-works')} 
+              className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               How It Works
-            </Link>
-            <Link 
-              to="/solutions" 
-              className="text-white hover:text-green-400 transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => scrollToSection('solutions')} 
+              className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Solutions
-            </Link>
-            <Link 
-              to="/resources" 
-              className="text-white hover:text-green-400 transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => scrollToSection('resources')} 
+              className="text-white hover:text-green-400 transition-colors py-2 text-left"
             >
               Resources
-            </Link>
+            </button>
             <div className="flex flex-col space-y-2 pt-2">
               <Button variant="outline" className="border-white text-white hover:bg-gray-800">
                 Log in
