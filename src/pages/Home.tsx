@@ -236,10 +236,10 @@ export default function Home() {
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               Pricing
             </h2>
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-3 gap-8 items-stretch">
               {/* Starter Plan */}
               <div 
-                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm flex flex-col h-full ${
                   visibleSections.has('pricing') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
@@ -253,7 +253,7 @@ export default function Home() {
                   <p className="text-slate-400 mt-4">For small teams or early adopters testing AI outreach</p>
                 </div>
                 
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8 flex-grow">
                   <li className="flex items-start gap-3 text-slate-300">
                     <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
                     <span>1 AI agent</span>
@@ -280,14 +280,18 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                <div className="bg-slate-700/30 p-3 rounded-lg mb-6">
+                  <p className="text-emerald-400 text-sm">$1/minute when budget is exceeded</p>
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg mt-auto">
                   Get Started
                 </Button>
               </div>
 
               {/* Pro Plan */}
               <div 
-                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border-2 border-emerald-400/50 hover:border-emerald-400 transition-all duration-500 shadow-xl backdrop-blur-sm relative ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border-2 border-emerald-400/50 hover:border-emerald-400 transition-all duration-500 shadow-xl backdrop-blur-sm relative flex flex-col h-full ${
                   visibleSections.has('pricing') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
@@ -307,7 +311,7 @@ export default function Home() {
                   <p className="text-slate-400 mt-4">For sales teams scaling AI-led outreach with ROI tracking</p>
                 </div>
                 
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8 flex-grow">
                   <li className="flex items-start gap-3 text-slate-300">
                     <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
                     <span>Up to 3 AI agents</span>
@@ -342,14 +346,18 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                <div className="bg-slate-700/30 p-3 rounded-lg mb-6">
+                  <p className="text-emerald-400 text-sm">$1/minute when budget is exceeded</p>
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg mt-auto">
                   Get Started
                 </Button>
               </div>
 
               {/* Enterprise Plan */}
               <div 
-                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm flex flex-col h-full ${
                   visibleSections.has('pricing') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
@@ -363,7 +371,7 @@ export default function Home() {
                   <p className="text-slate-400 mt-4">For high-volume teams with custom workflows and SLAs</p>
                 </div>
                 
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-3 mb-8 flex-grow">
                   <li className="flex items-start gap-3 text-slate-300">
                     <Check className="text-emerald-400 mt-0.5 flex-shrink-0" size={16} />
                     <span>Unlimited agents/minutes (usage-based)</span>
@@ -394,7 +402,7 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
+                <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg mt-auto">
                   Contact Sales
                 </Button>
               </div>
