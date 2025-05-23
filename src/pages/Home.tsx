@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -281,10 +280,6 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
-                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: SMBs running &lt;1K cold leads/mo</p>
-                </div>
-
                 <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
                   Get Started
                 </Button>
@@ -347,10 +342,6 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
-                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: startups or agencies booking 20–50+ meetings/mo</p>
-                </div>
-
                 <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
                   Get Started
                 </Button>
@@ -402,10 +393,6 @@ export default function Home() {
                     <span>24/7 support + quarterly ROI reports</span>
                   </li>
                 </ul>
-
-                <div className="bg-emerald-400/10 p-4 rounded-lg mb-6">
-                  <p className="text-emerald-400 text-sm font-medium">🔸 Ideal for: B2B orgs running 50K+ leads or needing full compliance coverage with pay-as-you-go charging $1/minute</p>
-                </div>
 
                 <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg">
                   Contact Sales
