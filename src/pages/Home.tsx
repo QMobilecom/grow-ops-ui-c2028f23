@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -143,71 +142,79 @@ export default function Home() {
               : 'opacity-0 translate-y-10'
           }`}
         >
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               Solutions
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div 
-                className={`bg-gradient-to-br from-slate-800/80 to-purple-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:scale-105 flex flex-col h-full ${
                   visibleSections.has('solutions') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: '0ms' }}
               >
-                <Shield className="text-emerald-400 mb-4" size={48} />
+                <div className="bg-gradient-to-br from-emerald-400/20 to-teal-400/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <Shield className="text-emerald-400" size={32} />
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Enterprise Security</h3>
-                <p className="text-slate-300 mb-6">Bank-grade encryption and compliance with industry standards</p>
-                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg">
+                <p className="text-slate-300 mb-6 flex-grow">Bank-grade encryption and compliance with industry standards</p>
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
               </div>
               
               <div 
-                className={`bg-gradient-to-br from-slate-800/80 to-purple-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:scale-105 flex flex-col h-full ${
                   visibleSections.has('solutions') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: '200ms' }}
               >
-                <Target className="text-emerald-400 mb-4" size={48} />
+                <div className="bg-gradient-to-br from-emerald-400/20 to-teal-400/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <Target className="text-emerald-400" size={32} />
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Lead Qualification & Scoring Engine</h3>
-                <p className="text-slate-300 mb-6">• Automatically rank and prioritize your raw lead lists by purchase intent—so your AI agents only dial the hottest prospects.<br/>• Delivers higher connect-to-meeting ratios by weeding out low-value contacts before you ever pick up the phone.</p>
-                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg">
+                <p className="text-slate-300 mb-6 flex-grow">• Automatically rank and prioritize your raw lead lists by purchase intent—so your AI agents only dial the hottest prospects.<br/>• Delivers higher connect-to-meeting ratios by weeding out low-value contacts before you ever pick up the phone.</p>
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
               </div>
               
               <div 
-                className={`bg-gradient-to-br from-slate-800/80 to-purple-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:scale-105 flex flex-col h-full ${
                   visibleSections.has('solutions') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: '400ms' }}
               >
-                <AlertTriangle className="text-emerald-400 mb-4" size={48} />
+                <div className="bg-gradient-to-br from-emerald-400/20 to-teal-400/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <AlertTriangle className="text-emerald-400" size={32} />
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Real-Time Objection Handling</h3>
-                <p className="text-slate-300 mb-6">• During live calls, detect and classify objections (price, timing, decision-maker, etc.) in real time, and prompt the agent with data-backed rebuttals.<br/>• Reduces hang-ups and dead-ends by up to 30%, so every call has a fighting chance at booking the next step.</p>
-                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg">
+                <p className="text-slate-300 mb-6 flex-grow">• During live calls, detect and classify objections (price, timing, decision-maker, etc.) in real time, and prompt the agent with data-backed rebuttals.<br/>• Reduces hang-ups and dead-ends by up to 30%, so every call has a fighting chance at booking the next step.</p>
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
               </div>
               
               <div 
-                className={`bg-gradient-to-br from-slate-800/80 to-purple-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm ${
+                className={`bg-gradient-to-br from-slate-800/90 to-purple-800/50 p-8 rounded-2xl border border-slate-700/50 hover:border-emerald-400/50 transition-all duration-500 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:scale-105 flex flex-col h-full ${
                   visibleSections.has('solutions') 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: '600ms' }}
               >
-                <PieChart className="text-emerald-400 mb-4" size={48} />
+                <div className="bg-gradient-to-br from-emerald-400/20 to-teal-400/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                  <PieChart className="text-emerald-400" size={32} />
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Integrated Analytics & ROI Dashboard</h3>
-                <p className="text-slate-300 mb-6">• An all-in-one portal showing calls dialed → connects → booked meetings → closed deals, plus cost-per-lead and revenue-per-campaign.<br/>• Includes ROI forecasting and SLA-style reports you can share with stakeholders to prove your AI program's impact.</p>
-                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg">
+                <p className="text-slate-300 mb-6 flex-grow">• An all-in-one portal showing calls dialed → connects → booked meetings → closed deals, plus cost-per-lead and revenue-per-campaign.<br/>• Includes ROI forecasting and SLA-style reports you can share with stakeholders to prove your AI program's impact.</p>
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
               </div>
