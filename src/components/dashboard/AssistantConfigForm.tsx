@@ -70,25 +70,25 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
           
           {/* Improved Cost and Latency Display */}
           <div className="flex items-center gap-6 mt-4">
-            <div className="flex items-center gap-2 p-3 bg-gray-900 rounded-lg border border-gray-700">
-              <DollarSign className="h-4 w-4 text-orange-500" />
+            <div className="flex items-center gap-2 p-3 bg-black rounded-lg border border-gray-700">
+              <DollarSign className="h-4 w-4 text-green-500" />
               <div>
                 <div className="text-xs text-gray-400">Cost</div>
-                <div className="text-orange-500 font-medium">~$0.11 /min</div>
+                <div className="text-green-500 font-medium">~$0.11 /min</div>
               </div>
               <div className="w-32 h-2 bg-gray-700 rounded-full overflow-hidden ml-3">
-                <div className="h-full bg-gradient-to-r from-teal-500 via-orange-500 via-yellow-500 via-blue-500 to-cyan-500 w-1/4"></div>
+                <div className="h-full bg-gradient-to-r from-green-500 to-green-400 w-1/4"></div>
               </div>
             </div>
             
-            <div className="flex items-center gap-2 p-3 bg-gray-900 rounded-lg border border-gray-700">
+            <div className="flex items-center gap-2 p-3 bg-black rounded-lg border border-gray-700">
               <Clock className="h-4 w-4 text-orange-500" />
               <div>
                 <div className="text-xs text-gray-400">Latency</div>
                 <div className="text-orange-500 font-medium">~990 ms</div>
               </div>
               <div className="w-32 h-2 bg-gray-700 rounded-full overflow-hidden ml-3">
-                <div className="h-full bg-gradient-to-r from-orange-500 via-yellow-500 via-blue-500 to-purple-500 w-1/3"></div>
+                <div className="h-full bg-gradient-to-r from-orange-500 to-orange-400 w-1/3"></div>
               </div>
             </div>
           </div>
