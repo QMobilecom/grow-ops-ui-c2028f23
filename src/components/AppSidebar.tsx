@@ -14,7 +14,8 @@ import {
   Activity,
   TrendingUp,
   MessageSquare,
-  Eye
+  Eye,
+  Users
 } from "lucide-react";
 import {
   Sidebar,
@@ -55,6 +56,11 @@ const menuItems = [
     title: "Lead Flow",
     icon: TrendingUp,
     id: "lead-flow",
+  },
+  {
+    title: "Lead Handling",
+    icon: Users,
+    id: "lead-handling",
   },
   {
     title: "System Prompts",

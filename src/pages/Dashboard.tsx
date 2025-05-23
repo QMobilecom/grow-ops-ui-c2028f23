@@ -14,6 +14,7 @@ import { AnalyticsSection } from "@/components/dashboard/AnalyticsSection";
 import { ComplianceSection } from "@/components/dashboard/ComplianceSection";
 import { SystemMonitoringSection } from "@/components/dashboard/SystemMonitoringSection";
 import { LeadFlowSection } from "@/components/dashboard/LeadFlowSection";
+import { LeadHandlingSection } from "@/components/dashboard/LeadHandlingSection";
 import { SystemPromptsSection } from "@/components/dashboard/SystemPromptsSection";
 import { LiveMonitoringSection } from "@/components/dashboard/LiveMonitoringSection";
 
@@ -44,6 +45,8 @@ export default function Dashboard() {
         return <SystemMonitoringSection />;
       case "lead-flow":
         return <LeadFlowSection />;
+      case "lead-handling":
+        return <LeadHandlingSection />;
       case "system-prompts":
         return <SystemPromptsSection />;
       case "live-monitoring":

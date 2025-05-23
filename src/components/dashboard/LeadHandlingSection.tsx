@@ -1,0 +1,346 @@
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Progress } from "@/components/ui/progress";
+import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy } from "lucide-react";
+
+const leadData = [
+  { id: "1", name: "John Smith", phone: "+1 (555) 123-4567", source: "Website", status: "Qualified", score: 85, lastContact: "2025-05-23 10:30", followUpDate: "2025-05-24 14:00", duplicateRisk: false },
+  { id: "2", name: "Sarah Johnson", phone: "+1 (555) 987-6543", source: "Facebook Ads", status: "New", score: 72, lastContact: "2025-05-23 09:15", followUpDate: "2025-05-24 11:00", duplicateRisk: true },
+  { id: "3", name: "Mike Wilson", phone: "+1 (555) 456-7890", source: "Google Ads", status: "Contacted", score: 91, lastContact: "2025-05-22 16:45", followUpDate: "2025-05-23 15:30", duplicateRisk: false },
+  { id: "4", name: "Emily Davis", phone: "+1 (555) 321-0987", source: "Referral", status: "Qualified", score: 78, lastContact: "2025-05-22 14:20", followUpDate: "2025-05-25 10:00", duplicateRisk: false },
+];
+
+const followUpQueue = [
+  { id: "1", leadName: "John Smith", phone: "+1 (555) 123-4567", scheduledTime: "2025-05-24 14:00", priority: "High", lastAttempt: "2025-05-23 10:30", attempts: 2 },
+  { id: "2", leadName: "Mike Wilson", phone: "+1 (555) 456-7890", scheduledTime: "2025-05-23 15:30", priority: "Medium", lastAttempt: "2025-05-22 16:45", attempts: 1 },
+  { id: "3", leadName: "Sarah Johnson", phone: "+1 (555) 987-6543", scheduledTime: "2025-05-24 11:00", priority: "Low", lastAttempt: "2025-05-23 09:15", attempts: 1 },
+];
+
+export function LeadHandlingSection() {
+  const totalLeads = leadData.length;
+  const qualifiedLeads = leadData.filter(lead => lead.status === "Qualified").length;
+  const duplicateLeads = leadData.filter(lead => lead.duplicateRisk).length;
+  const duplicateRate = (duplicateLeads / totalLeads) * 100;
+  const averageScore = leadData.reduce((sum, lead) => sum + lead.score, 0) / totalLeads;
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "High": return "bg-red-100 text-red-800 border-red-200";
+      case "Medium": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "Low": return "bg-green-100 text-green-800 border-green-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Qualified": return "bg-green-100 text-green-800 border-green-200";
+      case "Contacted": return "bg-blue-100 text-blue-800 border-blue-200";
+      case "New": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  return (
+    <div className="space-y-6 bg-white p-6 rounded-lg">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Lead Handling</h2>
+          <p className="text-gray-600">Manage leads, follow-ups, and quality tracking</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
+            <Users className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalLeads}</div>
+            <p className="text-xs text-muted-foreground">Active leads in pipeline</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Qualified Leads</CardTitle>
+            <UserCheck className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{qualifiedLeads}</div>
+            <p className="text-xs text-muted-foreground">{((qualifiedLeads / totalLeads) * 100).toFixed(1)}% qualification rate</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Duplicate Rate</CardTitle>
+            <Copy className="h-4 w-4 text-orange-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{duplicateRate.toFixed(1)}%</div>
+            <Progress value={duplicateRate} className="mt-2" />
+            <p className="text-xs text-muted-foreground">{duplicateLeads} duplicate leads detected</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Avg Quality Score</CardTitle>
+            <TrendingUp className="h-4 w-4 text-purple-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{averageScore.toFixed(1)}</div>
+            <p className="text-xs text-muted-foreground">Out of 100</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Tabs defaultValue="leads" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="leads">Leads</TabsTrigger>
+          <TabsTrigger value="followup">Follow-up Queue</TabsTrigger>
+          <TabsTrigger value="calendar">Follow-up Calendar</TabsTrigger>
+          <TabsTrigger value="quality">Lead Quality</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="leads">
+          <Card>
+            <CardHeader>
+              <CardTitle>Lead Management</CardTitle>
+              <CardDescription>All leads with quality scores and status</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Source</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Quality Score</TableHead>
+                    <TableHead>Last Contact</TableHead>
+                    <TableHead>Follow-up Date</TableHead>
+                    <TableHead>Duplicate Risk</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {leadData.map((lead) => (
+                    <TableRow key={lead.id}>
+                      <TableCell className="font-medium">{lead.name}</TableCell>
+                      <TableCell>{lead.phone}</TableCell>
+                      <TableCell>{lead.source}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(lead.status)}>
+                          {lead.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{lead.score}</span>
+                          <Progress value={lead.score} className="w-16" />
+                        </div>
+                      </TableCell>
+                      <TableCell>{lead.lastContact}</TableCell>
+                      <TableCell>{lead.followUpDate}</TableCell>
+                      <TableCell>
+                        {lead.duplicateRisk ? (
+                          <Badge className="bg-red-100 text-red-800">
+                            <AlertTriangle className="h-3 w-3 mr-1" />
+                            Risk
+                          </Badge>
+                        ) : (
+                          <Badge className="bg-green-100 text-green-800">Clean</Badge>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="followup">
+          <Card>
+            <CardHeader>
+              <CardTitle>Follow-up Queue</CardTitle>
+              <CardDescription>Scheduled follow-up calls and their priority</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Lead Name</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Scheduled Time</TableHead>
+                    <TableHead>Priority</TableHead>
+                    <TableHead>Last Attempt</TableHead>
+                    <TableHead>Attempts</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {followUpQueue.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">{item.leadName}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
+                      <TableCell>{item.scheduledTime}</TableCell>
+                      <TableCell>
+                        <Badge className={getPriorityColor(item.priority)}>
+                          {item.priority}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{item.lastAttempt}</TableCell>
+                      <TableCell>{item.attempts}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline">Call Now</Button>
+                          <Button size="sm" variant="outline">Reschedule</Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="calendar">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Today's Follow-ups</CardTitle>
+                <CardDescription>Scheduled calls for today</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Mike Wilson</p>
+                      <p className="text-sm text-gray-600">15:30 - High Priority</p>
+                    </div>
+                    <Button size="sm">Call</Button>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Sarah Johnson</p>
+                      <p className="text-sm text-gray-600">17:00 - Medium Priority</p>
+                    </div>
+                    <Button size="sm">Call</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Tomorrow's Follow-ups</CardTitle>
+                <CardDescription>Scheduled calls for tomorrow</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">John Smith</p>
+                      <p className="text-sm text-gray-600">14:00 - High Priority</p>
+                    </div>
+                    <Button size="sm" variant="outline">Scheduled</Button>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">Emily Davis</p>
+                      <p className="text-sm text-gray-600">10:00 - Medium Priority</p>
+                    </div>
+                    <Button size="sm" variant="outline">Scheduled</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="quality">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Top Performing Lead Sources</CardTitle>
+                <CardDescription>Sources with highest quality scores</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Referrals</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={91} className="w-16" />
+                      <span className="text-sm font-medium">91</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Google Ads</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={85} className="w-16" />
+                      <span className="text-sm font-medium">85</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Website</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={78} className="w-16" />
+                      <span className="text-sm font-medium">78</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Facebook Ads</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={72} className="w-16" />
+                      <span className="text-sm font-medium">72</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Lead Quality Metrics</CardTitle>
+                <CardDescription>Quality assessment breakdown</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>High Quality (80-100)</span>
+                      <span>2 leads</span>
+                    </div>
+                    <Progress value={50} className="mt-1" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>Medium Quality (60-79)</span>
+                      <span>2 leads</span>
+                    </div>
+                    <Progress value={50} className="mt-1" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>Low Quality (0-59)</span>
+                      <span>0 leads</span>
+                    </div>
+                    <Progress value={0} className="mt-1" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
