@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -68,6 +69,30 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         <div className="flex-1">
           <h2 className="text-2xl font-bold">{assistant.name}</h2>
           
+          {/* Provider Tags */}
+          <div className="flex items-center gap-2 mt-2 mb-4">
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">Vapi Fixed Cost</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">deepgram</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">gpt 4o mini</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">eleven turbo v2</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">web</span>
+            </div>
+          </div>
+          
           {/* Improved Cost and Latency Display */}
           <div className="flex items-center gap-6 mt-4">
             <div className="flex items-center gap-2 p-3 bg-black rounded-lg border border-gray-700">
@@ -77,7 +102,7 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
                 <div className="text-green-500 font-medium">~$0.11 /min</div>
               </div>
               <div className="w-32 h-2 bg-gray-700 rounded-full overflow-hidden ml-3">
-                <div className="h-full bg-gradient-to-r from-green-500 to-green-400 w-1/4"></div>
+                <div className="h-full bg-gradient-to-r from-teal-500 via-orange-500 via-yellow-500 to-cyan-500 w-1/4"></div>
               </div>
             </div>
             
@@ -88,7 +113,7 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
                 <div className="text-orange-500 font-medium">~990 ms</div>
               </div>
               <div className="w-32 h-2 bg-gray-700 rounded-full overflow-hidden ml-3">
-                <div className="h-full bg-gradient-to-r from-orange-500 to-orange-400 w-1/3"></div>
+                <div className="h-full bg-gradient-to-r from-orange-500 via-yellow-500 via-cyan-500 to-purple-500 w-1/3"></div>
               </div>
             </div>
           </div>
