@@ -67,62 +67,62 @@ export function CallAnalyticsOverview() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white">Reason Call Ended</CardTitle>
+            <CardTitle className="text-gray-900">Reason Call Ended</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={reasonCallEndedData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="month" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
-                <Bar dataKey="exceededMaxDuration" stackId="a" fill="#FB923C" />
-                <Bar dataKey="assistantEnded" stackId="a" fill="#6366F1" />
-                <Bar dataKey="customerDidNotAnswer" stackId="a" fill="#10B981" />
-                <Bar dataKey="assistantSaidPhrase" stackId="a" fill="#F59E0B" />
-                <Bar dataKey="pipelineError" stackId="a" fill="#06B6D4" />
-                <Bar dataKey="silenceTimedOut" stackId="a" fill="#8B5CF6" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="month" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Bar dataKey="exceededMaxDuration" stackId="a" fill="#ef4444" />
+                <Bar dataKey="assistantEnded" stackId="a" fill="#3b82f6" />
+                <Bar dataKey="customerDidNotAnswer" stackId="a" fill="#10b981" />
+                <Bar dataKey="assistantSaidPhrase" stackId="a" fill="#f59e0b" />
+                <Bar dataKey="pipelineError" stackId="a" fill="#8b5cf6" />
+                <Bar dataKey="silenceTimedOut" stackId="a" fill="#06b6d4" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white">Average Call Duration by Assistant</CardTitle>
+            <CardTitle className="text-gray-900">Average Call Duration by Assistant</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={avgCallDurationData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="month" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
-                <Bar dataKey="riley" fill="#6366F1" />
-                <Bar dataKey="unknown" fill="#10B981" />
-                <Bar dataKey="noqoody" fill="#F59E0B" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="month" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Bar dataKey="riley" fill="#3b82f6" />
+                <Bar dataKey="unknown" fill="#10b981" />
+                <Bar dataKey="noqoody" fill="#f59e0b" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white">Cost Breakdown</CardTitle>
+            <CardTitle className="text-gray-900">Cost Breakdown</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={costBreakdownData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="month" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
-                <Bar dataKey="LLM" fill="#6366F1" />
-                <Bar dataKey="STT" fill="#10B981" />
-                <Bar dataKey="TTS" fill="#F59E0B" />
-                <Bar dataKey="VAPI" fill="#06B6D4" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="month" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Bar dataKey="LLM" fill="#3b82f6" />
+                <Bar dataKey="STT" fill="#10b981" />
+                <Bar dataKey="TTS" fill="#f59e0b" />
+                <Bar dataKey="VAPI" fill="#06b6d4" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -130,68 +130,68 @@ export function CallAnalyticsOverview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white">Success Evaluation</CardTitle>
+            <CardTitle className="text-gray-900">Success Evaluation</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={successEvaluationData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="month" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
-                <Bar dataKey="unknown" stackId="a" fill="#6B7280" />
-                <Bar dataKey="false" stackId="a" fill="#F87171" />
-                <Bar dataKey="true" stackId="a" fill="#34D399" />
-                <Bar dataKey="score85" stackId="a" fill="#FBBF24" />
-                <Bar dataKey="score95" stackId="a" fill="#A78BFA" />
-                <Bar dataKey="score40" stackId="a" fill="#FB7185" />
-                <Bar dataKey="score10" stackId="a" fill="#60A5FA" />
-                <Bar dataKey="other" stackId="a" fill="#10B981" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="month" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Bar dataKey="unknown" stackId="a" fill="#6b7280" />
+                <Bar dataKey="false" stackId="a" fill="#ef4444" />
+                <Bar dataKey="true" stackId="a" fill="#10b981" />
+                <Bar dataKey="score85" stackId="a" fill="#f59e0b" />
+                <Bar dataKey="score95" stackId="a" fill="#8b5cf6" />
+                <Bar dataKey="score40" stackId="a" fill="#ec4899" />
+                <Bar dataKey="score10" stackId="a" fill="#3b82f6" />
+                <Bar dataKey="other" stackId="a" fill="#06b6d4" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white">Unsuccessful calls</CardTitle>
+            <CardTitle className="text-gray-900">Unsuccessful calls</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {unsuccessfulCalls.map((call, index) => (
-                <div key={index} className="flex items-center justify-between p-3 border border-gray-700 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50">
                   <div>
-                    <p className="font-medium text-white">{call.assistant}</p>
-                    <p className="text-sm text-gray-400">{call.date} • {call.phone}</p>
+                    <p className="font-medium text-gray-900">{call.assistant}</p>
+                    <p className="text-sm text-gray-500">{call.date} • {call.phone}</p>
                   </div>
                   <Badge variant="destructive">{call.status}</Badge>
                 </div>
               ))}
-              <Button variant="link" className="text-cyan-400 p-0">View More</Button>
+              <Button variant="link" className="text-blue-600 p-0 hover:text-blue-800">View More</Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-white flex items-center justify-between">
+            <CardTitle className="text-gray-900 flex items-center justify-between">
               Number of Concurrent Calls
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400">Day</span>
-                <ChevronDown className="h-4 w-4" />
+                <span className="text-sm text-gray-500">Day</span>
+                <ChevronDown className="h-4 w-4 text-gray-500" />
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={concurrentCallsData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="time" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
-                <Line type="monotone" dataKey="calls" stroke="#06B6D4" strokeWidth={2} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="time" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Line type="monotone" dataKey="calls" stroke="#3b82f6" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>

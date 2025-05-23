@@ -162,23 +162,23 @@ export function CallLogsSection() {
 
   const getStatusBadge = (status: string) => {
     return status === "Pass" ? (
-      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Pass</Badge>
+      <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-green-200">Pass</Badge>
     ) : (
-      <Badge variant="destructive">Fail</Badge>
+      <Badge className="bg-red-100 text-red-800 hover:bg-red-100 border-red-200">Fail</Badge>
     );
   };
 
   const getEndedReasonBadge = (reason: string) => {
     const colorMap: { [key: string]: string } = {
-      "Silence Timed Out": "bg-orange-100 text-orange-800",
-      "Customer Ended Call": "bg-cyan-100 text-cyan-800", 
-      "Max Duration Exceeded": "bg-yellow-100 text-yellow-800",
-      "Assistant Did Not Receiv...": "bg-purple-100 text-purple-800",
-      "Pipeline error eleven la...": "bg-red-100 text-red-800"
+      "Silence Timed Out": "bg-orange-100 text-orange-800 border-orange-200",
+      "Customer Ended Call": "bg-blue-100 text-blue-800 border-blue-200", 
+      "Max Duration Exceeded": "bg-yellow-100 text-yellow-800 border-yellow-200",
+      "Assistant Did Not Receiv...": "bg-purple-100 text-purple-800 border-purple-200",
+      "Pipeline error eleven la...": "bg-red-100 text-red-800 border-red-200"
     };
     
     return (
-      <Badge className={colorMap[reason] || "bg-gray-100 text-gray-800"}>
+      <Badge className={colorMap[reason] || "bg-gray-100 text-gray-800 border-gray-200"}>
         {reason}
       </Badge>
     );
@@ -186,17 +186,17 @@ export function CallLogsSection() {
 
   const getCallTypeIcon = (callType: string) => {
     if (callType === "Web") {
-      return <Globe className="h-3 w-3 text-purple-400" />;
+      return <Globe className="h-3 w-3 text-purple-500" />;
     }
-    return <PhoneCall className="h-3 w-3 text-green-400" />;
+    return <PhoneCall className="h-3 w-3 text-green-500" />;
   };
 
   const getCallTypeColor = (callType: string) => {
     switch (callType) {
-      case "Inbound": return "bg-green-100 text-green-800";
-      case "Outbound": return "bg-yellow-100 text-yellow-800";
-      case "Web": return "bg-purple-100 text-purple-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "Inbound": return "bg-green-100 text-green-800 border-green-200";
+      case "Outbound": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "Web": return "bg-purple-100 text-purple-800 border-purple-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
@@ -205,16 +205,16 @@ export function CallLogsSection() {
   }
 
   return (
-    <div className="space-y-6 bg-gray-900 text-white p-6 rounded-lg">
+    <div className="space-y-6 bg-white p-6 rounded-lg">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Call Logs</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Call Logs</h2>
         </div>
       </div>
 
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-white mb-4">Logs</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Logs</h3>
           
           <div className="flex gap-2 mb-4">
             {[
@@ -229,8 +229,8 @@ export function CallLogsSection() {
                 size="sm"
                 onClick={() => setCallFilter(filter.name)}
                 className={callFilter === filter.name 
-                  ? "bg-green-600 hover:bg-green-700 border-green-600" 
-                  : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                  ? "bg-blue-600 hover:bg-blue-700 border-blue-600 text-white" 
+                  : "border-gray-300 text-gray-700 hover:bg-gray-50"
                 }
               >
                 {filter.name}
@@ -239,11 +239,11 @@ export function CallLogsSection() {
             ))}
           </div>
 
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-gray-500 mb-4">
             Note: The filter counts reflect only the logs currently loaded in the table.
           </p>
 
-          <div className="flex items-center gap-4 mb-4 text-sm text-gray-400">
+          <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
               <span>Date and Time</span>
@@ -267,7 +267,7 @@ export function CallLogsSection() {
               <span>Ended Reason</span>
             </div>
             <div className="ml-auto">
-              <Button size="sm" variant="outline" className="border-gray-600 text-gray-300">
+              <Button size="sm" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Download className="h-4 w-4 mr-2" />
                 Export to CSV
               </Button>
@@ -275,53 +275,53 @@ export function CallLogsSection() {
           </div>
         </div>
 
-        <Card className="bg-gray-800 border-gray-700">
+        <Card className="bg-white border-gray-200">
           <CardContent className="p-0">
             <Table>
               <TableHeader>
-                <TableRow className="border-gray-700">
-                  <TableHead className="text-gray-300">Call ID</TableHead>
-                  <TableHead className="text-gray-300">Assistant</TableHead>
-                  <TableHead className="text-gray-300">Assistant Phone Number</TableHead>
-                  <TableHead className="text-gray-300">Customer Phone Number</TableHead>
-                  <TableHead className="text-gray-300">Ended Reason</TableHead>
-                  <TableHead className="text-gray-300">Success Evaluation</TableHead>
-                  <TableHead className="text-gray-300">Start Time</TableHead>
-                  <TableHead className="text-gray-300">Duration</TableHead>
-                  <TableHead className="text-gray-300">Cost</TableHead>
+                <TableRow className="border-gray-200 bg-gray-50">
+                  <TableHead className="text-gray-700 font-medium">Call ID</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Assistant</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Assistant Phone Number</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Customer Phone Number</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Ended Reason</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Success Evaluation</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Start Time</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Duration</TableHead>
+                  <TableHead className="text-gray-700 font-medium">Cost</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredCalls.map((call) => (
                   <TableRow 
                     key={call.id} 
-                    className="border-gray-700 hover:bg-gray-700 cursor-pointer"
+                    className="border-gray-200 hover:bg-gray-50 cursor-pointer"
                     onClick={() => setSelectedCall(call.id)}
                   >
-                    <TableCell className="text-gray-300">
+                    <TableCell className="text-gray-700">
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-sm">{call.id}</span>
-                        <Copy className="h-3 w-3 text-gray-500" />
+                        <Copy className="h-3 w-3 text-gray-400 hover:text-gray-600" />
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-white">
+                      <div className="text-gray-900">
                         <p className="font-medium">{call.assistant}</p>
-                        <p className="text-sm text-gray-400">{call.assistantId}</p>
+                        <p className="text-sm text-gray-500">{call.assistantId}</p>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-white">
+                      <div className="text-gray-900">
                         <p>{call.assistantPhone}</p>
                         {call.assistantName !== "N/A" && (
-                          <p className="text-sm text-gray-400">{call.assistantName}</p>
+                          <p className="text-sm text-gray-500">{call.assistantName}</p>
                         )}
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {getCallTypeIcon(call.callType)}
-                        <span className="text-white">{call.customerPhone}</span>
+                        <span className="text-gray-900">{call.customerPhone}</span>
                         <Badge className={`text-xs ${getCallTypeColor(call.callType)}`}>
                           {call.callType}
                         </Badge>
@@ -333,9 +333,9 @@ export function CallLogsSection() {
                     <TableCell>
                       {call.successEvaluation !== "N/A" ? getStatusBadge(call.successEvaluation) : <span className="text-gray-400">N/A</span>}
                     </TableCell>
-                    <TableCell className="text-gray-300">{call.startTime}</TableCell>
-                    <TableCell className="text-gray-300">{call.duration}</TableCell>
-                    <TableCell className="text-gray-300">{call.cost}</TableCell>
+                    <TableCell className="text-gray-700">{call.startTime}</TableCell>
+                    <TableCell className="text-gray-700">{call.duration}</TableCell>
+                    <TableCell className="text-gray-700">{call.cost}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
