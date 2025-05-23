@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -32,86 +33,116 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const menuItems = [
+const menuGroups = [
   {
-    title: "Overview",
-    icon: LayoutDashboard,
-    id: "overview",
+    label: "Dashboard",
+    items: [
+      {
+        title: "Overview",
+        icon: LayoutDashboard,
+        id: "overview",
+      },
+    ]
   },
   {
-    title: "Create Assistant",
-    icon: Bot,
-    id: "create-assistant",
+    label: "Assistant Management",
+    items: [
+      {
+        title: "Create Assistant",
+        icon: Bot,
+        id: "create-assistant",
+      },
+      {
+        title: "System Prompts",
+        icon: MessageSquare,
+        id: "system-prompts",
+      },
+      {
+        title: "Live Assistant Trainer",
+        icon: GraduationCap,
+        id: "live-assistant-trainer",
+      },
+    ]
   },
   {
-    title: "Phone Numbers",
-    icon: Phone,
-    id: "phone-numbers",
+    label: "Call Management",
+    items: [
+      {
+        title: "Phone Numbers",
+        icon: Phone,
+        id: "phone-numbers",
+      },
+      {
+        title: "Call Logs",
+        icon: PhoneCall,
+        id: "call-logs",
+      },
+      {
+        title: "Live Monitoring",
+        icon: Eye,
+        id: "live-monitoring",
+      },
+    ]
   },
   {
-    title: "Call Logs",
-    icon: PhoneCall,
-    id: "call-logs",
+    label: "Lead Operations",
+    items: [
+      {
+        title: "Lead Flow",
+        icon: TrendingUp,
+        id: "lead-flow",
+      },
+      {
+        title: "Lead Handling",
+        icon: Users,
+        id: "lead-handling",
+      },
+      {
+        title: "CRM Integration",
+        icon: Database,
+        id: "crm-integration",
+      },
+    ]
   },
   {
-    title: "Lead Flow",
-    icon: TrendingUp,
-    id: "lead-flow",
+    label: "Analytics & Monitoring",
+    items: [
+      {
+        title: "Analytics",
+        icon: BarChart3,
+        id: "analytics",
+      },
+      {
+        title: "System Monitoring",
+        icon: Activity,
+        id: "system-monitoring",
+      },
+      {
+        title: "Compliance",
+        icon: Shield,
+        id: "compliance",
+      },
+    ]
   },
   {
-    title: "Lead Handling",
-    icon: Users,
-    id: "lead-handling",
-  },
-  {
-    title: "System Prompts",
-    icon: MessageSquare,
-    id: "system-prompts",
-  },
-  {
-    title: "Live Monitoring",
-    icon: Eye,
-    id: "live-monitoring",
-  },
-  {
-    title: "Live Assistant Trainer",
-    icon: GraduationCap,
-    id: "live-assistant-trainer",
-  },
-  {
-    title: "CRM Integration",
-    icon: Database,
-    id: "crm-integration",
-  },
-  {
-    title: "Analytics",
-    icon: BarChart3,
-    id: "analytics",
-  },
-  {
-    title: "Compliance",
-    icon: Shield,
-    id: "compliance",
-  },
-  {
-    title: "System Monitoring",
-    icon: Activity,
-    id: "system-monitoring",
-  },
-  {
-    title: "Files",
-    icon: FileText,
-    id: "files",
-  },
-  {
-    title: "External API Keys",
-    icon: Key,
-    id: "api-keys",
-  },
-  {
-    title: "Billing",
-    icon: CreditCard,
-    id: "billing",
+    label: "Settings",
+    items: [
+      {
+        title: "Files",
+        icon: FileText,
+        id: "files",
+      },
+      {
+        title: "External API Keys",
+        icon: Key,
+        id: "api-keys",
+      },
+      {
+        title: "Billing",
+        icon: CreditCard,
+        id: "billing",
+      },
+    ]
   },
 ];
 
@@ -135,33 +166,35 @@ export function AppSidebar({ activeSection, onSectionChange }: AppSidebarProps) 
         </div>
       </SidebarHeader>
       
-      <SidebarContent className="p-4">
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground mb-3">
-            Dashboard
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton 
-                    asChild
-                    className={`w-full justify-start rounded-lg transition-all hover:bg-white hover:shadow-sm ${
-                      activeSection === item.id 
-                        ? 'bg-white shadow-sm border border-slate-200 text-blue-600' 
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    <button onClick={() => onSectionChange(item.id)}>
-                      <item.icon className="h-4 w-4" />
-                      <span className="font-medium">{item.title}</span>
-                    </button>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarContent className="p-2">
+        {menuGroups.map((group) => (
+          <SidebarGroup key={group.label} className="mb-2">
+            <SidebarGroupLabel className="text-xs font-medium text-muted-foreground mb-2 px-2">
+              {group.label}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-1">
+                {group.items.map((item) => (
+                  <SidebarMenuItem key={item.id}>
+                    <SidebarMenuButton 
+                      asChild
+                      className={`w-full justify-start rounded-lg transition-all hover:bg-white hover:shadow-sm ${
+                        activeSection === item.id 
+                          ? 'bg-white shadow-sm border border-slate-200 text-blue-600' 
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      <button onClick={() => onSectionChange(item.id)}>
+                        <item.icon className="h-4 w-4" />
+                        <span className="font-medium">{item.title}</span>
+                      </button>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
       
       <SidebarFooter className="p-4 border-t">
