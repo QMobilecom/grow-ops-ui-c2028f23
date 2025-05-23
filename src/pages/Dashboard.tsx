@@ -13,6 +13,9 @@ import { BillingSection } from "@/components/dashboard/BillingSection";
 import { AnalyticsSection } from "@/components/dashboard/AnalyticsSection";
 import { ComplianceSection } from "@/components/dashboard/ComplianceSection";
 import { SystemMonitoringSection } from "@/components/dashboard/SystemMonitoringSection";
+import { LeadFlowSection } from "@/components/dashboard/LeadFlowSection";
+import { SystemPromptsSection } from "@/components/dashboard/SystemPromptsSection";
+import { LiveMonitoringSection } from "@/components/dashboard/LiveMonitoringSection";
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -39,6 +42,12 @@ export default function Dashboard() {
         return <ComplianceSection />;
       case "system-monitoring":
         return <SystemMonitoringSection />;
+      case "lead-flow":
+        return <LeadFlowSection />;
+      case "system-prompts":
+        return <SystemPromptsSection />;
+      case "live-monitoring":
+        return <LiveMonitoringSection />;
       default:
         return <OverviewSection />;
     }

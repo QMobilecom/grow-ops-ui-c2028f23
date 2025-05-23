@@ -11,7 +11,10 @@ import {
   CreditCard,
   BarChart3,
   Shield,
-  Activity
+  Activity,
+  TrendingUp,
+  MessageSquare,
+  Eye
 } from "lucide-react";
 import {
   Sidebar,
@@ -47,6 +50,21 @@ const menuItems = [
     title: "Call Logs",
     icon: PhoneCall,
     id: "call-logs",
+  },
+  {
+    title: "Lead Flow",
+    icon: TrendingUp,
+    id: "lead-flow",
+  },
+  {
+    title: "System Prompts",
+    icon: MessageSquare,
+    id: "system-prompts",
+  },
+  {
+    title: "Live Monitoring",
+    icon: Eye,
+    id: "live-monitoring",
   },
   {
     title: "Analytics",
