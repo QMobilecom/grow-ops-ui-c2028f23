@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -15,7 +14,9 @@ import {
   TrendingUp,
   MessageSquare,
   Eye,
-  Users
+  Users,
+  GraduationCap,
+  Database
 } from "lucide-react";
 import {
   Sidebar,
@@ -71,6 +72,16 @@ const menuItems = [
     title: "Live Monitoring",
     icon: Eye,
     id: "live-monitoring",
+  },
+  {
+    title: "Live Assistant Trainer",
+    icon: GraduationCap,
+    id: "live-assistant-trainer",
+  },
+  {
+    title: "CRM Integration",
+    icon: Database,
+    id: "crm-integration",
   },
   {
     title: "Analytics",

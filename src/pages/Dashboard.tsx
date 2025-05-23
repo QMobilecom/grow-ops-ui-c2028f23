@@ -17,6 +17,8 @@ import { LeadFlowSection } from "@/components/dashboard/LeadFlowSection";
 import { LeadHandlingSection } from "@/components/dashboard/LeadHandlingSection";
 import { SystemPromptsSection } from "@/components/dashboard/SystemPromptsSection";
 import { LiveMonitoringSection } from "@/components/dashboard/LiveMonitoringSection";
+import { LiveAssistantTrainerSection } from "@/components/dashboard/LiveAssistantTrainerSection";
+import { CrmIntegrationSection } from "@/components/dashboard/CrmIntegrationSection";
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -51,6 +53,10 @@ export default function Dashboard() {
         return <SystemPromptsSection />;
       case "live-monitoring":
         return <LiveMonitoringSection />;
+      case "live-assistant-trainer":
+        return <LiveAssistantTrainerSection />;
+      case "crm-integration":
+        return <CrmIntegrationSection />;
       default:
         return <OverviewSection />;
     }
