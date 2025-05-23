@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -44,8 +43,22 @@ export default function Home() {
           </div>
         </section>
         
+        {/* Partner Logos */}
+        <div className="bg-gradient-to-b from-transparent to-slate-800/30 py-16">
+          <div className="max-w-7xl mx-auto px-4">
+            <h3 className="text-center text-white text-xl mb-8">Trusted by leading companies</h3>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+              {['Microsoft', 'Amazon', 'Google', 'IBM', 'Oracle', 'Salesforce'].map((company, i) => (
+                <div key={i} className="text-slate-400 opacity-70 text-xl font-bold hover:text-emerald-400 transition-colors cursor-pointer">
+                  {company}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gradient-to-b from-transparent via-slate-800/30 to-purple-900/50">
+        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/30 via-slate-800/30 to-purple-900/50">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               How It Works
@@ -167,20 +180,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
-        {/* Partner Logos */}
-        <div className="bg-gradient-to-b from-slate-800/50 to-purple-900/50 py-16">
-          <div className="max-w-7xl mx-auto px-4">
-            <h3 className="text-center text-white text-xl mb-8">Trusted by leading companies</h3>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-              {['Microsoft', 'Amazon', 'Google', 'IBM', 'Oracle', 'Salesforce'].map((company, i) => (
-                <div key={i} className="text-slate-400 opacity-70 text-xl font-bold hover:text-emerald-400 transition-colors cursor-pointer">
-                  {company}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
         
         {/* CTA Section */}
         <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-emerald-500 to-teal-500">
