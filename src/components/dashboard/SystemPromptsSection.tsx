@@ -75,10 +75,6 @@ export function SystemPromptsSection() {
           <h2 className="text-2xl font-bold">System Prompts & Voice Testing</h2>
           <p className="text-muted-foreground">Manage prompts and test voice agent behavior</p>
         </div>
-        <Button>
-          <MessageSquare className="h-4 w-4 mr-2" />
-          Create New Prompt
-        </Button>
       </div>
 
       {/* Add metrics cards */}

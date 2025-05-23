@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, FileText, History, Lightbulb, TrendingUp, Award } from "lucide-react";
+import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, FileText, History, Lightbulb, TrendingUp, Award, Sparkles } from "lucide-react";
 import { AssistantConfigForm } from "./AssistantConfigForm";
 import { Badge } from "@/components/ui/badge";
 
@@ -163,6 +164,26 @@ export function CreateAssistantSection() {
                 <p className="text-gray-400 text-sm">
                   Here's a few templates to get you started, or you can create your own template and use it to create a new assistant.
                 </p>
+                
+                {/* System Prompt Section */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-white">System Prompt</Label>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="border-teal-500 text-teal-400 hover:bg-teal-500 hover:text-white"
+                    >
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Generate with AI
+                    </Button>
+                  </div>
+                  <div className="p-3 bg-gray-800 border border-gray-600 rounded-lg">
+                    <p className="text-sm text-gray-400">
+                      System prompt will be generated based on your selected template and can be customized after creation.
+                    </p>
+                  </div>
+                </div>
                 
                 {/* Blank Template */}
                 <div 
