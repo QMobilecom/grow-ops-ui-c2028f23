@@ -49,6 +49,7 @@ export function Header() {
             { id: 'home', label: 'Home' },
             { id: 'how-it-works', label: 'How It Works' },
             { id: 'solutions', label: 'Solutions' },
+            { id: 'pricing', label: 'Pricing' },
             { id: 'resources', label: 'Resources' }
           ].map((item) => (
             <button 
@@ -93,6 +94,7 @@ export function Header() {
               { id: 'home', label: 'Home' },
               { id: 'how-it-works', label: 'How It Works' },
               { id: 'solutions', label: 'Solutions' },
+              { id: 'pricing', label: 'Pricing' },
               { id: 'resources', label: 'Resources' }
             ].map((item) => (
               <button 
