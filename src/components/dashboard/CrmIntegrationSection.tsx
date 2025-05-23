@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   Database, 
-  Sync, 
+  RefreshCw, 
   TrendingUp, 
   DollarSign, 
   Target,
@@ -18,7 +17,6 @@ import {
   Users,
   BarChart3,
   AlertCircle,
-  RefreshCw,
   Plus
 } from "lucide-react";
 
@@ -141,7 +139,7 @@ export function CrmIntegrationSection() {
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
-                    <Sync className="h-4 w-4 text-blue-500" />
+                    <RefreshCw className="h-4 w-4 text-blue-500" />
                     <span className="text-sm text-gray-600">Active Syncs</span>
                   </div>
                   <p className="text-2xl font-bold text-gray-900 mt-1">2/3</p>
