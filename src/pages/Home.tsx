@@ -159,7 +159,7 @@ export default function Home() {
                   <Shield className="text-emerald-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Enterprise Security</h3>
-                <p className="text-slate-300 mb-6 flex-grow">Bank-grade encryption and compliance with industry standards</p>
+                <p className="text-slate-300 mb-6 flex-grow">Bank-grade encryption and compliance with industry standards for maximum data protection.</p>
                 <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
@@ -177,7 +177,7 @@ export default function Home() {
                   <Target className="text-emerald-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Lead Qualification & Scoring Engine</h3>
-                <p className="text-slate-300 mb-6 flex-grow">• Automatically rank and prioritize your raw lead lists by purchase intent—so your AI agents only dial the hottest prospects.<br/>• Delivers higher connect-to-meeting ratios by weeding out low-value contacts before you ever pick up the phone.</p>
+                <p className="text-slate-300 mb-6 flex-grow">Automatically rank and prioritize leads by purchase intent. Focus your AI agents on the hottest prospects for higher conversion rates.</p>
                 <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
@@ -195,7 +195,7 @@ export default function Home() {
                   <AlertTriangle className="text-emerald-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Real-Time Objection Handling</h3>
-                <p className="text-slate-300 mb-6 flex-grow">• During live calls, detect and classify objections (price, timing, decision-maker, etc.) in real time, and prompt the agent with data-backed rebuttals.<br/>• Reduces hang-ups and dead-ends by up to 30%, so every call has a fighting chance at booking the next step.</p>
+                <p className="text-slate-300 mb-6 flex-grow">Detect and classify objections during live calls with instant data-backed rebuttals. Reduce hang-ups by up to 30% and keep conversations moving forward.</p>
                 <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
@@ -213,7 +213,7 @@ export default function Home() {
                   <PieChart className="text-emerald-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Integrated Analytics & ROI Dashboard</h3>
-                <p className="text-slate-300 mb-6 flex-grow">• An all-in-one portal showing calls dialed → connects → booked meetings → closed deals, plus cost-per-lead and revenue-per-campaign.<br/>• Includes ROI forecasting and SLA-style reports you can share with stakeholders to prove your AI program's impact.</p>
+                <p className="text-slate-300 mb-6 flex-grow">Complete tracking from calls to closed deals with cost-per-lead analysis and ROI forecasting. Share detailed reports with stakeholders to prove your AI program's impact.</p>
                 <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg w-full">
                   Learn More
                 </Button>
