@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -15,7 +14,7 @@ import {
   LineChart,
   Line
 } from "recharts";
-import { Calendar, Clock, Users, AlertCircle } from "lucide-react";
+import { Calendar, Clock, Users, AlertCircle, FolderKanban, Target } from "lucide-react";
 
 const activeProjects = [
   {
