@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -261,6 +260,58 @@ export function CreateAssistantSection() {
         </Dialog>
       </div>
 
+      {/* Assistants List - moved up */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            Your Assistants
+          </CardTitle>
+          <CardDescription>
+            Manage and configure your AI voice assistants
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {assistants.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p>No assistants created yet</p>
+              <p className="text-sm">Click "Create Assistant" to get started</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {assistants.map((assistant) => (
+                <div key={assistant.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{assistant.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Template: {assistant.template} • Status: {assistant.status}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleEditAssistant(assistant)}
+                    >
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Test
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Add metrics cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
@@ -385,58 +436,6 @@ export function CreateAssistantSection() {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Assistants List */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Your Assistants
-          </CardTitle>
-          <CardDescription>
-            Manage and configure your AI voice assistants
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {assistants.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No assistants created yet</p>
-              <p className="text-sm">Click "Create Assistant" to get started</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {assistants.map((assistant) => (
-                <div key={assistant.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Bot className="h-4 w-4 text-blue-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium">{assistant.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Template: {assistant.template} • Status: {assistant.status}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleEditAssistant(assistant)}
-                    >
-                      Edit
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Test
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>
