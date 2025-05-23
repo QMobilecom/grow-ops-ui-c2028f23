@@ -12,7 +12,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
       <div className="bg-green-400 text-black py-2 text-center text-sm font-medium">
         New Launch! AI Voice Agents Program · Join now to get rewards for creating Voice AI content.
       </div>
@@ -45,29 +45,29 @@ export default function Home() {
         </section>
         
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gray-900">
+        <section id="how-it-works" className="py-20 px-4 md:px-8 bg-gradient-to-b from-gray-900 to-black">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               How It Works
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="bg-green-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Mic className="text-black" size={32} />
+              <div className="text-center bg-black/50 p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
+                <div className="bg-green-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Mic className="text-green-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Voice Input</h3>
                 <p className="text-gray-300">Advanced speech recognition processes natural language with 99.9% accuracy</p>
               </div>
-              <div className="text-center">
-                <div className="bg-green-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Brain className="text-black" size={32} />
+              <div className="text-center bg-black/50 p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
+                <div className="bg-green-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Brain className="text-green-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">AI Processing</h3>
                 <p className="text-gray-300">Intelligent algorithms understand context and intent to provide meaningful responses</p>
               </div>
-              <div className="text-center">
-                <div className="bg-green-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Zap className="text-black" size={32} />
+              <div className="text-center bg-black/50 p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
+                <div className="bg-green-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Zap className="text-green-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Instant Action</h3>
                 <p className="text-gray-300">Real-time responses and actions executed in milliseconds</p>
@@ -77,13 +77,13 @@ export default function Home() {
         </section>
         
         {/* Solutions Section */}
-        <section id="solutions" className="py-20 px-4 md:px-8 bg-black">
+        <section id="solutions" className="py-20 px-4 md:px-8 bg-gradient-to-b from-black via-gray-900 to-black">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white text-center mb-16">
               Solutions
             </h2>
             <div className="grid md:grid-cols-2 gap-12">
-              <div className="bg-gray-900 p-8 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <Shield className="text-green-400 mb-4" size={48} />
                 <h3 className="text-3xl font-bold text-white mb-4">Enterprise Security</h3>
                 <p className="text-gray-300 mb-6">Bank-grade encryption and compliance with industry standards</p>
@@ -91,7 +91,7 @@ export default function Home() {
                   Learn More
                 </Button>
               </div>
-              <div className="bg-gray-900 p-8 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <Users className="text-green-400 mb-4" size={48} />
                 <h3 className="text-3xl font-bold text-white mb-4">Team Collaboration</h3>
                 <p className="text-gray-300 mb-6">Seamless integration with your existing workflow and team</p>
@@ -104,30 +104,30 @@ export default function Home() {
         </section>
         
         {/* Resources Section */}
-        <section id="resources" className="py-20 px-4 md:px-8 bg-gray-900">
+        <section id="resources" className="py-20 px-4 md:px-8 bg-gradient-to-b from-gray-900 to-black">
           <div className="max-w-6xl mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-16">
               Resources
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-black p-6 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <h3 className="text-xl font-bold text-white mb-4">Documentation</h3>
                 <p className="text-gray-300 mb-4">Complete guides and API references</p>
-                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black">
+                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition-colors">
                   View Docs
                 </Button>
               </div>
-              <div className="bg-black p-6 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <h3 className="text-xl font-bold text-white mb-4">Tutorials</h3>
                 <p className="text-gray-300 mb-4">Step-by-step implementation guides</p>
-                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black">
+                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition-colors">
                   Start Learning
                 </Button>
               </div>
-              <div className="bg-black p-6 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <h3 className="text-xl font-bold text-white mb-4">Support</h3>
                 <p className="text-gray-300 mb-4">24/7 expert assistance</p>
-                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black">
+                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition-colors">
                   Get Help
                 </Button>
               </div>
@@ -136,13 +136,13 @@ export default function Home() {
         </section>
         
         {/* Testimonials */}
-        <section className="py-20 px-4 md:px-8 bg-black">
+        <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-black via-gray-900 to-black">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-white text-center mb-16">
               Trusted by Industry Leaders
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gray-900 p-8 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="text-green-400 fill-current" size={20} />
@@ -153,7 +153,7 @@ export default function Home() {
                 </p>
                 <div className="text-white font-semibold">Sarah Chen, CTO at TechFlow</div>
               </div>
-              <div className="bg-gray-900 p-8 rounded-lg">
+              <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-gray-800 hover:border-green-400/50 transition-all duration-300">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="text-green-400 fill-current" size={20} />
@@ -169,12 +169,12 @@ export default function Home() {
         </section>
         
         {/* Partner Logos */}
-        <div className="bg-gray-900 py-16">
+        <div className="bg-gradient-to-b from-gray-900 to-black py-16">
           <div className="max-w-7xl mx-auto px-4">
             <h3 className="text-center text-white text-xl mb-8">Trusted by leading companies</h3>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
               {['Microsoft', 'Amazon', 'Google', 'IBM', 'Oracle', 'Salesforce'].map((company, i) => (
-                <div key={i} className="text-gray-400 opacity-70 text-xl font-bold">
+                <div key={i} className="text-gray-400 opacity-70 text-xl font-bold hover:text-green-400 transition-colors cursor-pointer">
                   {company}
                 </div>
               ))}
