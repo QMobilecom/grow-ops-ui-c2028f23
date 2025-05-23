@@ -226,7 +226,7 @@ export default function Home() {
         <section 
           id="pricing" 
           data-animate
-          className={`py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 via-purple-900/50 to-slate-900/80 transition-all duration-1000 ${
+          className={`py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 via-purple-900/50 to-slate-800/50 transition-all duration-1000 ${
             visibleSections.has('pricing') 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-10'
@@ -414,7 +414,7 @@ export default function Home() {
         <section 
           id="resources" 
           data-animate
-          className={`py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 to-purple-900/50 transition-all duration-1000 ${
+          className={`py-20 px-4 md:px-8 bg-gradient-to-b from-slate-800/50 via-purple-900/50 to-slate-900/80 transition-all duration-1000 ${
             visibleSections.has('resources') 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-10'
