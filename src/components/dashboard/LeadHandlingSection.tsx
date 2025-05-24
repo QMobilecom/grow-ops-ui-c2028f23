@@ -1,11 +1,10 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy } from "lucide-react";
+import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload } from "lucide-react";
 
 const leadData = [
   { id: "1", name: "John Smith", phone: "+1 (555) 123-4567", source: "Website", status: "Qualified", score: 85, lastContact: "2025-05-23 10:30", followUpDate: "2025-05-24 14:00", duplicateRisk: false },
@@ -42,6 +41,14 @@ export function LeadHandlingSection() {
       case "Contacted": return "bg-blue-100 text-blue-800 border-blue-200";
       case "New": return "bg-yellow-100 text-yellow-800 border-yellow-200";
       default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const handleCSVUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log("CSV file selected:", file.name);
+      // TODO: Process CSV file
     }
   };
 
@@ -112,8 +119,28 @@ export function LeadHandlingSection() {
         <TabsContent value="leads">
           <Card>
             <CardHeader>
-              <CardTitle>Lead Management</CardTitle>
-              <CardDescription>All leads with quality scores and status</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Lead Management</CardTitle>
+                  <CardDescription>All leads with quality scores and status</CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => document.getElementById('csv-upload')?.click()}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload CSV
+                  </Button>
+                  <input
+                    id="csv-upload"
+                    type="file"
+                    accept=".csv"
+                    onChange={handleCSVUpload}
+                    className="hidden"
+                  />
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <Table>
