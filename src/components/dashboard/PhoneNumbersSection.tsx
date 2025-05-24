@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Phone, Plus, Edit, Trash2, Settings, Upload } from "lucide-react";
+import { Phone, Plus, Edit, Trash2, Settings, Upload, ExternalLink } from "lucide-react";
 
 export function PhoneNumbersSection() {
   const [selectedNumber, setSelectedNumber] = useState(null);
@@ -33,82 +33,141 @@ export function PhoneNumbersSection() {
                 Create Phone Number
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl bg-slate-900 text-white border-slate-700">
-              <DialogHeader>
-                <DialogTitle className="text-xl text-white">Create Phone Number</DialogTitle>
+            <DialogContent className="max-w-3xl bg-slate-900 text-white border-slate-700 p-0 overflow-hidden">
+              <DialogHeader className="px-8 py-6 border-b border-slate-700">
+                <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <Phone className="h-5 w-5 text-white" />
+                  </div>
+                  Create Phone Number
+                </DialogTitle>
+                <p className="text-slate-400 mt-2">Choose a phone number option and configure your settings</p>
               </DialogHeader>
               
-              <Tabs defaultValue="free-nova" className="w-full">
-                <TabsList className="grid w-full grid-cols-6 bg-slate-800">
-                  <TabsTrigger value="free-nova" className="text-xs">Free Nova Number</TabsTrigger>
-                  <TabsTrigger value="free-sip" className="text-xs">Free Nova SIP</TabsTrigger>
-                  <TabsTrigger value="import-twilio" className="text-xs">Import Twilio</TabsTrigger>
-                  <TabsTrigger value="import-vonage" className="text-xs">Import Vonage</TabsTrigger>
-                  <TabsTrigger value="import-telnyx" className="text-xs">Import Telnyx</TabsTrigger>
-                  <TabsTrigger value="byo-sip" className="text-xs text-teal-400">BYO SIP Trunk Number</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="free-nova" className="space-y-4 mt-6">
-                  <div>
-                    <Label className="text-white">Phone Number</Label>
-                    <Input 
-                      value="+14155551234"
-                      className="bg-slate-800 border-slate-600 text-white mt-2"
-                      readOnly
-                    />
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="e164" className="border-slate-600" />
-                    <Label htmlFor="e164" className="text-slate-300 text-sm">
-                      Allow non-E164 phone numbers
-                    </Label>
-                  </div>
-                  <p className="text-xs text-slate-400">
-                    Check this box to disable E164 format validation and use custom phone number formats
-                  </p>
-                  
-                  <div>
-                    <Label className="text-white">SIP Trunk Credential</Label>
-                    <Select>
-                      <SelectTrigger className="bg-slate-800 border-slate-600 text-white mt-2">
-                        <SelectValue placeholder="Select a SIP trunk credential" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-600">
-                        <SelectItem value="credential1">Credential 1</SelectItem>
-                        <SelectItem value="credential2">Credential 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div>
-                    <Label className="text-white">Label</Label>
-                    <Input 
-                      placeholder="Label for Phone Number"
-                      className="bg-slate-800 border-slate-600 text-white mt-2"
-                    />
-                  </div>
-                  
-                  <div className="text-center">
-                    <a href="#" className="text-blue-400 text-sm hover:underline">
-                      Read more about SIP trunking in the documentation
-                    </a>
-                  </div>
-                  
-                  <div className="flex justify-between pt-4">
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setIsCreateDialogOpen(false)}
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800"
+              <div className="px-8 py-6">
+                <Tabs defaultValue="free-nova" className="w-full">
+                  <TabsList className="grid w-full grid-cols-6 bg-slate-800/50 p-1 rounded-lg border border-slate-700">
+                    <TabsTrigger 
+                      value="free-nova" 
+                      className="text-xs font-medium data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
                     >
-                      Cancel
-                    </Button>
-                    <Button className="bg-teal-600 hover:bg-teal-700 text-white">
-                      Import SIP Phone Number
-                    </Button>
-                  </div>
-                </TabsContent>
-              </Tabs>
+                      Free Nova Number
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="free-sip" 
+                      className="text-xs font-medium data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                    >
+                      Free Nova SIP
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="import-twilio" 
+                      className="text-xs font-medium data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                    >
+                      Import Twilio
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="import-vonage" 
+                      className="text-xs font-medium data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                    >
+                      Import Vonage
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="import-telnyx" 
+                      className="text-xs font-medium data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
+                    >
+                      Import Telnyx
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="byo-sip" 
+                      className="text-xs font-medium text-teal-400 data-[state=active]:bg-teal-600 data-[state=active]:text-white transition-all"
+                    >
+                      BYO SIP Trunk
+                    </TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="free-nova" className="space-y-6 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="text-white font-medium">Phone Number</Label>
+                        <div className="relative">
+                          <Input 
+                            value="+14155551234"
+                            className="bg-slate-800/50 border-slate-600 text-white h-12 pl-4 pr-10 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                            readOnly
+                          />
+                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label className="text-white font-medium">Label</Label>
+                        <Input 
+                          placeholder="e.g., Customer Support Line"
+                          className="bg-slate-800/50 border-slate-600 text-white h-12 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-400"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="text-white font-medium">SIP Trunk Credential</Label>
+                      <Select>
+                        <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white h-12 rounded-lg focus:border-blue-500 transition-all">
+                          <SelectValue placeholder="Select a SIP trunk credential" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-slate-800 border-slate-600">
+                          <SelectItem value="credential1">Primary Credential</SelectItem>
+                          <SelectItem value="credential2">Backup Credential</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/50">
+                      <div className="flex items-start space-x-3">
+                        <Checkbox 
+                          id="e164" 
+                          className="border-slate-500 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-1" 
+                        />
+                        <div className="space-y-1">
+                          <Label htmlFor="e164" className="text-white font-medium cursor-pointer">
+                            Allow non-E164 phone numbers
+                          </Label>
+                          <p className="text-sm text-slate-400 leading-relaxed">
+                            Check this box to disable E164 format validation and use custom phone number formats. This allows more flexibility in number formatting.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl p-6 border border-blue-500/20">
+                      <div className="flex items-center gap-3">
+                        <ExternalLink className="h-5 w-5 text-blue-400" />
+                        <a 
+                          href="#" 
+                          className="text-blue-400 font-medium hover:text-blue-300 transition-colors"
+                        >
+                          Read more about SIP trunking in the documentation
+                        </a>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+              
+              <div className="px-8 py-6 bg-slate-800/30 border-t border-slate-700 flex justify-between items-center">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsCreateDialogOpen(false)}
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white h-11 px-6 rounded-lg transition-all"
+                >
+                  Cancel
+                </Button>
+                <Button className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white h-11 px-8 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Import SIP Phone Number
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
