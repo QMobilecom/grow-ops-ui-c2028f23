@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,14 +9,21 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Phone, Plus, Edit, Trash2, Settings, Upload, ExternalLink } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Phone, Plus, Edit, Trash2, Settings, Upload, ExternalLink, CalendarIcon, Clock } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 export function PhoneNumbersSection() {
   const [selectedNumber, setSelectedNumber] = useState(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
   const [callMode, setCallMode] = useState("single");
   const [singlePhoneNumber, setSinglePhoneNumber] = useState("");
   const [csvFile, setCsvFile] = useState(null);
+  const [scheduleDate, setScheduleDate] = useState<Date>();
+  const [scheduleTime, setScheduleTime] = useState("");
 
   const phoneNumbers = [
     { id: 1, number: "+1 (555) 123-4567", status: "Active", assistant: "Customer Support" },
@@ -50,6 +56,16 @@ export function PhoneNumbersSection() {
     }
     console.log("Starting bulk calls with file:", csvFile.name);
     alert(`Starting bulk calls with ${csvFile.name}`);
+  };
+
+  const handleScheduleCall = () => {
+    if (!scheduleDate || !scheduleTime) {
+      alert("Please select both date and time for scheduling");
+      return;
+    }
+    console.log("Scheduling call for:", scheduleDate, "at", scheduleTime);
+    alert(`Call scheduled for ${format(scheduleDate, "PPP")} at ${scheduleTime}`);
+    setIsScheduleDialogOpen(false);
   };
 
   return (
@@ -442,10 +458,83 @@ export function PhoneNumbersSection() {
                       Start Bulk Calls
                     </Button>
                   )}
-                  <Button variant="outline" className="border-slate-300 hover:bg-slate-50">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Schedule Call
-                  </Button>
+                  
+                  {/* Schedule Call Dialog */}
+                  <Dialog open={isScheduleDialogOpen} onOpenChange={setIsScheduleDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" className="border-slate-300 hover:bg-slate-50">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Schedule Call
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-md bg-white border-slate-200">
+                      <DialogHeader>
+                        <DialogTitle className="text-slate-900 flex items-center gap-2">
+                          <CalendarIcon className="h-5 w-5 text-blue-600" />
+                          Schedule Call
+                        </DialogTitle>
+                      </DialogHeader>
+                      
+                      <div className="space-y-6 py-4">
+                        <div className="space-y-2">
+                          <Label className="text-slate-700 font-medium">Select Date</Label>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "w-full justify-start text-left font-normal",
+                                  !scheduleDate && "text-muted-foreground"
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {scheduleDate ? format(scheduleDate, "PPP") : <span>Pick a date</span>}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={scheduleDate}
+                                onSelect={setScheduleDate}
+                                disabled={(date) => date < new Date()}
+                                initialFocus
+                                className={cn("p-3 pointer-events-auto")}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label className="text-slate-700 font-medium">Select Time</Label>
+                          <div className="flex items-center gap-2">
+                            <Clock className="h-4 w-4 text-slate-500" />
+                            <Input
+                              type="time"
+                              value={scheduleTime}
+                              onChange={(e) => setScheduleTime(e.target.value)}
+                              className="border-slate-300 focus:border-blue-500"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-3 pt-4">
+                        <Button 
+                          variant="outline" 
+                          onClick={() => setIsScheduleDialogOpen(false)}
+                          className="flex-1"
+                        >
+                          Cancel
+                        </Button>
+                        <Button 
+                          onClick={handleScheduleCall}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          Schedule Call
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </CardContent>
             </Card>
