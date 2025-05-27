@@ -305,14 +305,6 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label className="text-slate-700 font-medium">Squad</Label>
-                  <div className="mt-2 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold">!</div>
-                    <span className="text-sm text-amber-800">No squads available. Create a squad to enable this feature.</span>
-                  </div>
-                </div>
-
-                <div>
                   <Label className="text-slate-700 font-medium">Workflow</Label>
                   <Select>
                     <SelectTrigger className="mt-2">
@@ -328,7 +320,7 @@ export function PhoneNumbersSection() {
                 <div>
                   <Label className="text-slate-700 font-medium">Fallback Destination</Label>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Set a fallback destination for inbound calls when the assistant or squad is not available.
+                    Set a fallback destination for inbound calls when the assistant is not available.
                   </p>
                   <div className="flex">
                     <Select>
@@ -355,7 +347,7 @@ export function PhoneNumbersSection() {
                   Outbound Settings
                 </CardTitle>
                 <CardDescription className="text-blue-700">
-                  You can assign an outbound phone number, set up a fallback and set up a squad to be called if the assistant is not available.
+                  You can assign an outbound phone number and set up a fallback for when the assistant is not available.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
@@ -442,17 +434,6 @@ export function PhoneNumbersSection() {
                       <SelectItem value="sales-bot">Sales Bot</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-
-                <div>
-                  <Label className="text-slate-700 font-medium">Squad</Label>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    If the assistant is not available, the call can be routed to the specified squad.
-                  </p>
-                  <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xs">!</div>
-                    <span className="text-sm text-yellow-800">No squads available. Create a squad to enable this feature.</span>
-                  </div>
                 </div>
 
                 <div>
