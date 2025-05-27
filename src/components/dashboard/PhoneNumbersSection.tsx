@@ -23,7 +23,8 @@ export function PhoneNumbersSection() {
   const [singlePhoneNumber, setSinglePhoneNumber] = useState("");
   const [csvFile, setCsvFile] = useState(null);
   const [scheduleDate, setScheduleDate] = useState<Date>();
-  const [scheduleTime, setScheduleTime] = useState("");
+  const [scheduleStartTime, setScheduleStartTime] = useState("");
+  const [scheduleEndTime, setScheduleEndTime] = useState("");
 
   const phoneNumbers = [
     { id: 1, number: "+1 (555) 123-4567", status: "Active", assistant: "Customer Support" },
@@ -59,12 +60,16 @@ export function PhoneNumbersSection() {
   };
 
   const handleScheduleCall = () => {
-    if (!scheduleDate || !scheduleTime) {
-      alert("Please select both date and time for scheduling");
+    if (!scheduleDate || !scheduleStartTime || !scheduleEndTime) {
+      alert("Please select date, start time, and end time for scheduling");
       return;
     }
-    console.log("Scheduling call for:", scheduleDate, "at", scheduleTime);
-    alert(`Call scheduled for ${format(scheduleDate, "PPP")} at ${scheduleTime}`);
+    if (scheduleStartTime >= scheduleEndTime) {
+      alert("End time must be after start time");
+      return;
+    }
+    console.log("Scheduling call for:", scheduleDate, "from", scheduleStartTime, "to", scheduleEndTime);
+    alert(`Call scheduled for ${format(scheduleDate, "PPP")} from ${scheduleStartTime} to ${scheduleEndTime}`);
     setIsScheduleDialogOpen(false);
   };
 
@@ -504,16 +509,40 @@ export function PhoneNumbersSection() {
                           </Popover>
                         </div>
 
-                        <div className="space-y-2">
-                          <Label className="text-slate-700 font-medium">Select Time</Label>
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4 text-slate-500" />
-                            <Input
-                              type="time"
-                              value={scheduleTime}
-                              onChange={(e) => setScheduleTime(e.target.value)}
-                              className="border-slate-300 focus:border-blue-500"
-                            />
+                        <div className="space-y-4">
+                          <Label className="text-slate-700 font-medium">Call Time Frame</Label>
+                          
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label className="text-sm text-slate-600">Start Time</Label>
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-slate-500" />
+                                <Input
+                                  type="time"
+                                  value={scheduleStartTime}
+                                  onChange={(e) => setScheduleStartTime(e.target.value)}
+                                  className="border-slate-300 focus:border-blue-500"
+                                />
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label className="text-sm text-slate-600">End Time</Label>
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-slate-500" />
+                                <Input
+                                  type="time"
+                                  value={scheduleEndTime}
+                                  onChange={(e) => setScheduleEndTime(e.target.value)}
+                                  className="border-slate-300 focus:border-blue-500"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="text-xs text-slate-500 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                            <p className="font-medium text-blue-800 mb-1">Time Frame Info</p>
+                            <p>Calls will be made between the selected start and end times on the chosen date.</p>
                           </div>
                         </div>
                       </div>
