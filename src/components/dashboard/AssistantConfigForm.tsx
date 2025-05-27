@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Save, Play, Bot, Settings, MessageSquare, Phone, Users, BarChart3, Lightbulb } from "lucide-react";
+import { ArrowLeft, Save, Play, Bot, Settings, MessageSquare, Phone, Users, BarChart3, Lightbulb, Mic } from "lucide-react";
 
 interface Assistant {
   id: string;
