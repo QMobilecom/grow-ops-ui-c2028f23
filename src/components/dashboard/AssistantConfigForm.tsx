@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ArrowLeft, ChevronDown, ChevronUp, Settings, Clock, DollarSign, MessageSquare, Mic, Minus } from "lucide-react";
 
 interface AssistantConfigFormProps {
@@ -59,6 +60,20 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
   const [maxIdleMessages, setMaxIdleMessages] = useState([3]);
   const [idleTimeout, setIdleTimeout] = useState([7.5]);
   const [dataProperties, setDataProperties] = useState<DataProperty[]>([]);
+  const [isAIPromptDialogOpen, setIsAIPromptDialogOpen] = useState(false);
+  
+  // AI Prompt Generation Form State
+  const [aiPromptData, setAiPromptData] = useState({
+    role: "",
+    name: "",
+    tone: "",
+    constraints: "",
+    targetAudience: "",
+    primaryObjective: "",
+    commonQuestions: "",
+    followUpQuestions: "",
+    fallbackBehavior: ""
+  });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections(prev => ({
@@ -86,6 +101,24 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
     setDataProperties(dataProperties.map(prop => 
       prop.id === id ? { ...prop, [field]: value } : prop
     ));
+  };
+
+  const handleGenerateAIPrompt = () => {
+    console.log("Generating AI prompt with data:", aiPromptData);
+    // Here you would implement the actual AI prompt generation logic
+    setIsAIPromptDialogOpen(false);
+    // Reset form data
+    setAiPromptData({
+      role: "",
+      name: "",
+      tone: "",
+      constraints: "",
+      targetAudience: "",
+      primaryObjective: "",
+      commonQuestions: "",
+      followUpQuestions: "",
+      fallbackBehavior: ""
+    });
   };
 
   return (
@@ -204,7 +237,132 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label>System Prompt</Label>
-                <Button size="sm" className="bg-teal-600 hover:bg-teal-700">Generate</Button>
+                <Dialog open={isAIPromptDialogOpen} onOpenChange={setIsAIPromptDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="bg-teal-600 hover:bg-teal-700">Generate with AI</Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Generate AI System Prompt</DialogTitle>
+                      <DialogDescription>
+                        Define how you want your AI assistant to behave by filling out the details below.
+                      </DialogDescription>
+                    </DialogHeader>
+                    
+                    <div className="space-y-4 mt-6">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="role">Role</Label>
+                          <Input 
+                            id="role"
+                            placeholder="e.g., Sales Representative, Customer Support Agent"
+                            value={aiPromptData.role}
+                            onChange={(e) => setAiPromptData(prev => ({ ...prev, role: e.target.value }))}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="name">Assistant Name</Label>
+                          <Input 
+                            id="name"
+                            placeholder="e.g., Rachel, Alex, Sarah"
+                            value={aiPromptData.name}
+                            onChange={(e) => setAiPromptData(prev => ({ ...prev, name: e.target.value }))}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="tone">Tone & Personality</Label>
+                        <Input 
+                          id="tone"
+                          placeholder="e.g., Professional yet friendly, enthusiastic, empathetic"
+                          value={aiPromptData.tone}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, tone: e.target.value }))}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="target-audience">Target Audience</Label>
+                        <Input 
+                          id="target-audience"
+                          placeholder="e.g., Small business owners, enterprise clients, consumers"
+                          value={aiPromptData.targetAudience}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, targetAudience: e.target.value }))}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="primary-objective">Primary Objective</Label>
+                        <Textarea 
+                          id="primary-objective"
+                          placeholder="e.g., Qualify leads and book appointments, resolve customer issues, gather feedback"
+                          value={aiPromptData.primaryObjective}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, primaryObjective: e.target.value }))}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="constraints">Constraints & Guidelines</Label>
+                        <Textarea 
+                          id="constraints"
+                          placeholder="e.g., Never make promises about pricing, always ask for permission before transferring calls"
+                          value={aiPromptData.constraints}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, constraints: e.target.value }))}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="common-questions">Common Questions to Handle</Label>
+                        <Textarea 
+                          id="common-questions"
+                          placeholder="e.g., What are your pricing plans? How does the service work? What's included?"
+                          value={aiPromptData.commonQuestions}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, commonQuestions: e.target.value }))}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="follow-up-questions">Follow-up Questions</Label>
+                        <Textarea 
+                          id="follow-up-questions"
+                          placeholder="e.g., What's your current solution? What challenges are you facing? When would you like to start?"
+                          value={aiPromptData.followUpQuestions}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, followUpQuestions: e.target.value }))}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="fallback-behavior">Fallback Behavior</Label>
+                        <Textarea 
+                          id="fallback-behavior"
+                          placeholder="e.g., If unable to help, transfer to human agent. If customer is aggressive, remain calm and professional."
+                          value={aiPromptData.fallbackBehavior}
+                          onChange={(e) => setAiPromptData(prev => ({ ...prev, fallbackBehavior: e.target.value }))}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-3 pt-4 border-t mt-6">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setIsAIPromptDialogOpen(false)}
+                      >
+                        Cancel
+                      </Button>
+                      <Button 
+                        onClick={handleGenerateAIPrompt}
+                        className="bg-teal-600 hover:bg-teal-700"
+                      >
+                        Generate Prompt
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <Textarea 
                 className="min-h-[200px] font-mono text-sm"
