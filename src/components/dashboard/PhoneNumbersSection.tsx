@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -305,19 +306,6 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label className="text-slate-700 font-medium">Workflow</Label>
-                  <Select>
-                    <SelectTrigger className="mt-2">
-                      <SelectValue placeholder="Select Workflow..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="workflow1">Workflow 1</SelectItem>
-                      <SelectItem value="workflow2">Workflow 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
                   <Label className="text-slate-700 font-medium">Fallback Destination</Label>
                   <p className="text-sm text-muted-foreground mb-2">
                     Set a fallback destination for inbound calls when the assistant is not available.
@@ -432,22 +420,6 @@ export function PhoneNumbersSection() {
                     <SelectContent>
                       <SelectItem value="customer-support">Customer Support</SelectItem>
                       <SelectItem value="sales-bot">Sales Bot</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label className="text-slate-700 font-medium">Workflow</Label>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Route to the specified workflow.
-                  </p>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Workflow..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="workflow1">Workflow 1</SelectItem>
-                      <SelectItem value="workflow2">Workflow 2</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
