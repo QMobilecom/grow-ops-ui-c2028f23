@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Eye } from "lucide-react";
+import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Clock } from "lucide-react";
 
 const leadData = [
   { id: "1", name: "John Smith", phone: "+1 (555) 123-4567", source: "Website", status: "Qualified", score: 85, lastContact: "2025-05-23 10:30", followUpDate: "2025-05-24 14:00", duplicateRisk: false },
@@ -20,10 +20,10 @@ const followUpQueue = [
 ];
 
 const emailsSentData = [
-  { id: "1", leadName: "John Smith", email: "john.smith@email.com", subject: "Follow-up on your inquiry", status: "Delivered", sentDate: "2025-05-23 14:30", openedDate: "2025-05-23 15:45", clicked: true, template: "Follow-up Template" },
-  { id: "2", leadName: "Sarah Johnson", email: "sarah.j@email.com", subject: "Welcome to our services", status: "Opened", sentDate: "2025-05-23 11:20", openedDate: "2025-05-23 12:10", clicked: false, template: "Welcome Template" },
-  { id: "3", leadName: "Mike Wilson", email: "mike.wilson@email.com", subject: "Special offer for you", status: "Bounced", sentDate: "2025-05-22 16:00", openedDate: null, clicked: false, template: "Promotion Template" },
-  { id: "4", leadName: "Emily Davis", email: "emily.davis@email.com", subject: "Thank you for your interest", status: "Delivered", sentDate: "2025-05-22 10:15", openedDate: null, clicked: false, template: "Thank You Template" },
+  { id: "1", leadName: "John Smith", email: "john.smith@email.com", subject: "Follow-up on your inquiry", status: "Delivered", sentDate: "2025-05-23 14:30", openedDate: "2025-05-23 15:45", clicked: true, template: "Follow-up Template", needsFollowUp: false },
+  { id: "2", leadName: "Sarah Johnson", email: "sarah.j@email.com", subject: "Welcome to our services", status: "Opened", sentDate: "2025-05-23 11:20", openedDate: "2025-05-23 12:10", clicked: false, template: "Welcome Template", needsFollowUp: true },
+  { id: "3", leadName: "Mike Wilson", email: "mike.wilson@email.com", subject: "Special offer for you", status: "Bounced", sentDate: "2025-05-22 16:00", openedDate: null, clicked: false, template: "Promotion Template", needsFollowUp: true },
+  { id: "4", leadName: "Emily Davis", email: "emily.davis@email.com", subject: "Thank you for your interest", status: "Delivered", sentDate: "2025-05-22 10:15", openedDate: null, clicked: false, template: "Thank You Template", needsFollowUp: true },
 ];
 
 export function LeadHandlingSection() {
@@ -35,11 +35,9 @@ export function LeadHandlingSection() {
 
   const totalEmailsSent = emailsSentData.length;
   const deliveredEmails = emailsSentData.filter(email => email.status === "Delivered" || email.status === "Opened").length;
-  const openedEmails = emailsSentData.filter(email => email.openedDate).length;
-  const clickedEmails = emailsSentData.filter(email => email.clicked).length;
+  const emailsNeedingFollowUp = emailsSentData.filter(email => email.needsFollowUp).length;
   const deliveryRate = (deliveredEmails / totalEmailsSent) * 100;
-  const openRate = (openedEmails / totalEmailsSent) * 100;
-  const clickRate = (clickedEmails / totalEmailsSent) * 100;
+  const followUpRate = (emailsNeedingFollowUp / totalEmailsSent) * 100;
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -395,7 +393,7 @@ export function LeadHandlingSection() {
 
         <TabsContent value="emails">
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
@@ -421,25 +419,13 @@ export function LeadHandlingSection() {
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Open Rate</CardTitle>
-                  <Eye className="h-4 w-4 text-orange-600" />
+                  <CardTitle className="text-sm font-medium">Need Follow-up</CardTitle>
+                  <Clock className="h-4 w-4 text-orange-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{openRate.toFixed(1)}%</div>
-                  <Progress value={openRate} className="mt-2" />
-                  <p className="text-xs text-muted-foreground">{openedEmails} opened</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Click Rate</CardTitle>
-                  <TrendingUp className="h-4 w-4 text-purple-600" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{clickRate.toFixed(1)}%</div>
-                  <Progress value={clickRate} className="mt-2" />
-                  <p className="text-xs text-muted-foreground">{clickedEmails} clicked</p>
+                  <div className="text-2xl font-bold">{emailsNeedingFollowUp}</div>
+                  <Progress value={followUpRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{followUpRate.toFixed(1)}% need follow-up</p>
                 </CardContent>
               </Card>
             </div>
@@ -467,8 +453,7 @@ export function LeadHandlingSection() {
                       <TableHead>Template</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Sent Date</TableHead>
-                      <TableHead>Opened Date</TableHead>
-                      <TableHead>Clicked</TableHead>
+                      <TableHead>Follow-up Needed</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -485,12 +470,14 @@ export function LeadHandlingSection() {
                           </Badge>
                         </TableCell>
                         <TableCell>{email.sentDate}</TableCell>
-                        <TableCell>{email.openedDate || "-"}</TableCell>
                         <TableCell>
-                          {email.clicked ? (
-                            <Badge className="bg-green-100 text-green-800">Yes</Badge>
+                          {email.needsFollowUp ? (
+                            <Badge className="bg-orange-100 text-orange-800">
+                              <Clock className="h-3 w-3 mr-1" />
+                              Yes
+                            </Badge>
                           ) : (
-                            <Badge className="bg-gray-100 text-gray-800">No</Badge>
+                            <Badge className="bg-green-100 text-green-800">No</Badge>
                           )}
                         </TableCell>
                         <TableCell>
