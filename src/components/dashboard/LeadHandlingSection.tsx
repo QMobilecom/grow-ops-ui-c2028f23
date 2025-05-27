@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload } from "lucide-react";
+import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Eye } from "lucide-react";
 
 const leadData = [
   { id: "1", name: "John Smith", phone: "+1 (555) 123-4567", source: "Website", status: "Qualified", score: 85, lastContact: "2025-05-23 10:30", followUpDate: "2025-05-24 14:00", duplicateRisk: false },
@@ -19,12 +19,27 @@ const followUpQueue = [
   { id: "3", leadName: "Sarah Johnson", phone: "+1 (555) 987-6543", scheduledTime: "2025-05-24 11:00", priority: "Low", lastAttempt: "2025-05-23 09:15", attempts: 1 },
 ];
 
+const emailsSentData = [
+  { id: "1", leadName: "John Smith", email: "john.smith@email.com", subject: "Follow-up on your inquiry", status: "Delivered", sentDate: "2025-05-23 14:30", openedDate: "2025-05-23 15:45", clicked: true, template: "Follow-up Template" },
+  { id: "2", leadName: "Sarah Johnson", email: "sarah.j@email.com", subject: "Welcome to our services", status: "Opened", sentDate: "2025-05-23 11:20", openedDate: "2025-05-23 12:10", clicked: false, template: "Welcome Template" },
+  { id: "3", leadName: "Mike Wilson", email: "mike.wilson@email.com", subject: "Special offer for you", status: "Bounced", sentDate: "2025-05-22 16:00", openedDate: null, clicked: false, template: "Promotion Template" },
+  { id: "4", leadName: "Emily Davis", email: "emily.davis@email.com", subject: "Thank you for your interest", status: "Delivered", sentDate: "2025-05-22 10:15", openedDate: null, clicked: false, template: "Thank You Template" },
+];
+
 export function LeadHandlingSection() {
   const totalLeads = leadData.length;
   const qualifiedLeads = leadData.filter(lead => lead.status === "Qualified").length;
   const duplicateLeads = leadData.filter(lead => lead.duplicateRisk).length;
   const duplicateRate = (duplicateLeads / totalLeads) * 100;
   const averageScore = leadData.reduce((sum, lead) => sum + lead.score, 0) / totalLeads;
+
+  const totalEmailsSent = emailsSentData.length;
+  const deliveredEmails = emailsSentData.filter(email => email.status === "Delivered" || email.status === "Opened").length;
+  const openedEmails = emailsSentData.filter(email => email.openedDate).length;
+  const clickedEmails = emailsSentData.filter(email => email.clicked).length;
+  const deliveryRate = (deliveredEmails / totalEmailsSent) * 100;
+  const openRate = (openedEmails / totalEmailsSent) * 100;
+  const clickRate = (clickedEmails / totalEmailsSent) * 100;
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -40,6 +55,15 @@ export function LeadHandlingSection() {
       case "Qualified": return "bg-green-100 text-green-800 border-green-200";
       case "Contacted": return "bg-blue-100 text-blue-800 border-blue-200";
       case "New": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const getEmailStatusColor = (status: string) => {
+    switch (status) {
+      case "Delivered": return "bg-green-100 text-green-800 border-green-200";
+      case "Opened": return "bg-blue-100 text-blue-800 border-blue-200";
+      case "Bounced": return "bg-red-100 text-red-800 border-red-200";
       default: return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
@@ -114,6 +138,7 @@ export function LeadHandlingSection() {
           <TabsTrigger value="followup">Follow-up Queue</TabsTrigger>
           <TabsTrigger value="calendar">Follow-up Calendar</TabsTrigger>
           <TabsTrigger value="quality">Lead Quality</TabsTrigger>
+          <TabsTrigger value="emails">Emails Sent</TabsTrigger>
         </TabsList>
 
         <TabsContent value="leads">
@@ -363,6 +388,121 @@ export function LeadHandlingSection() {
                     <Progress value={0} className="mt-1" />
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="emails">
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
+                  <Send className="h-4 w-4 text-blue-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{totalEmailsSent}</div>
+                  <p className="text-xs text-muted-foreground">Emails sent to leads</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Delivery Rate</CardTitle>
+                  <Mail className="h-4 w-4 text-green-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{deliveryRate.toFixed(1)}%</div>
+                  <Progress value={deliveryRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{deliveredEmails} delivered</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Open Rate</CardTitle>
+                  <Eye className="h-4 w-4 text-orange-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{openRate.toFixed(1)}%</div>
+                  <Progress value={openRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{openedEmails} opened</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Click Rate</CardTitle>
+                  <TrendingUp className="h-4 w-4 text-purple-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{clickRate.toFixed(1)}%</div>
+                  <Progress value={clickRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{clickedEmails} clicked</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Email Campaign History</CardTitle>
+                    <CardDescription>Track all emails sent to leads</CardDescription>
+                  </div>
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    <Send className="h-4 w-4 mr-2" />
+                    Send Email
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Lead Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Subject</TableHead>
+                      <TableHead>Template</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Sent Date</TableHead>
+                      <TableHead>Opened Date</TableHead>
+                      <TableHead>Clicked</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {emailsSentData.map((email) => (
+                      <TableRow key={email.id}>
+                        <TableCell className="font-medium">{email.leadName}</TableCell>
+                        <TableCell>{email.email}</TableCell>
+                        <TableCell>{email.subject}</TableCell>
+                        <TableCell>{email.template}</TableCell>
+                        <TableCell>
+                          <Badge className={getEmailStatusColor(email.status)}>
+                            {email.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{email.sentDate}</TableCell>
+                        <TableCell>{email.openedDate || "-"}</TableCell>
+                        <TableCell>
+                          {email.clicked ? (
+                            <Badge className="bg-green-100 text-green-800">Yes</Badge>
+                          ) : (
+                            <Badge className="bg-gray-100 text-gray-800">No</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="outline">View</Button>
+                            <Button size="sm" variant="outline">Resend</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </div>
