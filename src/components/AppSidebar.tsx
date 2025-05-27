@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -17,7 +16,8 @@ import {
   Eye,
   Users,
   GraduationCap,
-  Database
+  Database,
+  Brain
 } from "lucide-react";
 import {
   Sidebar,
@@ -96,6 +96,11 @@ const menuGroups = [
         title: "Lead Handling",
         icon: Users,
         id: "lead-handling",
+      },
+      {
+        title: "Lead Generation AI",
+        icon: Brain,
+        id: "lead-generation-ai",
       },
       {
         title: "CRM Integration",

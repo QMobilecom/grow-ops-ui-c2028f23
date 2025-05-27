@@ -15,6 +15,7 @@ import { ComplianceSection } from "@/components/dashboard/ComplianceSection";
 import { SystemMonitoringSection } from "@/components/dashboard/SystemMonitoringSection";
 import { LeadFlowSection } from "@/components/dashboard/LeadFlowSection";
 import { LeadHandlingSection } from "@/components/dashboard/LeadHandlingSection";
+import { LeadGenerationAISection } from "@/components/dashboard/LeadGenerationAISection";
 import { SystemPromptsSection } from "@/components/dashboard/SystemPromptsSection";
 import { LiveMonitoringSection } from "@/components/dashboard/LiveMonitoringSection";
 import { LiveAssistantTrainerSection } from "@/components/dashboard/LiveAssistantTrainerSection";
@@ -49,6 +50,8 @@ export default function Dashboard() {
         return <LeadFlowSection />;
       case "lead-handling":
         return <LeadHandlingSection />;
+      case "lead-generation-ai":
+        return <LeadGenerationAISection />;
       case "system-prompts":
         return <SystemPromptsSection />;
       case "live-monitoring":
