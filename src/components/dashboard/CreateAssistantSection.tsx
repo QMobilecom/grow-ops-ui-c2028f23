@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, TrendingUp, Award, Lightbulb } from "lucide-react";
+import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, TrendingUp, Award, Lightbulb, Clock, DollarSign } from "lucide-react";
 import { AssistantConfigForm } from "./AssistantConfigForm";
+import { Progress } from "@/components/ui/progress";
 
 interface Assistant {
   id: string;
@@ -131,6 +132,51 @@ export function CreateAssistantSection() {
                   onChange={(e) => setAssistantName(e.target.value)}
                   className="bg-gray-800 border-gray-600 text-white"
                 />
+              </div>
+
+              {/* Provider Tags */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                  <span className="text-xs text-gray-300">Vapi Fixed Cost</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <span className="text-xs text-gray-300">deepgram</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                  <span className="text-xs text-gray-300">gpt 4o mini</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                  <span className="text-xs text-gray-300">eleven turbo v2</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span className="text-xs text-gray-300">web</span>
+                </div>
+              </div>
+
+              {/* Cost and Latency Cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-black rounded-lg p-4 border border-gray-700">
+                  <div className="flex items-center gap-2 mb-3">
+                    <DollarSign className="h-4 w-4 text-green-500" />
+                    <span className="text-sm text-gray-400">Cost</span>
+                  </div>
+                  <div className="text-xl font-semibold text-green-500 mb-2">~$0.11 /min</div>
+                  <Progress value={25} className="h-2" />
+                </div>
+                
+                <div className="bg-black rounded-lg p-4 border border-gray-700">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Clock className="h-4 w-4 text-orange-500" />
+                    <span className="text-sm text-gray-400">Latency</span>
+                  </div>
+                  <div className="text-xl font-semibold text-orange-500 mb-2">~990 ms</div>
+                  <Progress value={33} className="h-2" />
+                </div>
               </div>
 
               <div className="space-y-4">
