@@ -413,39 +413,122 @@ export function LeadHandlingSection() {
         </TabsContent>
 
         <TabsContent value="emails-sent">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
-                <Send className="h-4 w-4 text-blue-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{totalEmailsSent}</div>
-                <p className="text-xs text-muted-foreground">Emails sent to leads</p>
-              </CardContent>
-            </Card>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
+                  <Send className="h-4 w-4 text-blue-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{totalEmailsSent}</div>
+                  <p className="text-xs text-muted-foreground">Emails sent to leads</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Delivery Rate</CardTitle>
+                  <Mail className="h-4 w-4 text-green-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{deliveryRate.toFixed(1)}%</div>
+                  <Progress value={deliveryRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{deliveredEmails} delivered</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Need Follow-up</CardTitle>
+                  <Clock className="h-4 w-4 text-orange-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{emailsNeedingFollowUp}</div>
+                  <Progress value={followUpRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{followUpRate.toFixed(1)}% need follow-up</p>
+                </CardContent>
+              </Card>
+            </div>
 
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Delivery Rate</CardTitle>
-                <Mail className="h-4 w-4 text-green-600" />
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Sent Emails</CardTitle>
+                    <CardDescription>Track all emails sent to leads</CardDescription>
+                  </div>
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    <Send className="h-4 w-4 mr-2" />
+                    Send New Email
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{deliveryRate.toFixed(1)}%</div>
-                <Progress value={deliveryRate} className="mt-2" />
-                <p className="text-xs text-muted-foreground">{deliveredEmails} delivered</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Need Follow-up</CardTitle>
-                <Clock className="h-4 w-4 text-orange-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{emailsNeedingFollowUp}</div>
-                <Progress value={followUpRate} className="mt-2" />
-                <p className="text-xs text-muted-foreground">{followUpRate.toFixed(1)}% need follow-up</p>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Lead Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Subject</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Template</TableHead>
+                      <TableHead>Sent Date</TableHead>
+                      <TableHead>Opened</TableHead>
+                      <TableHead>Clicked</TableHead>
+                      <TableHead>Follow-up</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {emailsSentData.map((email) => (
+                      <TableRow key={email.id}>
+                        <TableCell className="font-medium">{email.leadName}</TableCell>
+                        <TableCell>{email.email}</TableCell>
+                        <TableCell>{email.subject}</TableCell>
+                        <TableCell>
+                          <Badge className={getEmailStatusColor(email.status)}>
+                            {email.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{email.template}</TableCell>
+                        <TableCell>{email.sentDate}</TableCell>
+                        <TableCell>
+                          {email.openedDate ? (
+                            <Badge className="bg-green-100 text-green-800">
+                              {email.openedDate}
+                            </Badge>
+                          ) : (
+                            <Badge className="bg-gray-100 text-gray-800">Not opened</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {email.clicked ? (
+                            <Badge className="bg-blue-100 text-blue-800">Yes</Badge>
+                          ) : (
+                            <Badge className="bg-gray-100 text-gray-800">No</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {email.needsFollowUp ? (
+                            <Badge className="bg-orange-100 text-orange-800">
+                              <Clock className="h-3 w-3 mr-1" />
+                              Required
+                            </Badge>
+                          ) : (
+                            <Badge className="bg-green-100 text-green-800">Complete</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="outline">View</Button>
+                            <Button size="sm" variant="outline">Resend</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </div>
