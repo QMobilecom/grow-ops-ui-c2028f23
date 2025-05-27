@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,14 +20,14 @@ export function PhoneNumbersSection() {
   ];
 
   return (
-    <div className="flex h-full gap-6">
+    <div className="flex h-full gap-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6 rounded-xl">
       {/* Left Sidebar */}
       <div className="w-80 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Phone Numbers</h3>
+          <h3 className="text-lg font-semibold text-slate-800">Phone Numbers</h3>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-slate-800 hover:bg-slate-700">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg">
                 <Plus className="h-4 w-4 mr-2" />
                 Create Phone Number
               </Button>
@@ -172,10 +171,10 @@ export function PhoneNumbersSection() {
           </Dialog>
         </div>
 
-        <Card className="bg-white">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Phone className="h-4 w-4" />
+        <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
+          <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-blue-50 rounded-t-lg">
+            <CardTitle className="flex items-center gap-2 text-base text-slate-800">
+              <Phone className="h-4 w-4 text-blue-600" />
               Active Numbers
             </CardTitle>
           </CardHeader>
@@ -183,17 +182,26 @@ export function PhoneNumbersSection() {
             {phoneNumbers.map((phone) => (
               <div 
                 key={phone.id} 
-                className={`p-3 border rounded-lg cursor-pointer transition-colors hover:bg-slate-50 ${
-                  selectedNumber?.id === phone.id ? 'border-blue-500 bg-blue-50' : 'border-slate-200'
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
+                  selectedNumber?.id === phone.id 
+                    ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50 shadow-md' 
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
                 onClick={() => setSelectedNumber(phone)}
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-sm">{phone.number}</p>
-                    <p className="text-xs text-muted-foreground">{phone.assistant}</p>
+                    <p className="font-medium text-sm text-slate-900">{phone.number}</p>
+                    <p className="text-xs text-slate-600 mt-1">{phone.assistant}</p>
                   </div>
-                  <Badge variant={phone.status === "Active" ? "default" : "secondary"} className="text-xs">
+                  <Badge 
+                    variant={phone.status === "Active" ? "default" : "secondary"} 
+                    className={`text-xs ${
+                      phone.status === "Active" 
+                        ? "bg-green-100 text-green-800 border-green-200" 
+                        : "bg-orange-100 text-orange-800 border-orange-200"
+                    }`}
+                  >
                     {phone.status}
                   </Badge>
                 </div>
@@ -207,52 +215,57 @@ export function PhoneNumbersSection() {
       <div className="flex-1 space-y-6">
         {selectedNumber ? (
           <>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-slate-200 shadow-lg">
               <div>
-                <h2 className="text-2xl font-bold">{selectedNumber.number}</h2>
-                <p className="text-muted-foreground">This Twilio number was purchased through Nova.</p>
+                <h2 className="text-2xl font-bold text-slate-900">{selectedNumber.number}</h2>
+                <p className="text-slate-600 mt-1">This Twilio number was purchased through Nova.</p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="border-slate-300 hover:bg-slate-50">
                   <Edit className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="border-red-300 text-red-600 hover:bg-red-50">
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
-            <div>
-              <Label className="text-sm font-medium">Phone Number Name</Label>
-              <Input className="mt-1" placeholder="Enter phone number name" />
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-slate-200 shadow-lg">
+              <Label className="text-sm font-medium text-slate-700">Phone Number Name</Label>
+              <Input className="mt-2 border-slate-300 focus:border-blue-500" placeholder="Enter phone number name" />
             </div>
 
             {/* Inbound Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Inbound Settings</CardTitle>
-                <CardDescription>
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-t-lg border-b border-green-100">
+                <CardTitle className="text-green-800 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                    <Phone className="h-4 w-4 text-green-600" />
+                  </div>
+                  Inbound Settings
+                </CardTitle>
+                <CardDescription className="text-green-700">
                   You can assign an assistant to the phone number so that whenever someone calls this phone number, the assistant will automatically be assigned to the call.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <div>
-                  <Label>Inbound Phone Number</Label>
-                  <div className="flex items-center mt-1">
-                    <Input value={selectedNumber.number} readOnly className="bg-slate-50" />
-                    <div className="ml-2 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                  <Label className="text-slate-700 font-medium">Inbound Phone Number</Label>
+                  <div className="flex items-center mt-2">
+                    <Input value={selectedNumber.number} readOnly className="bg-slate-50 border-slate-300" />
+                    <div className="ml-3 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <Label>Assistant</Label>
+                  <Label className="text-slate-700 font-medium">Assistant</Label>
                   <Select>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-2 border-slate-300 focus:border-green-500">
                       <SelectValue placeholder={selectedNumber.assistant} />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="border-slate-200">
                       <SelectItem value="customer-support">Customer Support</SelectItem>
                       <SelectItem value="sales-bot">Sales Bot</SelectItem>
                     </SelectContent>
@@ -260,17 +273,17 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label>Squad</Label>
-                  <div className="mt-1 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xs">!</div>
-                    <span className="text-sm text-yellow-800">No squads available. Create a squad to enable this feature.</span>
+                  <Label className="text-slate-700 font-medium">Squad</Label>
+                  <div className="mt-2 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold">!</div>
+                    <span className="text-sm text-amber-800">No squads available. Create a squad to enable this feature.</span>
                   </div>
                 </div>
 
                 <div>
-                  <Label>Workflow</Label>
+                  <Label className="text-slate-700 font-medium">Workflow</Label>
                   <Select>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-2">
                       <SelectValue placeholder="Select Workflow..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -281,7 +294,7 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label>Fallback Destination</Label>
+                  <Label className="text-slate-700 font-medium">Fallback Destination</Label>
                   <p className="text-sm text-muted-foreground mb-2">
                     Set a fallback destination for inbound calls when the assistant or squad is not available.
                   </p>
@@ -301,28 +314,33 @@ export function PhoneNumbersSection() {
             </Card>
 
             {/* Outbound Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Outbound Settings</CardTitle>
-                <CardDescription>
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-lg border-b border-blue-100">
+                <CardTitle className="text-blue-800 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Phone className="h-4 w-4 text-blue-600" />
+                  </div>
+                  Outbound Settings
+                </CardTitle>
+                <CardDescription className="text-blue-700">
                   You can assign an outbound phone number, set up a fallback and set up a squad to be called if the assistant is not available.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <div className="flex gap-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                    <span className="text-sm">Call One Number</span>
+                    <div className="w-4 h-4 rounded-full bg-blue-500 shadow-sm"></div>
+                    <span className="text-sm font-medium text-slate-700">Call One Number</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full border border-slate-300"></div>
-                    <span className="text-sm">Call Many Numbers (Upload CSV)</span>
+                    <div className="w-4 h-4 rounded-full border-2 border-slate-300"></div>
+                    <span className="text-sm text-slate-600">Call Many Numbers (Upload CSV)</span>
                   </div>
                 </div>
 
                 <div>
-                  <Label>Outbound Phone Number</Label>
-                  <div className="flex mt-1">
+                  <Label className="text-slate-700 font-medium">Outbound Phone Number</Label>
+                  <div className="flex mt-2">
                     <Select>
                       <SelectTrigger className="w-20">
                         <SelectValue defaultValue="US" />
@@ -336,9 +354,9 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label>Assistant</Label>
+                  <Label className="text-slate-700 font-medium">Assistant</Label>
                   <Select>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-2">
                       <SelectValue placeholder="Select Assistant..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -349,7 +367,7 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label>Squad</Label>
+                  <Label className="text-slate-700 font-medium">Squad</Label>
                   <p className="text-sm text-muted-foreground mb-2">
                     If the assistant is not available, the call can be routed to the specified squad.
                   </p>
@@ -360,7 +378,7 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div>
-                  <Label>Workflow</Label>
+                  <Label className="text-slate-700 font-medium">Workflow</Label>
                   <p className="text-sm text-muted-foreground mb-2">
                     Route to the specified workflow.
                   </p>
@@ -375,12 +393,12 @@ export function PhoneNumbersSection() {
                   </Select>
                 </div>
 
-                <div className="flex gap-2 pt-4">
-                  <Button className="bg-teal-600 hover:bg-teal-700">
+                <div className="flex gap-3 pt-4">
+                  <Button className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-lg">
                     <Phone className="h-4 w-4 mr-2" />
                     Make a Call
                   </Button>
-                  <Button variant="outline">
+                  <Button variant="outline" className="border-slate-300 hover:bg-slate-50">
                     <Settings className="h-4 w-4 mr-2" />
                     Schedule Call
                   </Button>
@@ -389,10 +407,13 @@ export function PhoneNumbersSection() {
             </Card>
           </>
         ) : (
-          <div className="flex items-center justify-center h-96 text-muted-foreground">
+          <div className="flex items-center justify-center h-96 bg-white/60 backdrop-blur-sm rounded-xl border border-slate-200">
             <div className="text-center">
-              <Phone className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>Select a phone number to view and edit its settings</p>
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+                <Phone className="h-8 w-8 text-slate-400" />
+              </div>
+              <p className="text-slate-600 font-medium">Select a phone number to view and edit its settings</p>
+              <p className="text-slate-500 text-sm mt-1">Choose from the list on the left to get started</p>
             </div>
           </div>
         )}
