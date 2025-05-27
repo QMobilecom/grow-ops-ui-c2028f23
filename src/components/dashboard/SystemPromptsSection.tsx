@@ -1,6 +1,7 @@
-import { useState } from "react";
+
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -73,7 +74,7 @@ export function SystemPromptsSection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">System Prompts & Voice Testing</h2>
+          <h2 className="text-2xl font-bold">Assistant Health & Voice Testing</h2>
           <p className="text-muted-foreground">Manage prompts and test voice agent behavior</p>
         </div>
       </div>
