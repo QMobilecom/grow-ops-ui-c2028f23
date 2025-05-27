@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -53,7 +52,7 @@ const menuGroups = [
         id: "create-assistant",
       },
       {
-        title: "Assistant Health",
+        title: "System Prompts",
         icon: MessageSquare,
         id: "system-prompts",
       },
