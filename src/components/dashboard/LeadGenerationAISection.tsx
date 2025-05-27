@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -249,58 +248,68 @@ export function LeadGenerationAISection() {
         </div>
       </div>
 
-      {/* Generated Leads Table */}
+      {/* New Leads Generated Section */}
       {generatedLeads.length > 0 && (
-        <Card className="bg-white/80 backdrop-blur-sm border-purple-200 shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-            <CardTitle className="flex items-center gap-2 text-purple-800">
-              <Users className="h-5 w-5" />
-              Generated Leads
-            </CardTitle>
-            <CardDescription>AI-generated leads ready for your outreach</CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-purple-200">
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Name</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Company</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Industry</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Contact</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Score</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Location</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {generatedLeads.map((lead) => (
-                    <tr key={lead.id} className="border-b border-gray-100 hover:bg-purple-25">
-                      <td className="py-4 px-4 font-medium">{lead.name}</td>
-                      <td className="py-4 px-4">{lead.company}</td>
-                      <td className="py-4 px-4">
-                        <Badge variant="outline" className="border-blue-200 text-blue-700">
-                          {lead.industry}
-                        </Badge>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="text-sm">
-                          <div>{lead.email}</div>
-                          <div className="text-gray-500">{lead.phone}</div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <Badge className={getScoreColor(lead.score)}>
-                          {lead.score}
-                        </Badge>
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-600">{lead.location}</td>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Users className="h-6 w-6 text-purple-600" />
+            <h3 className="text-2xl font-bold text-purple-800">Leads Generated</h3>
+            <Badge className="bg-purple-100 text-purple-800 border-purple-200">
+              {generatedLeads.length} Total
+            </Badge>
+          </div>
+
+          <Card className="bg-white/80 backdrop-blur-sm border-purple-200 shadow-lg">
+            <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
+              <CardTitle className="flex items-center gap-2 text-purple-800">
+                <Users className="h-5 w-5" />
+                AI-Generated Leads
+              </CardTitle>
+              <CardDescription>High-quality leads ready for your outreach campaigns</CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-purple-200">
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Name</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Company</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Industry</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Contact</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Score</th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">Location</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+                  </thead>
+                  <tbody>
+                    {generatedLeads.map((lead) => (
+                      <tr key={lead.id} className="border-b border-gray-100 hover:bg-purple-25">
+                        <td className="py-4 px-4 font-medium">{lead.name}</td>
+                        <td className="py-4 px-4">{lead.company}</td>
+                        <td className="py-4 px-4">
+                          <Badge variant="outline" className="border-blue-200 text-blue-700">
+                            {lead.industry}
+                          </Badge>
+                        </td>
+                        <td className="py-4 px-4">
+                          <div className="text-sm">
+                            <div>{lead.email}</div>
+                            <div className="text-gray-500">{lead.phone}</div>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4">
+                          <Badge className={getScoreColor(lead.score)}>
+                            {lead.score}
+                          </Badge>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-600">{lead.location}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
