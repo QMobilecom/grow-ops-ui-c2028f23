@@ -8,7 +8,6 @@ import { CreateAssistantSection } from "@/components/dashboard/CreateAssistantSe
 import { PhoneNumbersSection } from "@/components/dashboard/PhoneNumbersSection";
 import { CallLogsSection } from "@/components/dashboard/CallLogsSection";
 import { FilesSection } from "@/components/dashboard/FilesSection";
-import { ApiKeysSection } from "@/components/dashboard/ApiKeysSection";
 import { BillingSection } from "@/components/dashboard/BillingSection";
 import { AnalyticsSection } from "@/components/dashboard/AnalyticsSection";
 import { ComplianceSection } from "@/components/dashboard/ComplianceSection";
@@ -36,8 +35,6 @@ export default function Dashboard() {
         return <CallLogsSection />;
       case "files":
         return <FilesSection />;
-      case "api-keys":
-        return <ApiKeysSection />;
       case "billing":
         return <BillingSection />;
       case "analytics":
