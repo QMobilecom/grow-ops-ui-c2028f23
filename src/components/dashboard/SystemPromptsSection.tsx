@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MessageSquare, Mic, History, Lightbulb, Play, Pause, TrendingUp, Award, FileText } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -70,16 +68,6 @@ const suggestedUpdates = [
 ];
 
 export function SystemPromptsSection() {
-  const [isGenerateDialogOpen, setIsGenerateDialogOpen] = useState(false);
-  const [modelBehavior, setModelBehavior] = useState("");
-
-  const handleGeneratePrompt = () => {
-    // Handle the generation logic here
-    console.log("Generating prompt with behavior:", modelBehavior);
-    setIsGenerateDialogOpen(false);
-    setModelBehavior("");
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -87,41 +75,6 @@ export function SystemPromptsSection() {
           <h2 className="text-2xl font-bold">System Prompts & Voice Testing</h2>
           <p className="text-muted-foreground">Manage prompts and test voice agent behavior</p>
         </div>
-        <Dialog open={isGenerateDialogOpen} onOpenChange={setIsGenerateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>Generate with AI</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Generate AI System Prompt</DialogTitle>
-              <DialogDescription>
-                Describe how you want your AI model to behave and we'll generate an optimized system prompt for you.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="space-y-2">
-                <label htmlFor="behavior" className="text-sm font-medium">
-                  Model Behavior Description
-                </label>
-                <textarea
-                  id="behavior"
-                  placeholder="Describe the desired behavior, tone, and personality for your AI assistant. For example: 'Be professional and empathetic when handling customer service calls, always ask clarifying questions, and focus on resolving issues quickly...'"
-                  className="w-full min-h-[120px] p-3 border rounded-md resize-none"
-                  value={modelBehavior}
-                  onChange={(e) => setModelBehavior(e.target.value)}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsGenerateDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleGeneratePrompt} disabled={!modelBehavior.trim()}>
-                Generate Prompt
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
 
       {/* Add metrics cards */}
