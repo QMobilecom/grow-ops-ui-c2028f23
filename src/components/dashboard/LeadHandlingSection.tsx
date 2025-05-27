@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Clock, MailOpen, Reply } from "lucide-react";
 
 const leadData = [
@@ -465,70 +466,74 @@ export function LeadHandlingSection() {
                 </div>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Lead Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Subject</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Template</TableHead>
-                      <TableHead>Sent Date</TableHead>
-                      <TableHead>Opened</TableHead>
-                      <TableHead>Clicked</TableHead>
-                      <TableHead>Follow-up</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {emailsSentData.map((email) => (
-                      <TableRow key={email.id}>
-                        <TableCell className="font-medium">{email.leadName}</TableCell>
-                        <TableCell>{email.email}</TableCell>
-                        <TableCell>{email.subject}</TableCell>
-                        <TableCell>
-                          <Badge className={getEmailStatusColor(email.status)}>
-                            {email.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{email.template}</TableCell>
-                        <TableCell>{email.sentDate}</TableCell>
-                        <TableCell>
-                          {email.openedDate ? (
-                            <Badge className="bg-green-100 text-green-800">
-                              {email.openedDate}
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-gray-100 text-gray-800">Not opened</Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {email.clicked ? (
-                            <Badge className="bg-blue-100 text-blue-800">Yes</Badge>
-                          ) : (
-                            <Badge className="bg-gray-100 text-gray-800">No</Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {email.needsFollowUp ? (
-                            <Badge className="bg-orange-100 text-orange-800">
-                              <Clock className="h-3 w-3 mr-1" />
-                              Required
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-green-100 text-green-800">Complete</Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button size="sm" variant="outline">View</Button>
-                            <Button size="sm" variant="outline">Resend</Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                <ScrollArea className="w-full">
+                  <div className="min-w-full overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="min-w-[120px]">Lead Name</TableHead>
+                          <TableHead className="min-w-[180px]">Email</TableHead>
+                          <TableHead className="min-w-[200px]">Subject</TableHead>
+                          <TableHead className="min-w-[80px]">Status</TableHead>
+                          <TableHead className="min-w-[120px]">Template</TableHead>
+                          <TableHead className="min-w-[140px]">Sent Date</TableHead>
+                          <TableHead className="min-w-[120px]">Opened</TableHead>
+                          <TableHead className="min-w-[80px]">Clicked</TableHead>
+                          <TableHead className="min-w-[100px]">Follow-up</TableHead>
+                          <TableHead className="min-w-[120px]">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {emailsSentData.map((email) => (
+                          <TableRow key={email.id}>
+                            <TableCell className="font-medium">{email.leadName}</TableCell>
+                            <TableCell className="max-w-[180px] truncate" title={email.email}>{email.email}</TableCell>
+                            <TableCell className="max-w-[200px] truncate" title={email.subject}>{email.subject}</TableCell>
+                            <TableCell>
+                              <Badge className={getEmailStatusColor(email.status)}>
+                                {email.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="max-w-[120px] truncate">{email.template}</TableCell>
+                            <TableCell className="text-sm">{email.sentDate}</TableCell>
+                            <TableCell>
+                              {email.openedDate ? (
+                                <Badge className="bg-green-100 text-green-800 text-xs">
+                                  Opened
+                                </Badge>
+                              ) : (
+                                <Badge className="bg-gray-100 text-gray-800 text-xs">No</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {email.clicked ? (
+                                <Badge className="bg-blue-100 text-blue-800 text-xs">Yes</Badge>
+                              ) : (
+                                <Badge className="bg-gray-100 text-gray-800 text-xs">No</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {email.needsFollowUp ? (
+                                <Badge className="bg-orange-100 text-orange-800 text-xs">
+                                  <Clock className="h-3 w-3 mr-1" />
+                                  Yes
+                                </Badge>
+                              ) : (
+                                <Badge className="bg-green-100 text-green-800 text-xs">No</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-1">
+                                <Button size="sm" variant="outline" className="text-xs px-2">View</Button>
+                                <Button size="sm" variant="outline" className="text-xs px-2">Resend</Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </ScrollArea>
               </CardContent>
             </Card>
           </div>
