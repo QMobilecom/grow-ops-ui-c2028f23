@@ -8,16 +8,48 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Phone, Plus, Edit, Trash2, Settings, Upload, ExternalLink } from "lucide-react";
 
 export function PhoneNumbersSection() {
   const [selectedNumber, setSelectedNumber] = useState(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [callMode, setCallMode] = useState("single");
+  const [singlePhoneNumber, setSinglePhoneNumber] = useState("");
+  const [csvFile, setCsvFile] = useState(null);
 
   const phoneNumbers = [
     { id: 1, number: "+1 (555) 123-4567", status: "Active", assistant: "Customer Support" },
     { id: 2, number: "+1 (555) 987-6543", status: "Inactive", assistant: "Sales Bot" },
   ];
+
+  const handleSingleCall = () => {
+    if (!singlePhoneNumber.trim()) {
+      alert("Please enter a phone number");
+      return;
+    }
+    console.log("Making single call to:", singlePhoneNumber);
+    alert(`Initiating call to ${singlePhoneNumber}`);
+  };
+
+  const handleCsvUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "text/csv") {
+      setCsvFile(file);
+      console.log("CSV file uploaded:", file.name);
+    } else {
+      alert("Please upload a valid CSV file");
+    }
+  };
+
+  const handleBulkCall = () => {
+    if (!csvFile) {
+      alert("Please upload a CSV file first");
+      return;
+    }
+    console.log("Starting bulk calls with file:", csvFile.name);
+    alert(`Starting bulk calls with ${csvFile.name}`);
+  };
 
   return (
     <div className="flex h-full gap-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6 rounded-xl">
@@ -327,31 +359,77 @@ export function PhoneNumbersSection() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 pt-6">
-                <div className="flex gap-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded-full bg-blue-500 shadow-sm"></div>
-                    <span className="text-sm font-medium text-slate-700">Call One Number</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded-full border-2 border-slate-300"></div>
-                    <span className="text-sm text-slate-600">Call Many Numbers (Upload CSV)</span>
-                  </div>
+                <div>
+                  <Label className="text-slate-700 font-medium mb-3 block">Call Mode</Label>
+                  <RadioGroup value={callMode} onValueChange={setCallMode} className="flex gap-6">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="single" id="single" />
+                      <Label htmlFor="single" className="text-sm font-medium text-slate-700 cursor-pointer">
+                        Call One Number
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="bulk" id="bulk" />
+                      <Label htmlFor="bulk" className="text-sm font-medium text-slate-700 cursor-pointer">
+                        Call Many Numbers (Upload CSV)
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
 
-                <div>
-                  <Label className="text-slate-700 font-medium">Outbound Phone Number</Label>
-                  <div className="flex mt-2">
-                    <Select>
-                      <SelectTrigger className="w-20">
-                        <SelectValue defaultValue="US" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="US">🇺🇸</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Input placeholder="Enter a phone number" className="ml-2" />
+                {callMode === "single" && (
+                  <div>
+                    <Label className="text-slate-700 font-medium">Outbound Phone Number</Label>
+                    <div className="flex mt-2">
+                      <Select>
+                        <SelectTrigger className="w-20">
+                          <SelectValue defaultValue="US" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">🇺🇸</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Input 
+                        placeholder="Enter a phone number" 
+                        className="ml-2" 
+                        value={singlePhoneNumber}
+                        onChange={(e) => setSinglePhoneNumber(e.target.value)}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {callMode === "bulk" && (
+                  <div>
+                    <Label className="text-slate-700 font-medium">Upload CSV File</Label>
+                    <div className="mt-2">
+                      <div className="flex items-center justify-center w-full">
+                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100">
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <Upload className="w-8 h-8 mb-2 text-slate-500" />
+                            <p className="mb-2 text-sm text-slate-500">
+                              <span className="font-semibold">Click to upload</span> your CSV file
+                            </p>
+                            <p className="text-xs text-slate-500">CSV files only</p>
+                          </div>
+                          <input 
+                            type="file" 
+                            className="hidden" 
+                            accept=".csv"
+                            onChange={handleCsvUpload}
+                          />
+                        </label>
+                      </div>
+                      {csvFile && (
+                        <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-lg">
+                          <p className="text-sm text-green-800">
+                            ✓ {csvFile.name} uploaded successfully
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <Label className="text-slate-700 font-medium">Assistant</Label>
@@ -394,10 +472,23 @@ export function PhoneNumbersSection() {
                 </div>
 
                 <div className="flex gap-3 pt-4">
-                  <Button className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-lg">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Make a Call
-                  </Button>
+                  {callMode === "single" ? (
+                    <Button 
+                      className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-lg"
+                      onClick={handleSingleCall}
+                    >
+                      <Phone className="h-4 w-4 mr-2" />
+                      Make a Call
+                    </Button>
+                  ) : (
+                    <Button 
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg"
+                      onClick={handleBulkCall}
+                    >
+                      <Phone className="h-4 w-4 mr-2" />
+                      Start Bulk Calls
+                    </Button>
+                  )}
                   <Button variant="outline" className="border-slate-300 hover:bg-slate-50">
                     <Settings className="h-4 w-4 mr-2" />
                     Schedule Call
