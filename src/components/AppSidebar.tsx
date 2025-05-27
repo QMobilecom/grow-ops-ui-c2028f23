@@ -4,7 +4,6 @@ import {
   Bot, 
   Phone, 
   FileText,
-  Key,
   Settings,
   PhoneCall,
   CreditCard,
@@ -136,11 +135,6 @@ const menuGroups = [
         title: "Files",
         icon: FileText,
         id: "files",
-      },
-      {
-        title: "External API Keys",
-        icon: Key,
-        id: "api-keys",
       },
       {
         title: "Billing",
