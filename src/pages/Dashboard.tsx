@@ -19,6 +19,7 @@ import { SystemPromptsSection } from "@/components/dashboard/SystemPromptsSectio
 import { LiveMonitoringSection } from "@/components/dashboard/LiveMonitoringSection";
 import { LiveAssistantTrainerSection } from "@/components/dashboard/LiveAssistantTrainerSection";
 import { CrmIntegrationSection } from "@/components/dashboard/CrmIntegrationSection";
+import { ExternalApiKeysSection } from "@/components/dashboard/ExternalApiKeysSection";
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -35,6 +36,8 @@ export default function Dashboard() {
         return <CallLogsSection />;
       case "files":
         return <FilesSection />;
+      case "external-api-keys":
+        return <ExternalApiKeysSection />;
       case "billing":
         return <BillingSection />;
       case "analytics":

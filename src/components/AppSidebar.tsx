@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -17,7 +16,8 @@ import {
   Users,
   GraduationCap,
   Database,
-  Brain
+  Brain,
+  Key
 } from "lucide-react";
 import {
   Sidebar,
@@ -136,6 +136,11 @@ const menuGroups = [
         title: "Files",
         icon: FileText,
         id: "files",
+      },
+      {
+        title: "External API Keys",
+        icon: Key,
+        id: "external-api-keys",
       },
       {
         title: "Billing",
