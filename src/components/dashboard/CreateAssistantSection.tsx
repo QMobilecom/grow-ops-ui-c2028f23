@@ -4,10 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, FileText, History, Lightbulb, TrendingUp, Award } from "lucide-react";
+import { Bot, Plus, Heart, User, Calendar, MessageSquare, Star, TrendingUp, Award, Lightbulb } from "lucide-react";
 import { AssistantConfigForm } from "./AssistantConfigForm";
-import { Badge } from "@/components/ui/badge";
 
 interface Assistant {
   id: string;
@@ -58,29 +56,6 @@ const templates = [
     description: "A specialized template for call forwarding and routing services with advanced telephony management capabilities.",
     icon: Star,
     category: "quickstart"
-  }
-];
-
-const systemPromptHistory = [
-  { id: 1, assistant: "SalesAI Pro", version: "v2.1", date: "2024-01-12", performance: 92 },
-  { id: 2, assistant: "Support Bot", version: "v1.8", date: "2024-01-10", performance: 88 },
-  { id: 3, assistant: "Scheduler AI", version: "v3.2", date: "2024-01-08", performance: 95 },
-];
-
-const promptSuggestions = [
-  {
-    id: 1,
-    assistant: "SalesAI Pro",
-    suggestion: "Improve objection handling for price concerns",
-    impact: "+12% conversion rate",
-    status: "pending"
-  },
-  {
-    id: 2,
-    assistant: "Support Bot", 
-    suggestion: "Add more empathy phrases for frustrated customers",
-    impact: "+8% satisfaction score",
-    status: "applied"
   }
 ];
 
@@ -169,7 +144,7 @@ export function CreateAssistantSection() {
                   className={`border-2 rounded-lg p-4 cursor-pointer transition-colors ${
                     selectedTemplate === "blank" 
                       ? "border-teal-500 bg-gray-800" 
-                      : "border-gray-600 bg-gray-800 hover:border-gray-500"
+                      : "border-gray-600 bg-gray-800"
                   }`}
                   onClick={() => setSelectedTemplate("blank")}
                 >
@@ -240,11 +215,11 @@ export function CreateAssistantSection() {
         </Dialog>
       </div>
 
-      {/* Assistants List - moved up */}
+      {/* Assistants List */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
+            <Bot className="h-5 w-5" />
             Your Assistants
           </CardTitle>
           <CardDescription>
@@ -292,7 +267,7 @@ export function CreateAssistantSection() {
         </CardContent>
       </Card>
 
-      {/* Add metrics cards */}
+      {/* Metrics cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -338,86 +313,6 @@ export function CreateAssistantSection() {
           </CardContent>
         </Card>
       </div>
-
-      {/* System Prompt History Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <History className="h-5 w-5" />
-            System Prompt History
-          </CardTitle>
-          <CardDescription>
-            Recent changes to assistant prompts across all assistants
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Assistant</TableHead>
-                <TableHead>Version</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Performance</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {systemPromptHistory.map((entry) => (
-                <TableRow key={entry.id}>
-                  <TableCell className="font-medium">{entry.assistant}</TableCell>
-                  <TableCell>{entry.version}</TableCell>
-                  <TableCell>{entry.date}</TableCell>
-                  <TableCell>
-                    <Badge variant={entry.performance >= 90 ? "default" : "secondary"}>
-                      {entry.performance}%
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="outline" size="sm">View Changes</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      {/* Suggested System Prompt Updates */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5" />
-            Suggested System Prompt Updates
-          </CardTitle>
-          <CardDescription>
-            AI-generated improvements for your assistants
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {promptSuggestions.map((suggestion) => (
-              <div key={suggestion.id} className="flex items-center justify-between p-4 border rounded-lg">
-                <div>
-                  <div className="font-medium">{suggestion.assistant}</div>
-                  <div className="text-sm text-muted-foreground">{suggestion.suggestion}</div>
-                  <div className="text-sm font-medium text-green-600">{suggestion.impact}</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant={suggestion.status === "applied" ? "default" : "outline"}>
-                    {suggestion.status === "applied" ? "Applied" : "Pending"}
-                  </Badge>
-                  {suggestion.status === "pending" && (
-                    <div className="flex gap-2">
-                      <Button size="sm">Apply</Button>
-                      <Button size="sm" variant="outline">Preview</Button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
