@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Clock } from "lucide-react";
+import { Users, UserCheck, Calendar, AlertTriangle, TrendingUp, Copy, Upload, Mail, Send, Clock, MailOpen, Reply } from "lucide-react";
 
 const leadData = [
   { id: "1", name: "John Smith", phone: "+1 (555) 123-4567", source: "Website", status: "Qualified", score: 85, lastContact: "2025-05-23 10:30", followUpDate: "2025-05-24 14:00", duplicateRisk: false },
@@ -26,6 +26,13 @@ const emailsSentData = [
   { id: "4", leadName: "Emily Davis", email: "emily.davis@email.com", subject: "Thank you for your interest", status: "Delivered", sentDate: "2025-05-22 10:15", openedDate: null, clicked: false, template: "Thank You Template", needsFollowUp: true },
 ];
 
+const emailsReceivedData = [
+  { id: "1", leadName: "John Smith", email: "john.smith@email.com", subject: "Re: Follow-up on your inquiry", receivedDate: "2025-05-23 16:30", status: "Unread", priority: "High", responded: false, needsResponse: true },
+  { id: "2", leadName: "Sarah Johnson", email: "sarah.j@email.com", subject: "Question about pricing", receivedDate: "2025-05-23 14:20", status: "Read", priority: "Medium", responded: true, needsResponse: false },
+  { id: "3", leadName: "Mike Wilson", email: "mike.wilson@email.com", subject: "Schedule a call", receivedDate: "2025-05-22 11:45", status: "Read", priority: "High", responded: false, needsResponse: true },
+  { id: "4", leadName: "Emily Davis", email: "emily.davis@email.com", subject: "Thank you for the information", receivedDate: "2025-05-22 09:15", status: "Read", priority: "Low", responded: true, needsResponse: false },
+];
+
 export function LeadHandlingSection() {
   const totalLeads = leadData.length;
   const qualifiedLeads = leadData.filter(lead => lead.status === "Qualified").length;
@@ -38,6 +45,11 @@ export function LeadHandlingSection() {
   const emailsNeedingFollowUp = emailsSentData.filter(email => email.needsFollowUp).length;
   const deliveryRate = (deliveredEmails / totalEmailsSent) * 100;
   const followUpRate = (emailsNeedingFollowUp / totalEmailsSent) * 100;
+
+  const totalEmailsReceived = emailsReceivedData.length;
+  const unreadEmails = emailsReceivedData.filter(email => email.status === "Unread").length;
+  const emailsNeedingResponse = emailsReceivedData.filter(email => email.needsResponse).length;
+  const responseRate = ((emailsReceivedData.filter(email => email.responded).length / totalEmailsReceived) * 100);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -62,6 +74,14 @@ export function LeadHandlingSection() {
       case "Delivered": return "bg-green-100 text-green-800 border-green-200";
       case "Opened": return "bg-blue-100 text-blue-800 border-blue-200";
       case "Bounced": return "bg-red-100 text-red-800 border-red-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
+  const getEmailReceivedStatusColor = (status: string) => {
+    switch (status) {
+      case "Unread": return "bg-blue-100 text-blue-800 border-blue-200";
+      case "Read": return "bg-gray-100 text-gray-800 border-gray-200";
       default: return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
@@ -133,10 +153,11 @@ export function LeadHandlingSection() {
       <Tabs defaultValue="leads" className="space-y-6">
         <TabsList>
           <TabsTrigger value="leads">Leads</TabsTrigger>
+          <TabsTrigger value="quality">Lead Quality</TabsTrigger>
           <TabsTrigger value="followup">Follow-up Queue</TabsTrigger>
           <TabsTrigger value="calendar">Follow-up Calendar</TabsTrigger>
-          <TabsTrigger value="quality">Lead Quality</TabsTrigger>
-          <TabsTrigger value="emails">Emails Sent</TabsTrigger>
+          <TabsTrigger value="emails-sent">Emails Sent</TabsTrigger>
+          <TabsTrigger value="emails-received">Emails Received</TabsTrigger>
         </TabsList>
 
         <TabsContent value="leads">
@@ -214,6 +235,81 @@ export function LeadHandlingSection() {
               </Table>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="quality">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Top Performing Lead Sources</CardTitle>
+                <CardDescription>Sources with highest quality scores</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Referrals</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={91} className="w-16" />
+                      <span className="text-sm font-medium">91</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Google Ads</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={85} className="w-16" />
+                      <span className="text-sm font-medium">85</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Website</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={78} className="w-16" />
+                      <span className="text-sm font-medium">78</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Facebook Ads</span>
+                    <div className="flex items-center gap-2">
+                      <Progress value={72} className="w-16" />
+                      <span className="text-sm font-medium">72</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Lead Quality Metrics</CardTitle>
+                <CardDescription>Quality assessment breakdown</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>High Quality (80-100)</span>
+                      <span>2 leads</span>
+                    </div>
+                    <Progress value={50} className="mt-1" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>Medium Quality (60-79)</span>
+                      <span>2 leads</span>
+                    </div>
+                    <Progress value={50} className="mt-1" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-sm">
+                      <span>Low Quality (0-59)</span>
+                      <span>0 leads</span>
+                    </div>
+                    <Progress value={0} className="mt-1" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="followup">
@@ -316,116 +412,80 @@ export function LeadHandlingSection() {
           </div>
         </TabsContent>
 
-        <TabsContent value="quality">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <TabsContent value="emails-sent">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Top Performing Lead Sources</CardTitle>
-                <CardDescription>Sources with highest quality scores</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
+                <Send className="h-4 w-4 text-blue-600" />
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">Referrals</span>
-                    <div className="flex items-center gap-2">
-                      <Progress value={91} className="w-16" />
-                      <span className="text-sm font-medium">91</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">Google Ads</span>
-                    <div className="flex items-center gap-2">
-                      <Progress value={85} className="w-16" />
-                      <span className="text-sm font-medium">85</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">Website</span>
-                    <div className="flex items-center gap-2">
-                      <Progress value={78} className="w-16" />
-                      <span className="text-sm font-medium">78</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">Facebook Ads</span>
-                    <div className="flex items-center gap-2">
-                      <Progress value={72} className="w-16" />
-                      <span className="text-sm font-medium">72</span>
-                    </div>
-                  </div>
-                </div>
+                <div className="text-2xl font-bold">{totalEmailsSent}</div>
+                <p className="text-xs text-muted-foreground">Emails sent to leads</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle>Lead Quality Metrics</CardTitle>
-                <CardDescription>Quality assessment breakdown</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Delivery Rate</CardTitle>
+                <Mail className="h-4 w-4 text-green-600" />
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-sm">
-                      <span>High Quality (80-100)</span>
-                      <span>2 leads</span>
-                    </div>
-                    <Progress value={50} className="mt-1" />
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-sm">
-                      <span>Medium Quality (60-79)</span>
-                      <span>2 leads</span>
-                    </div>
-                    <Progress value={50} className="mt-1" />
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-sm">
-                      <span>Low Quality (0-59)</span>
-                      <span>0 leads</span>
-                    </div>
-                    <Progress value={0} className="mt-1" />
-                  </div>
-                </div>
+                <div className="text-2xl font-bold">{deliveryRate.toFixed(1)}%</div>
+                <Progress value={deliveryRate} className="mt-2" />
+                <p className="text-xs text-muted-foreground">{deliveredEmails} delivered</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Need Follow-up</CardTitle>
+                <Clock className="h-4 w-4 text-orange-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{emailsNeedingFollowUp}</div>
+                <Progress value={followUpRate} className="mt-2" />
+                <p className="text-xs text-muted-foreground">{followUpRate.toFixed(1)}% need follow-up</p>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
-        <TabsContent value="emails">
+        <TabsContent value="emails-received">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Sent</CardTitle>
-                  <Send className="h-4 w-4 text-blue-600" />
+                  <CardTitle className="text-sm font-medium">Total Received</CardTitle>
+                  <MailOpen className="h-4 w-4 text-blue-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{totalEmailsSent}</div>
-                  <p className="text-xs text-muted-foreground">Emails sent to leads</p>
+                  <div className="text-2xl font-bold">{totalEmailsReceived}</div>
+                  <p className="text-xs text-muted-foreground">Emails from leads</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Delivery Rate</CardTitle>
-                  <Mail className="h-4 w-4 text-green-600" />
+                  <CardTitle className="text-sm font-medium">Unread</CardTitle>
+                  <Mail className="h-4 w-4 text-orange-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{deliveryRate.toFixed(1)}%</div>
-                  <Progress value={deliveryRate} className="mt-2" />
-                  <p className="text-xs text-muted-foreground">{deliveredEmails} delivered</p>
+                  <div className="text-2xl font-bold">{unreadEmails}</div>
+                  <Progress value={(unreadEmails / totalEmailsReceived) * 100} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">Need attention</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Need Follow-up</CardTitle>
-                  <Clock className="h-4 w-4 text-orange-600" />
+                  <CardTitle className="text-sm font-medium">Response Rate</CardTitle>
+                  <Reply className="h-4 w-4 text-green-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{emailsNeedingFollowUp}</div>
-                  <Progress value={followUpRate} className="mt-2" />
-                  <p className="text-xs text-muted-foreground">{followUpRate.toFixed(1)}% need follow-up</p>
+                  <div className="text-2xl font-bold">{responseRate.toFixed(1)}%</div>
+                  <Progress value={responseRate} className="mt-2" />
+                  <p className="text-xs text-muted-foreground">{emailsNeedingResponse} need response</p>
                 </CardContent>
               </Card>
             </div>
@@ -434,12 +494,12 @@ export function LeadHandlingSection() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Email Campaign History</CardTitle>
-                    <CardDescription>Track all emails sent to leads</CardDescription>
+                    <CardTitle>Received Emails</CardTitle>
+                    <CardDescription>Track all emails received from leads</CardDescription>
                   </div>
                   <Button className="bg-blue-600 hover:bg-blue-700">
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Email
+                    <Reply className="h-4 w-4 mr-2" />
+                    Reply All
                   </Button>
                 </div>
               </CardHeader>
@@ -450,28 +510,32 @@ export function LeadHandlingSection() {
                       <TableHead>Lead Name</TableHead>
                       <TableHead>Email</TableHead>
                       <TableHead>Subject</TableHead>
-                      <TableHead>Template</TableHead>
                       <TableHead>Status</TableHead>
-                      <TableHead>Sent Date</TableHead>
-                      <TableHead>Follow-up Needed</TableHead>
+                      <TableHead>Priority</TableHead>
+                      <TableHead>Received Date</TableHead>
+                      <TableHead>Needs Response</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {emailsSentData.map((email) => (
+                    {emailsReceivedData.map((email) => (
                       <TableRow key={email.id}>
                         <TableCell className="font-medium">{email.leadName}</TableCell>
                         <TableCell>{email.email}</TableCell>
                         <TableCell>{email.subject}</TableCell>
-                        <TableCell>{email.template}</TableCell>
                         <TableCell>
-                          <Badge className={getEmailStatusColor(email.status)}>
+                          <Badge className={getEmailReceivedStatusColor(email.status)}>
                             {email.status}
                           </Badge>
                         </TableCell>
-                        <TableCell>{email.sentDate}</TableCell>
                         <TableCell>
-                          {email.needsFollowUp ? (
+                          <Badge className={getPriorityColor(email.priority)}>
+                            {email.priority}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{email.receivedDate}</TableCell>
+                        <TableCell>
+                          {email.needsResponse ? (
                             <Badge className="bg-orange-100 text-orange-800">
                               <Clock className="h-3 w-3 mr-1" />
                               Yes
@@ -482,8 +546,8 @@ export function LeadHandlingSection() {
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-2">
-                            <Button size="sm" variant="outline">View</Button>
-                            <Button size="sm" variant="outline">Resend</Button>
+                            <Button size="sm" variant="outline">Read</Button>
+                            <Button size="sm" variant="outline">Reply</Button>
                           </div>
                         </TableCell>
                       </TableRow>
