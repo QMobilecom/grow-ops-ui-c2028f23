@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Bot, Settings, Mic, FileText, BarChart3, Zap, Wrench, Plus, Calendar, Phone, MessageSquare, Code } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import { ArrowLeft, Bot, Settings, Mic, FileText, BarChart3, Zap, Wrench, Plus, Calendar, Phone, MessageSquare, Code, Volume2, Languages, Gauge, Shield } from "lucide-react";
 
 interface Assistant {
   id: string;
@@ -157,11 +158,79 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         <TabsContent value="voice" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Voice Configuration</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Volume2 className="h-5 w-5" />
+                Voice Configuration
+              </CardTitle>
               <CardDescription>Configure voice settings for your assistant</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Voice configuration options will be available here.</p>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Voice Provider</Label>
+                  <Select defaultValue="openai">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="openai">OpenAI</SelectItem>
+                      <SelectItem value="elevenlabs">ElevenLabs</SelectItem>
+                      <SelectItem value="deepgram">Deepgram</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Voice Model</Label>
+                  <Select defaultValue="alloy">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="alloy">Alloy</SelectItem>
+                      <SelectItem value="echo">Echo</SelectItem>
+                      <SelectItem value="fable">Fable</SelectItem>
+                      <SelectItem value="onyx">Onyx</SelectItem>
+                      <SelectItem value="nova">Nova</SelectItem>
+                      <SelectItem value="shimmer">Shimmer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Speed</Label>
+                  <Slider defaultValue={[1]} max={2} min={0.25} step={0.05} className="w-full" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>0.25x</span>
+                    <span>1x</span>
+                    <span>2x</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Stability</Label>
+                  <Slider defaultValue={[0.5]} max={1} min={0} step={0.1} className="w-full" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>More Variable</span>
+                    <span>More Stable</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Similarity Boost</Label>
+                  <Slider defaultValue={[0.8]} max={1} min={0} step={0.1} className="w-full" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Low</span>
+                    <span>High</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch id="optimize-streaming" />
+                <Label htmlFor="optimize-streaming">Optimize for streaming latency</Label>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -169,11 +238,84 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         <TabsContent value="transcriber" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Transcriber Settings</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Languages className="h-5 w-5" />
+                Transcriber Settings
+              </CardTitle>
               <CardDescription>Configure speech-to-text settings</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Transcriber settings will be available here.</p>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Provider</Label>
+                  <Select defaultValue="deepgram">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="deepgram">Deepgram</SelectItem>
+                      <SelectItem value="openai">OpenAI Whisper</SelectItem>
+                      <SelectItem value="assembly">AssemblyAI</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Model</Label>
+                  <Select defaultValue="nova-2">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="nova-2">Nova-2</SelectItem>
+                      <SelectItem value="enhanced">Enhanced</SelectItem>
+                      <SelectItem value="base">Base</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Language</Label>
+                <Select defaultValue="en">
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="es">Spanish</SelectItem>
+                    <SelectItem value="fr">French</SelectItem>
+                    <SelectItem value="de">German</SelectItem>
+                    <SelectItem value="it">Italian</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Switch id="smart-format" defaultChecked />
+                  <Label htmlFor="smart-format">Smart formatting</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="profanity-filter" />
+                  <Label htmlFor="profanity-filter">Profanity filter</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="punctuation" defaultChecked />
+                  <Label htmlFor="punctuation">Auto punctuation</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="diarization" />
+                  <Label htmlFor="diarization">Speaker diarization</Label>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Keywords</Label>
+                <Textarea 
+                  placeholder="Enter keywords to improve recognition accuracy (comma-separated)"
+                  rows={3}
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -181,11 +323,65 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         <TabsContent value="analysis" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Analysis Configuration</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Gauge className="h-5 w-5" />
+                Analysis Configuration
+              </CardTitle>
               <CardDescription>Configure call analysis and monitoring</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Analysis configuration will be available here.</p>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Switch id="sentiment-analysis" defaultChecked />
+                  <Label htmlFor="sentiment-analysis">Sentiment analysis</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="intent-detection" defaultChecked />
+                  <Label htmlFor="intent-detection">Intent detection</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="keyword-spotting" />
+                  <Label htmlFor="keyword-spotting">Keyword spotting</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="compliance-monitoring" />
+                  <Label htmlFor="compliance-monitoring">Compliance monitoring</Label>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Success Criteria</Label>
+                <Textarea 
+                  placeholder="Define what constitutes a successful call..."
+                  rows={4}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Custom Metrics</Label>
+                <div className="space-y-2">
+                  <Input placeholder="Metric name (e.g., Product Interest)" />
+                  <Textarea placeholder="Metric description and detection criteria..." rows={2} />
+                  <Button variant="outline" size="sm">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Metric
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Analysis Summary</Label>
+                <Select defaultValue="detailed">
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="brief">Brief summary</SelectItem>
+                    <SelectItem value="detailed">Detailed analysis</SelectItem>
+                    <SelectItem value="custom">Custom format</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -193,11 +389,72 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         <TabsContent value="advanced" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Advanced Settings</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Advanced Settings
+              </CardTitle>
               <CardDescription>Advanced configuration options</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Advanced settings will be available here.</p>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Max Call Duration (minutes)</Label>
+                  <Input type="number" defaultValue="30" min="1" max="120" />
+                </div>
+                <div className="space-y-2">
+                  <Label>Silence Timeout (seconds)</Label>
+                  <Input type="number" defaultValue="10" min="3" max="60" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Temperature</Label>
+                <Slider defaultValue={[0.7]} max={2} min={0} step={0.1} className="w-full" />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>More Focused</span>
+                  <span>More Creative</span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Switch id="interruption-sensitivity" defaultChecked />
+                  <Label htmlFor="interruption-sensitivity">Interruption sensitivity</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="background-sound-enabled" />
+                  <Label htmlFor="background-sound-enabled">Background sound enabled</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="voicemail-detection" defaultChecked />
+                  <Label htmlFor="voicemail-detection">Voicemail detection</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="end-call-on-goodbye" defaultChecked />
+                  <Label htmlFor="end-call-on-goodbye">End call on goodbye</Label>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Custom Headers</Label>
+                <Textarea 
+                  placeholder="Add custom headers for webhook requests (JSON format)"
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Webhook URL</Label>
+                <Input placeholder="https://your-webhook-url.com/endpoint" />
+              </div>
+
+              <div className="space-y-2">
+                <Label>End Call Message</Label>
+                <Textarea 
+                  placeholder="Thank you for calling. Have a great day!"
+                  rows={2}
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
