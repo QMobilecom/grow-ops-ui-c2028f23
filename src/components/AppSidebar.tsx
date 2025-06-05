@@ -17,8 +17,7 @@ import {
   GraduationCap,
   Database,
   Brain,
-  Key,
-  Wrench
+  Key
 } from "lucide-react";
 import {
   Sidebar,
@@ -52,11 +51,6 @@ const menuGroups = [
         title: "Create Assistant",
         icon: Bot,
         id: "create-assistant",
-      },
-      {
-        title: "Tools",
-        icon: Wrench,
-        id: "tools",
       },
       {
         title: "Assistant Health",
