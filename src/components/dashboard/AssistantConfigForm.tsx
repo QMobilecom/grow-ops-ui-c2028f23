@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft, Bot, Save, Play, Trash2, Plus, Settings, Mic, FileText, BarChart3, Wrench } from "lucide-react";
+import { ArrowLeft, Bot, Save, Play, Trash2, Plus, Settings, Mic, FileText, BarChart3, Wrench, Search, Edit, Calendar, Phone, MessageSquare, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,42 +31,65 @@ interface Tool {
   type: string;
   description: string;
   category: string;
-  assigned: boolean;
+  status: string;
+  assigned?: boolean;
 }
 
 const mockTools: Tool[] = [
   {
     id: "1",
-    name: "Schedule Appointment",
+    name: "google_calendar_check_availability_tool",
     type: "Google Calendar",
-    description: "Books appointments in Google Calendar",
-    category: "Predefined Functions",
+    description: "Automatically checks the specified Google Calendar for availability",
+    category: "Calendar Integration",
+    status: "Active",
     assigned: true
   },
   {
     id: "2",
-    name: "Send Follow-up SMS",
-    type: "Send Text",
-    description: "Sends automated follow-up text messages",
-    category: "Custom Functions",
+    name: "transfer_call_tool",
+    type: "Transfer Call",
+    description: "Transfers calls to specified phone numbers or departments",
+    category: "Call Management",
+    status: "Active",
     assigned: false
   },
   {
     id: "3",
-    name: "Lead Qualification",
+    name: "CheckCalendarAvailability",
     type: "Function",
-    description: "Qualifies leads based on predefined criteria",
+    description: "Automatically checks the specified calendar for availability",
     category: "Predefined Functions",
+    status: "Active",
     assigned: true
   },
   {
     id: "4",
-    name: "CRM Sync",
+    name: "CustomerStatus",
+    type: "Query",
+    description: "The CustomerStatus tool allows you to check customer status",
+    category: "Customer Management",
+    status: "Draft",
+    assigned: false
+  },
+  {
+    id: "5",
+    name: "CustomerNotes",
     type: "API Request",
-    description: "Syncs data with CRM system",
-    category: "Integrations",
+    description: "After each outbound call, take notes about customer",
+    category: "Customer Management",
+    status: "Active",
     assigned: false
   }
+];
+
+const toolTypes = [
+  { value: "function", label: "Function", icon: Settings },
+  { value: "google-calendar", label: "Google Calendar", icon: Calendar },
+  { value: "transfer-call", label: "Transfer Call", icon: Phone },
+  { value: "send-text", label: "Send Text", icon: MessageSquare },
+  { value: "query", label: "Query", icon: Database },
+  { value: "api-request", label: "API Request", icon: FileText }
 ];
 
 export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormProps) {
@@ -74,6 +97,34 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
   const [assistantName, setAssistantName] = useState(assistant.name);
   const [tools, setTools] = useState<Tool[]>(mockTools);
   const [isCreateToolOpen, setIsCreateToolOpen] = useState(false);
+  const [toolName, setToolName] = useState("");
+  const [toolDescription, setToolDescription] = useState("");
+  const [toolType, setToolType] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTools = tools.filter(tool =>
+    tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleCreateTool = () => {
+    if (toolName && toolDescription && toolType) {
+      const newTool: Tool = {
+        id: Date.now().toString(),
+        name: toolName,
+        type: toolTypes.find(t => t.value === toolType)?.label || toolType,
+        description: toolDescription,
+        category: "Custom Functions",
+        status: "Draft",
+        assigned: false
+      };
+      setTools([...tools, newTool]);
+      setIsCreateToolOpen(false);
+      setToolName("");
+      setToolDescription("");
+      setToolType("");
+    }
+  };
 
   const toggleToolAssignment = (toolId: string) => {
     setTools(tools.map(tool => 
@@ -81,6 +132,34 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
         ? { ...tool, assigned: !tool.assigned }
         : tool
     ));
+  };
+
+  const getToolIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "google calendar":
+        return Calendar;
+      case "transfer call":
+        return Phone;
+      case "send text":
+        return MessageSquare;
+      case "api request":
+        return FileText;
+      case "query":
+        return Database;
+      default:
+        return Settings;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "active":
+        return "bg-green-100 text-green-800";
+      case "draft":
+        return "bg-yellow-100 text-yellow-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
   };
 
   const assignedTools = tools.filter(tool => tool.assigned);
@@ -216,40 +295,77 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
                   </div>
                   <Dialog open={isCreateToolOpen} onOpenChange={setIsCreateToolOpen}>
                     <DialogTrigger asChild>
-                      <Button size="sm">
+                      <Button className="bg-teal-600 hover:bg-teal-700">
                         <Plus className="h-4 w-4 mr-2" />
-                        Add Tool
+                        Create Tool
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="max-w-2xl">
                       <DialogHeader>
-                        <DialogTitle>Add Tool to Assistant</DialogTitle>
+                        <DialogTitle className="flex items-center gap-2">
+                          <Wrench className="h-5 w-5" />
+                          Create New Tool
+                        </DialogTitle>
                         <DialogDescription>
-                          Select tools to add to this assistant's capabilities
+                          Create a new tool to enhance your AI assistant's capabilities
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="space-y-4">
-                        <div className="space-y-3">
-                          {availableTools.map((tool) => (
-                            <div key={tool.id} className="flex items-center justify-between p-3 border rounded-lg">
-                              <div className="flex-1">
-                                <h4 className="font-medium">{tool.name}</h4>
-                                <p className="text-sm text-muted-foreground">{tool.description}</p>
-                                <Badge variant="secondary" className="mt-1 text-xs">
-                                  {tool.type}
-                                </Badge>
-                              </div>
-                              <Button 
-                                size="sm" 
-                                onClick={() => {
-                                  toggleToolAssignment(tool.id);
-                                  setIsCreateToolOpen(false);
-                                }}
-                              >
-                                Add
-                              </Button>
-                            </div>
-                          ))}
+                      
+                      <div className="space-y-4 mt-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="tool-name">Tool Name</Label>
+                          <Input 
+                            id="tool-name"
+                            value={toolName}
+                            onChange={(e) => setToolName(e.target.value)}
+                            placeholder="e.g., google_calendar_check_availability_tool"
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="tool-type">Tool Type</Label>
+                          <Select value={toolType} onValueChange={setToolType}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a tool type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {toolTypes.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  <div className="flex items-center gap-2">
+                                    <type.icon className="h-4 w-4" />
+                                    {type.label}
+                                  </div>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="tool-description">Description</Label>
+                          <Textarea 
+                            id="tool-description"
+                            value={toolDescription}
+                            onChange={(e) => setToolDescription(e.target.value)}
+                            placeholder="Describe the tool in a few sentences"
+                            className="min-h-[100px]"
+                          />
+                        </div>
+
+                        <div className="flex justify-end gap-3 pt-4">
+                          <Button 
+                            variant="outline" 
+                            onClick={() => setIsCreateToolOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button 
+                            onClick={handleCreateTool}
+                            disabled={!toolName || !toolDescription || !toolType}
+                            className="bg-teal-600 hover:bg-teal-700"
+                          >
+                            Create Tool
+                          </Button>
                         </div>
                       </div>
                     </DialogContent>
@@ -258,48 +374,128 @@ export function AssistantConfigForm({ assistant, onBack }: AssistantConfigFormPr
 
                 <Separator />
 
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium mb-3">Assigned Tools ({assignedTools.length})</h4>
-                    {assignedTools.length === 0 ? (
+                {/* Search and Tool Library */}
+                <Card>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <Wrench className="h-5 w-5" />
+                          Tool Library
+                        </CardTitle>
+                        <CardDescription>
+                          Manage and configure your tools ({tools.length} total)
+                        </CardDescription>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="relative">
+                          <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                          <Input
+                            placeholder="Search tools..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-9 w-64"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {filteredTools.length === 0 ? (
                       <div className="text-center py-8 text-muted-foreground">
-                        <Wrench className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                        <p>No tools assigned yet</p>
-                        <p className="text-sm">Add tools to enhance your assistant's capabilities</p>
+                        <Wrench className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                        <p>No tools found</p>
+                        <p className="text-sm">Try adjusting your search or create a new tool</p>
                       </div>
                     ) : (
-                      <div className="space-y-3">
-                        {assignedTools.map((tool) => (
-                          <div key={tool.id} className="flex items-center justify-between p-4 border rounded-lg bg-muted/50">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <h4 className="font-medium">{tool.name}</h4>
-                                <Badge variant="outline" className="text-xs">
-                                  {tool.type}
-                                </Badge>
+                      <div className="space-y-4">
+                        {filteredTools.map((tool) => {
+                          const IconComponent = getToolIcon(tool.type);
+                          return (
+                            <div key={tool.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                              <div className="flex items-center gap-4 flex-1">
+                                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                  <IconComponent className="h-5 w-5 text-blue-600" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <h4 className="font-medium truncate">{tool.name}</h4>
+                                    <Badge variant="outline" className="text-xs">
+                                      {tool.type}
+                                    </Badge>
+                                    <Badge className={`text-xs ${getStatusColor(tool.status)}`}>
+                                      {tool.status}
+                                    </Badge>
+                                    {tool.assigned && (
+                                      <Badge className="bg-teal-100 text-teal-800 text-xs">
+                                        Assigned
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-sm text-muted-foreground line-clamp-2">{tool.description}</p>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    Category: {tool.category}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{tool.description}</p>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                Category: {tool.category}
-                              </p>
+                              <div className="flex items-center gap-2">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => toggleToolAssignment(tool.id)}
+                                >
+                                  {tool.assigned ? "Remove" : "Assign"}
+                                </Button>
+                                <Button variant="outline" size="sm">
+                                  <Edit className="h-4 w-4 mr-2" />
+                                  Edit
+                                </Button>
+                                <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Button variant="outline" size="sm">
-                                Configure
-                              </Button>
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => toggleToolAssignment(tool.id)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     )}
-                  </div>
+                  </CardContent>
+                </Card>
+
+                {/* Tool Statistics */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Assigned Tools</CardTitle>
+                      <Wrench className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{assignedTools.length}</div>
+                      <p className="text-xs text-muted-foreground">Currently in use</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Available Tools</CardTitle>
+                      <Settings className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{availableTools.length}</div>
+                      <p className="text-xs text-muted-foreground">Ready to assign</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Total Tools</CardTitle>
+                      <FileText className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{tools.length}</div>
+                      <p className="text-xs text-muted-foreground">All tools</p>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
 
