@@ -6,6 +6,7 @@ import { TopNavbar } from "@/components/TopNavbar";
 import { OverviewSection } from "@/components/dashboard/OverviewSection";
 import { CreateAssistantSection } from "@/components/dashboard/CreateAssistantSection";
 import { ToolsSection } from "@/components/dashboard/ToolsSection";
+import { VoiceAgentSection } from "@/components/dashboard/VoiceAgentSection";
 import { PhoneNumbersSection } from "@/components/dashboard/PhoneNumbersSection";
 import { CallLogsSection } from "@/components/dashboard/CallLogsSection";
 import { FilesSection } from "@/components/dashboard/FilesSection";
@@ -33,6 +34,8 @@ export default function Dashboard() {
         return <CreateAssistantSection />;
       case "tools":
         return <ToolsSection />;
+      case "voice-agent":
+        return <VoiceAgentSection />;
       case "phone-numbers":
         return <PhoneNumbersSection />;
       case "call-logs":

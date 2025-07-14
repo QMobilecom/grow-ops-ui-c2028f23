@@ -19,7 +19,8 @@ import {
   Database,
   Brain,
   Key,
-  Wrench
+  Wrench,
+  Mic
 } from "lucide-react";
 import {
   Sidebar,
@@ -55,9 +56,9 @@ const menuGroups = [
         id: "create-assistant",
       },
       {
-        title: "Tools",
-        icon: Wrench,
-        id: "tools",
+        title: "Voice Agent",
+        icon: Mic,
+        id: "voice-agent",
       },
       {
         title: "Assistant Health",
