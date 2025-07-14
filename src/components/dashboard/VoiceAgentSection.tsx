@@ -76,6 +76,8 @@ export function VoiceAgentSection() {
   });
 
   const startConversation = useCallback(async () => {
+    console.log("🚀 Starting conversation with agent ID:", agentId);
+    
     if (!agentId.trim()) {
       toast({
         title: "Agent ID Required",
@@ -86,9 +88,12 @@ export function VoiceAgentSection() {
     }
 
     try {
+      console.log("🎤 Requesting microphone access...");
       // Request microphone access
       await navigator.mediaDevices.getUserMedia({ audio: true });
+      console.log("✅ Microphone access granted");
       
+      console.log("🔗 Generating signed URL...");
       // Generate signed URL (in a real app, this should be done on your server)
       const API_KEY = "sk_e89cdf72dbaac5dd3365aa318504a2da287bc5b58169e895";
       const response = await fetch(
@@ -101,17 +106,26 @@ export function VoiceAgentSection() {
         }
       );
 
+      console.log("📡 API Response status:", response.status);
+      
       if (!response.ok) {
-        throw new Error("Failed to get signed URL");
+        const errorText = await response.text();
+        console.error("❌ API Error:", errorText);
+        throw new Error(`Failed to get signed URL: ${response.status} ${errorText}`);
       }
 
       const body = await response.json();
+      console.log("✅ Signed URL received:", body.signed_url ? "✓" : "✗");
+      
+      console.log("🔌 Starting WebSocket session...");
       const conversationIdResult = await conversation.startSession({ 
         signedUrl: body.signed_url 
       });
       
+      console.log("✅ Conversation started with ID:", conversationIdResult);
       setConversationId(conversationIdResult);
     } catch (error) {
+      console.error("❌ Conversation start failed:", error);
       toast({
         title: "Failed to Start",
         description: error instanceof Error ? error.message : "Failed to start voice conversation",
