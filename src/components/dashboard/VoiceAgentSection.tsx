@@ -1,3 +1,4 @@
+
 import { useState, useCallback } from "react";
 import { useConversation } from "@11labs/react";
 import { Button } from "@/components/ui/button";
@@ -37,15 +38,20 @@ export function VoiceAgentSection() {
   const [customPrompt, setCustomPrompt] = useState("");
   const [volume, setVolume] = useState(0.8);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   const conversation = useConversation({
     onConnect: () => {
+      console.log("🔗 WebSocket connection established");
+      setIsConnecting(false);
       toast({
         title: "Connected",
         description: "Voice conversation started successfully",
       });
     },
     onDisconnect: () => {
+      console.log("💔 WebSocket connection closed");
+      setIsConnecting(false);
       toast({
         title: "Disconnected",
         description: "Voice conversation ended",
@@ -53,12 +59,17 @@ export function VoiceAgentSection() {
       setConversationId(null);
     },
     onError: (error: any) => {
+      console.error("🚨 Conversation error:", error);
+      setIsConnecting(false);
       const errorMessage = error?.message || (typeof error === 'string' ? error : 'Unknown error');
       toast({
         title: "Error",
         description: `Voice conversation error: ${errorMessage}`,
         variant: "destructive",
       });
+    },
+    onMessage: (message) => {
+      console.log("📨 Message received:", message);
     },
     overrides: {
       agent: {
@@ -86,6 +97,13 @@ export function VoiceAgentSection() {
       });
       return;
     }
+
+    if (isConnecting) {
+      console.log("⏳ Already connecting, ignoring request");
+      return;
+    }
+
+    setIsConnecting(true);
 
     try {
       console.log("🎤 Requesting microphone access...");
@@ -116,8 +134,13 @@ export function VoiceAgentSection() {
 
       const body = await response.json();
       console.log("✅ Signed URL received:", body.signed_url ? "✓" : "✗");
+      console.log("🔌 Signed URL:", body.signed_url);
       
       console.log("🔌 Starting WebSocket session...");
+      
+      // Add a small delay to prevent rapid connection attempts
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       const conversationIdResult = await conversation.startSession({ 
         signedUrl: body.signed_url 
       });
@@ -126,18 +149,22 @@ export function VoiceAgentSection() {
       setConversationId(conversationIdResult);
     } catch (error) {
       console.error("❌ Conversation start failed:", error);
+      setIsConnecting(false);
       toast({
         title: "Failed to Start",
         description: error instanceof Error ? error.message : "Failed to start voice conversation",
         variant: "destructive",
       });
     }
-  }, [agentId, conversation, toast]);
+  }, [agentId, conversation, toast, isConnecting]);
 
   const endConversation = useCallback(async () => {
     try {
+      console.log("🛑 Ending conversation...");
       await conversation.endSession();
+      console.log("✅ Conversation ended successfully");
     } catch (error) {
+      console.error("❌ Error ending conversation:", error);
       toast({
         title: "Error",
         description: "Failed to end conversation properly",
@@ -186,13 +213,13 @@ export function VoiceAgentSection() {
                 value={agentId}
                 onChange={(e) => setAgentId(e.target.value)}
                 placeholder="Enter your ElevenLabs agent ID"
-                disabled={isConnected}
+                disabled={isConnected || isConnecting}
               />
             </div>
 
             <div>
               <Label htmlFor="voice">Voice</Label>
-              <Select value={selectedVoice} onValueChange={setSelectedVoice} disabled={isConnected}>
+              <Select value={selectedVoice} onValueChange={setSelectedVoice} disabled={isConnected || isConnecting}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -208,7 +235,7 @@ export function VoiceAgentSection() {
 
             <div>
               <Label htmlFor="model">Model</Label>
-              <Select value={selectedModel} onValueChange={setSelectedModel} disabled={isConnected}>
+              <Select value={selectedModel} onValueChange={setSelectedModel} disabled={isConnected || isConnecting}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -229,7 +256,7 @@ export function VoiceAgentSection() {
                 value={customPrompt}
                 onChange={(e) => setCustomPrompt(e.target.value)}
                 placeholder="Enter custom system prompt"
-                disabled={isConnected}
+                disabled={isConnected || isConnecting}
               />
             </div>
           </CardContent>
@@ -245,8 +272,8 @@ export function VoiceAgentSection() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Badge variant={isConnected ? "default" : "secondary"}>
-                {isConnected ? "Connected" : "Disconnected"}
+              <Badge variant={isConnected ? "default" : isConnecting ? "secondary" : "secondary"}>
+                {isConnected ? "Connected" : isConnecting ? "Connecting..." : "Disconnected"}
               </Badge>
               {conversation.isSpeaking && (
                 <Badge variant="outline">
@@ -256,13 +283,13 @@ export function VoiceAgentSection() {
             </div>
 
             <div className="flex gap-2">
-              {isDisconnected ? (
-                <Button onClick={startConversation} className="flex-1">
+              {isDisconnected && !isConnecting ? (
+                <Button onClick={startConversation} className="flex-1" disabled={isConnecting}>
                   <Phone className="mr-2 h-4 w-4" />
                   Start Conversation
                 </Button>
               ) : (
-                <Button onClick={endConversation} variant="destructive" className="flex-1">
+                <Button onClick={endConversation} variant="destructive" className="flex-1" disabled={isConnecting}>
                   <PhoneOff className="mr-2 h-4 w-4" />
                   End Conversation
                 </Button>
@@ -293,6 +320,12 @@ export function VoiceAgentSection() {
                 <strong>Conversation ID:</strong> {conversationId}
               </div>
             )}
+
+            <div className="text-xs text-muted-foreground">
+              <strong>Debug Info:</strong><br />
+              Status: {conversation.status}<br />
+              Speaking: {conversation.isSpeaking ? "Yes" : "No"}
+            </div>
           </CardContent>
         </Card>
       </div>
