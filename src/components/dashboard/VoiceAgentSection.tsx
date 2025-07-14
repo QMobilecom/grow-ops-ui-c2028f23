@@ -71,19 +71,6 @@ export function VoiceAgentSection() {
     onMessage: (message) => {
       console.log("📨 Message received:", message);
     },
-    overrides: {
-      agent: {
-        prompt: {
-          prompt: customPrompt || "You are a helpful AI assistant.",
-        },
-        firstMessage: "Hello! How can I help you today?",
-        language: "en",
-      },
-      tts: {
-        voiceId: selectedVoice,
-        model: selectedModel,
-      },
-    },
   });
 
   const startConversation = useCallback(async () => {
